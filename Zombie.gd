@@ -313,10 +313,6 @@ func choose_direction():
 
 	chosen_dir = chosen_dir.normalized()
 	
-
-
-
-	
 	# This happens if our target is on the other side of a wall
 	# so we 'push' him away from the wall for a second
 	var targetVector = (targetPosition - global_position).normalized()

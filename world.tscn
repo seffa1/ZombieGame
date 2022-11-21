@@ -27,7 +27,7 @@ script = ExtResource( 6 )
 [node name="ZombieManager" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="ZombieManager" instance=ExtResource( 2 )]
-position = Vector2( -896, 416 )
+position = Vector2( 992, 526 )
 collision_mask = 35
 STARTING_GUN = ExtResource( 15 )
 STARTING_GRENADE = ExtResource( 17 )
@@ -223,6 +223,7 @@ cost = 10
 [connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
 [connection signal="health_change" from="ZombieManager/Player" to="HUD" method="_on_Player_health_change"]
 [connection signal="money_change" from="ZombieManager/Player" to="HUD" method="_on_Player_money_change"]
+[connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
 
 [editable path="ZombieManager/Player"]
 [editable path="SpawnManager"]
