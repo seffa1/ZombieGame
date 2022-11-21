@@ -1,0 +1,3 @@
+extends "res://Gun.gd"
+
+

@@ -1,0 +1,230 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://WallSmall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ZombieManager.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GunBuy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://world.gd" type="Script" id=6]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Window.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Room_1.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Room_2.tscn" type="PackedScene" id=10]
+[ext_resource path="res://NavigationNode.tscn" type="PackedScene" id=11]
+[ext_resource path="res://ZombieSpawner.tscn" type="PackedScene" id=12]
+[ext_resource path="res://NavigationNodeManager.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Pistol.tscn" type="PackedScene" id=14]
+[ext_resource path="res://MachineGun.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Door.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Grenade.tscn" type="PackedScene" id=17]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1032, 768 )
+
+[node name="World" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="ZombieManager" parent="." instance=ExtResource( 4 )]
+
+[node name="Player" parent="ZombieManager" instance=ExtResource( 2 )]
+position = Vector2( -896, 416 )
+collision_mask = 35
+STARTING_GUN = ExtResource( 15 )
+STARTING_GRENADE = ExtResource( 17 )
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls/StaticBody2D8"]
+polygon = PoolVector2Array( -1152, 0, -1152, 640, -1232, 640, -1232, -80, -560, -80, -560, 0 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Walls/StaticBody2D8"]
+position = Vector2( -1152, 352 )
+rotation = -1.57079
+polygon = PoolVector2Array( -1152, 0, -1151.99, 1152.01, -335.993, 1152, -319.993, 1184, -335.992, 1216, -1151.99, 1216.01, -1152, 2096, -1200, 2096, -1232, -80, -448, -79.9989, -448, 0.00109863 )
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Walls/StaticBody2D8"]
+polygon = PoolVector2Array( -400, -80, 496, -80, 496, 0, 64, 0, 64, 416, 32, 432, 0, 416, 0, 0, -400, 0 )
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Walls/StaticBody2D8"]
+polygon = PoolVector2Array( 672, 0, 1216, 0, 2048, 0, 2048, 864, 2144, 864, 2144, -80, 672, -80 )
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Walls/StaticBody2D8"]
+polygon = PoolVector2Array( 1120, 1536, 2160, 1536, 2128, 1040, 2096, 1040, 2048, 1456, 1120, 1488 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls/StaticBody2D2"]
+polygon = PoolVector2Array( 1136, 768, 944, 832, 912, 1024, 1152, 1120, 1360, 976, 1376, 832 )
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Walls"]
+collision_layer = 2
+collision_mask = 6
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls/StaticBody2D3"]
+polygon = PoolVector2Array( -512, 384, -576, 384, -672, 512, -672, 736, -594.656, 896, -496, 896, -432, 768, -416, 480 )
+
+[node name="Barrel" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 480, 262 )
+collision_mask = 5
+
+[node name="Barrel6" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 1696, 1264 )
+collision_mask = 5
+
+[node name="Barrel7" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( -779, 1376 )
+collision_mask = 5
+
+[node name="Barrel2" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 480, 976 )
+collision_mask = 5
+
+[node name="Barrel3" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 288, 1440 )
+collision_mask = 5
+
+[node name="Barrel4" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 176, 1472 )
+collision_mask = 5
+
+[node name="Barrel5" parent="Walls" instance=ExtResource( 3 )]
+position = Vector2( 160, 1376 )
+collision_mask = 5
+
+[node name="HUD" parent="." instance=ExtResource( 7 )]
+
+[node name="Windows" type="Node" parent="."]
+
+[node name="Window" parent="Windows" instance=ExtResource( 8 )]
+position = Vector2( -1232, 640 )
+rotation = -4.71238
+
+[node name="Window2" parent="Windows" instance=ExtResource( 8 )]
+position = Vector2( 2112, 1050 )
+rotation = -1.57079
+
+[node name="Window3" parent="Windows" instance=ExtResource( 8 )]
+position = Vector2( 949, 1536 )
+
+[node name="Window4" parent="Windows" instance=ExtResource( 8 )]
+position = Vector2( -400, -16 )
+rotation = -3.14159
+
+[node name="Window5" parent="Windows" instance=ExtResource( 8 )]
+position = Vector2( 672, -32 )
+rotation = -3.14159
+
+[node name="SpawnManager" parent="." instance=ExtResource( 1 )]
+DISABLED = false
+MAX_ZOMBIES_AT_ONCE = 1
+
+[node name="ZombieSpawner2" parent="SpawnManager" instance=ExtResource( 12 )]
+position = Vector2( -1680, 720 )
+
+[node name="ZombieSpawner3" parent="SpawnManager" instance=ExtResource( 12 )]
+position = Vector2( 2368, 976 )
+
+[node name="ZombieSpawner4" parent="SpawnManager" instance=ExtResource( 12 )]
+position = Vector2( 576, -352 )
+
+[node name="ZombieSpawner5" parent="SpawnManager" instance=ExtResource( 12 )]
+position = Vector2( -528, -363 )
+
+[node name="ZombieSpawner6" parent="SpawnManager" instance=ExtResource( 12 )]
+position = Vector2( 1040, 1840 )
+
+[node name="NavigationNodeManager" parent="." instance=ExtResource( 13 )]
+
+[node name="Node1" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -1056, 720 )
+
+[node name="Node2" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -480, 96 )
+
+[node name="Node3" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -80, 528 )
+WINDOW_NODE = false
+
+[node name="Node4" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -208, 816 )
+WINDOW_NODE = false
+
+[node name="Node5" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( 384, 543 )
+WINDOW_NODE = false
+
+[node name="Node6" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( 1072, 1248 )
+
+[node name="Node7" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( 1968, 976 )
+
+[node name="Node8" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -848, 944 )
+
+[node name="Node9" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -592, 1104 )
+
+[node name="Node10" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( -352, 1072 )
+
+[node name="Node11" parent="NavigationNodeManager" instance=ExtResource( 11 )]
+position = Vector2( 576, 112 )
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="Room_1" parent="Rooms" instance=ExtResource( 9 )]
+position = Vector2( -720, 416 )
+collision_mask = 5
+ROOM_NAME = "Room_1"
+
+[node name="CollisionShape2D" parent="Rooms/Room_1" index="0"]
+modulate = Color( 0.843137, 0.992157, 0, 1 )
+position = Vector2( 160, 358.25 )
+
+[node name="Room_2" parent="Rooms" instance=ExtResource( 10 )]
+collision_mask = 5
+ROOM_NAME = "Room_2"
+
+[node name="CollisionShape2D" parent="Rooms/Room_2" index="0"]
+position = Vector2( 1064, 752 )
+shape = SubResource( 1 )
+
+[node name="GunBuys" type="Node2D" parent="."]
+
+[node name="PistolBuy" parent="GunBuys" instance=ExtResource( 5 )]
+position = Vector2( -32, 262 )
+rotation = 1.5708
+gun = ExtResource( 14 )
+gun_name = "Pistol"
+cost = 200
+
+[node name="MachineGunBuy" parent="GunBuys" instance=ExtResource( 5 )]
+position = Vector2( -32, 977 )
+rotation = 1.5708
+gun = ExtResource( 15 )
+gun_name = "MachineGun"
+cost = 100
+
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="Door" parent="Doors" instance=ExtResource( 16 )]
+position = Vector2( 64, 384 )
+rotation = 1.57079
+cost = 10
+
+[connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
+[connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
+[connection signal="health_change" from="ZombieManager/Player" to="HUD" method="_on_Player_health_change"]
+[connection signal="money_change" from="ZombieManager/Player" to="HUD" method="_on_Player_money_change"]
+
+[editable path="ZombieManager/Player"]
+[editable path="SpawnManager"]
+[editable path="Rooms/Room_1"]
+[editable path="Rooms/Room_2"]
