@@ -11,3 +11,4 @@ CLIP_SIZE = 15
 RELOAD_SPEED = 3
 damage = 1
 fire_rate = 1.0
+SINGLE_FIRE = true

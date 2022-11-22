@@ -33,10 +33,16 @@ var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 
 # Guns
-var SWITCH_WEAPON_TIMER = 3 # Replace this with an animation method call
+var SWITCH_WEAPON_TIMER = .1 # Replace this with an animation method call
 onready var current_gun : PackedScene = STARTING_GUN  # Packed Scene
 onready var other_gun : PackedScene
 var current_gun_name : String
+# Keeps track of the gun state while its not equiped
+var other_gun_info = {
+	"name": null,
+	"clip_count": null,
+	"ammo": null
+}  
 var can_switch_weapons = true
 
 # Grenades
@@ -48,8 +54,11 @@ var grenade_count = 1000 setget set_grenade
 
 var charging_grenade = false
 var can_add_grenade_charge = true
-var grenade_charge_count = 0
+var grenade_charge_count : int = 0 setget set_grenade_charge_count
 var grenade_charge_velocity = Vector2.ZERO
+
+func set_grenade_charge_count(_value):
+	grenade_charge_count = _value
 
 func _draw():
 	draw_line((grenade_charge_velocity * grenade_charge_count * 3).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
@@ -82,7 +91,7 @@ func _physics_process(delta):
 		charge_grenade()
 		
 	if Input.is_action_just_released("grenade"):
-		throw_grenade(grenade_charge_count, grenade_charge_velocity)
+		throw_grenade()
 		
 	if Input.is_action_pressed("interact"):
 		if len(interactables) > 0:
@@ -124,6 +133,7 @@ func charge_grenade():
 		if g == null:
 			grenade_charge_count = 0
 			grenade_charge_velocity = Vector2.ZERO
+			charging_grenade = false
 			return
 			
 		# Do we actually need this? 
@@ -132,7 +142,7 @@ func charge_grenade():
 		grenade_charge_velocity = (get_global_mouse_position() - global_position).normalized()
 		
 	
-func throw_grenade(grenade_charge_count : int, velocity : Vector2):
+func throw_grenade():
 	# Launch the grenade in the given direction
 	
 	var g = get_node("Grenade")
@@ -142,11 +152,11 @@ func throw_grenade(grenade_charge_count : int, velocity : Vector2):
 	if g == null:
 		grenade_charge_count = 0
 		grenade_charge_velocity = Vector2.ZERO
+		charging_grenade = false
 		return
 	
 	remove_child(g)
-
-	emit_signal("throw_grenade", grenade, global_position, grenade_charge_velocity, grenade_charge_count, self)
+	emit_signal("throw_grenade", grenade, self)
 	
 	# clean up
 	grenade_charge_count = 0
@@ -161,25 +171,48 @@ func equip_gun(_gun: PackedScene):
 	Adds an instance of the given gun and removes the old gun from the tree. 
 	It also updates a reference of both guns we have available in an array.
 	"""
-	var gun1 = current_gun.instance()
 	
-	# We currently have a current gun but no other gun
-	other_gun = current_gun
-	
-	# Make the current gun the other gune
-	current_gun = _gun
-	
-	# Remove the old gun from the tree
+	# Get the current gun we have equiped
+	var gun1
 	for _node in get_children():
-		if _node.get_filename() == other_gun.get_path():
-			remove_child(_node)
+		if _node.get_filename() == current_gun.get_path():
+			gun1 = _node
 	
-	# Add the new gun to the tree
-	var gun2 = current_gun.instance()
-	add_child(gun2)
+	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
+	if other_gun == null:
 	
-	# Update the HUD
-	emit_signal("gun_change", gun2.name, gun1.name)
+		# We currently have a current gun but no other gun
+		other_gun = current_gun
+	
+		# Make the current gun the other gune
+		current_gun = _gun
+	
+		# Remove the old gun from the tree
+		remove_child(gun1)
+	
+		# Add the new gun to the tree and restore its state
+		var gun2 = current_gun.instance()
+		add_child(gun2)
+		
+		# Update the HUD
+		emit_signal("gun_change", gun2.name, gun1.name)
+		
+		# Update other gun info with the new 'other' gun
+		other_gun_info['name'] = gun1.name
+		other_gun_info["clip_count"] = gun1.clip_count
+		other_gun_info["ammo"] = gun1.ammo
+		
+	# If we already have an 'other gun' then the new gun will replace our current gun
+	else:
+		# Remove our current gun
+		for _node in get_children():
+			if _node.get_filename() == current_gun.get_path():
+				remove_child(_node)
+		# Equip the new gun
+		current_gun = _gun
+		var gun = current_gun.instance()
+		add_child(gun)
+		emit_signal("gun_change", gun.name, other_gun_info["name"])
 
 func switch_weapons():
 	if not can_switch_weapons:
@@ -192,21 +225,34 @@ func switch_weapons():
 	can_switch_weapons = false
 	$SwitchWeaponTimer.start(SWITCH_WEAPON_TIMER)
 		
-	var gun_to_equip = other_gun.instance()
-	var temp = current_gun
-	current_gun = other_gun
-	other_gun = temp
+	# Get the current gun we have equiped
+	var gun1
 	
-	# Remove the old gun
 	for _node in get_children():
-		if _node.get_filename() == temp.get_path():
-			remove_child(_node)
-			
-	# Add the old gun
-	add_child(gun_to_equip)
+		if _node.get_filename() == current_gun.get_path():
+			gun1 = _node
+	
+	# Switch our gun references
+	var temp = other_gun
+	other_gun = current_gun
+	current_gun = temp
+
+	# Add the new gun to the tree and restore its state
+	var gun2 = current_gun.instance()
+	add_child(gun2)
+	gun2.ammo = other_gun_info["ammo"]
+	gun2.clip_count = other_gun_info["clip_count"]
 	
 	# Update the HUD
-	emit_signal("gun_change", gun_to_equip.name, temp.instance().name)
+	emit_signal("gun_change", gun2.name, gun1.name)
+	
+	# Update other gun info with the new 'other' gun
+	other_gun_info['name'] = gun1.name
+	other_gun_info["clip_count"] = gun1.clip_count
+	other_gun_info["ammo"] = gun1.ammo
+	
+	# Remove the old gun from the tree
+	remove_child(gun1)
 
 func find_closest_navigation_node():
 	# For each room we are in, check the distance to each navigation node in that room

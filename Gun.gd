@@ -14,8 +14,8 @@ export var SINGLE_FIRE = false
 
 var can_shoot = true
 
-onready var ammo = STARTING_AMMO
-onready var clip_count = CLIP_SIZE
+onready var ammo = STARTING_AMMO setget set_ammo
+onready var clip_count = CLIP_SIZE setget set_clip_count
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,12 +32,26 @@ func _ready():
 	
 	pass # Replace with function body.
 
+func set_ammo(_value):
+	ammo = _value
+	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	
+func set_clip_count(_value):
+	clip_count = _value
+	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# i could change this is "just_pressed" for a single shot gun
-	if Input.is_action_pressed("click"):
-		shoot()
+	if SINGLE_FIRE:
+		if Input.is_action_just_pressed("click"):
+			shoot()
+	else:
+		if Input.is_action_pressed("click"):
+			shoot()
+	
+	
+	
 	if Input.is_action_just_pressed("reload"):
 		reload()
 	look_at(get_global_mouse_position())
@@ -49,8 +63,10 @@ func shoot():
 			# tell player their gun is empty
 			return
 		
-		can_shoot = false
-		$GunTimer.start()
+		# Automatic guns fire on a timer (fire rate)
+		if not SINGLE_FIRE:
+			can_shoot = false
+			$GunTimer.start()
 		
 		
 		# create a bullet

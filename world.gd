@@ -95,14 +95,18 @@ func _on_gun_shoot(bullet, _position, _direction, _damage, _player_shooting):
 	b.start(_position, _direction)
 
 
-func _on_Player_throw_grenade(grenade, player_position, velocity, charge_amount, _player):
+func _on_Player_throw_grenade(grenade, _player):
+#	player_position, velocity, charge_amount, 
+	var player_position = _player.global_position
+	var velocity = _player.grenade_charge_velocity
+	var charge_amount = _player.grenade_charge_count
+	
 	print("Grenade emited")
 	var g = grenade.instance()
-	add_child(g)
-	print(player_position)
-	g.global_transform.origin = player_position
 	g.player = _player
-	print(velocity)
+	add_child(g)
+	g.global_transform.origin = player_position
+	
 	g.apply_impulse(player_position, velocity * charge_amount * 10)
 	
 	
