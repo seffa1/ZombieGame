@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -35,6 +35,117 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 0.33625, 0.33625 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 24, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -1.86026 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "melee_hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 24, 0 ), Vector2( 24, -16 ), Vector2( 40, -16 ), Vector2( 40, -16 ), Vector2( 24, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -1.86026, -32.3, -6.99147, -6.99147, -1.86026 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "melee_do_damage"
+}, {
+"args": [  ],
+"method": "melee_attack_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "melee_miss"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 24, 0 ), Vector2( 24, -16 ), Vector2( 40, -16 ), Vector2( 24, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -1.86026, -32.3, -6.99147, -1.86026 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "melee_attack_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "take_damage"
@@ -53,6 +164,9 @@ tracks/0/keys = {
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 84.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 100, 45 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 4
@@ -84,11 +198,14 @@ shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
+anims/melee_hit = SubResource( 8 )
+anims/melee_miss = SubResource( 7 )
 anims/take_damage = SubResource( 4 )
 
 [node name="HealTimer" type="Timer" parent="."]
 
 [node name="InteractDetector" type="Area2D" parent="."]
+visible = false
 z_index = 10
 collision_layer = 0
 collision_mask = 128
@@ -99,9 +216,18 @@ shape = SubResource( 5 )
 
 [node name="SwitchWeaponTimer" type="Timer" parent="."]
 
+[node name="MeleeDetector" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeDetector"]
+position = Vector2( 100, 0 )
+shape = SubResource( 6 )
+
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_RoomDetector_area_entered"]
 [connection signal="area_exited" from="RoomDetector" to="." method="_on_RoomDetector_area_exited"]
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="body_entered" from="InteractDetector" to="." method="_on_InteractDetector_body_entered"]
 [connection signal="body_exited" from="InteractDetector" to="." method="_on_InteractDetector_body_exited"]
 [connection signal="timeout" from="SwitchWeaponTimer" to="." method="_on_SwitchWeaponTimer_timeout"]
+[connection signal="body_entered" from="MeleeDetector" to="." method="_on_MeleeDetector_body_entered"]
+[connection signal="body_exited" from="MeleeDetector" to="." method="_on_MeleeDetector_body_exited"]

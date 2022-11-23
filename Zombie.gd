@@ -4,7 +4,7 @@ signal die_signal
 
 # Constants
 var WANDER_DISTANCE = 100
-var BASE_WALKING_SPEED = 100
+var BASE_WALKING_SPEED = 150
 var WANDER_TIMER_DURATION = 10
 var CLOSE_TO_TARGET = 50
 onready var START_POSITION = global_position

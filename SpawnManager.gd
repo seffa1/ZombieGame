@@ -1,7 +1,7 @@
 extends Node2D
 
 export (bool) var DISABLED = true
-export var MAX_ZOMBIES_AT_ONCE = 100
+export var MAX_ZOMBIES_AT_ONCE = 30
 
 var round_started = false
 

@@ -29,8 +29,11 @@ script = ExtResource( 6 )
 [node name="Player" parent="ZombieManager" instance=ExtResource( 2 )]
 position = Vector2( 992, 526 )
 collision_mask = 35
-STARTING_GUN = ExtResource( 15 )
+STARTING_GUN = ExtResource( 14 )
 STARTING_GRENADE = ExtResource( 17 )
+MAX_HEALTH = 5
+money = 0
+grenade_count = 2
 
 [node name="Walls" type="Node" parent="."]
 
@@ -104,6 +107,7 @@ collision_mask = 5
 [node name="Window" parent="Windows" instance=ExtResource( 8 )]
 position = Vector2( -1232, 640 )
 rotation = -4.71238
+MAX_BOARD_COUNT = 0
 
 [node name="Window2" parent="Windows" instance=ExtResource( 8 )]
 position = Vector2( 2112, 1050 )
@@ -122,7 +126,6 @@ rotation = -3.14159
 
 [node name="SpawnManager" parent="." instance=ExtResource( 1 )]
 DISABLED = false
-MAX_ZOMBIES_AT_ONCE = 1
 
 [node name="ZombieSpawner2" parent="SpawnManager" instance=ExtResource( 12 )]
 position = Vector2( -1680, 720 )
@@ -215,6 +218,7 @@ cost = 100
 [node name="Doors" type="Node2D" parent="."]
 
 [node name="Door" parent="Doors" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 64, 384 )
 rotation = 1.57079
 cost = 10

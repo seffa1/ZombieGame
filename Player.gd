@@ -20,14 +20,14 @@ export (PackedScene) var STARTING_GRENADE
 
 # Health stuff
 onready var health = MAX_HEALTH
-var MAX_HEALTH = 1000
+export var MAX_HEALTH = 1000
 var HEALTH_REGEN_AFTER_DAMAGE_RATE = 3  # how long you have to wait to start healing after taking damage
 var HEALTH_REGENERATION_RATE = 1  # seconds / health you gain after the health regen after damage rate is over with
 var can_heal = true
 
 # Interactable Stuff
 var interactables = []
-var money = 100000 setget _set_money
+export var money = 100000 setget _set_money
 var gun_slots = []
 var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
@@ -46,15 +46,49 @@ var other_gun_info = {
 var can_switch_weapons = true
 
 # Grenades
-var MAX_GRENADE_COUNT = 1000
+var MAX_GRENADE_COUNT = 10
 var MIN_GRENADE_CHARGE = 2
 var MAX_GRENADE_CHARGE = 300  # frames
 export onready var grenade : PackedScene = STARTING_GRENADE
-var grenade_count = 1000 setget set_grenade
-
+export var grenade_count = 1000 setget set_grenade
 var charging_grenade = false
 var grenade_throw_velocity = Vector2.ZERO
 
+# Melee
+var meleeable_zombies = []
+var can_melee = true
+var melee_lunge = false
+var melee_damage = 5
+var chosen_zombie
+
+func melee_do_damage():
+	if chosen_zombie != null:
+		chosen_zombie.take_damage(melee_damage, self)
+	velocity = Vector2.ZERO
+
+func melee_attack_finished():
+	can_melee = true
+	melee_lunge = false
+	
+func melee():
+	if can_melee:
+		if len(meleeable_zombies) == 0:
+			can_melee = false
+			$AnimationPlayer.play("melee_miss")
+		else:
+			melee_lunge = true
+			can_melee = false
+			var distance = INF
+			for zombie in meleeable_zombies:
+				var d = (zombie.global_position - global_position).length()
+				if d < distance:
+					distance = d
+					chosen_zombie = zombie
+
+			$AnimationPlayer.play("melee_hit")
+			look_at(chosen_zombie.global_position)
+			velocity = (chosen_zombie.global_position - global_position)
+				
 
 func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
@@ -89,6 +123,9 @@ func _physics_process(delta):
 	if Input.is_action_just_released("grenade"):
 		throw_grenade()
 		
+	if Input.is_action_just_pressed("melee"):
+		melee()
+		
 	if Input.is_action_pressed("interact"):
 		if len(interactables) > 0:
 			if interactables[0].has_method("interact"):
@@ -102,10 +139,11 @@ func _physics_process(delta):
 		movement_speed = RUN_SPEED
 	else:
 		movement_speed = WALK_SPEED
-		
-		
-	velocity = get_input_vector()
-	look_at(get_global_mouse_position())
+	
+	# If we are lunging from a melee attack hit, then move around
+	if not melee_lunge:
+		velocity = get_input_vector()
+		look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
 
 func charge_grenade():
@@ -316,3 +354,13 @@ func _on_InteractDetector_body_exited(body):
 
 func _on_SwitchWeaponTimer_timeout():
 	can_switch_weapons = true
+
+
+func _on_MeleeDetector_body_entered(body):
+	print("Body entered")
+	meleeable_zombies.append(body)
+
+
+func _on_MeleeDetector_body_exited(body):
+	print("body exited")
+	meleeable_zombies.erase(body)
