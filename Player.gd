@@ -53,15 +53,11 @@ export onready var grenade : PackedScene = STARTING_GRENADE
 var grenade_count = 1000 setget set_grenade
 
 var charging_grenade = false
-var can_add_grenade_charge = true
-var grenade_charge_count : int = 0 setget set_grenade_charge_count
-var grenade_charge_velocity = Vector2.ZERO
+var grenade_throw_velocity = Vector2.ZERO
 
-func set_grenade_charge_count(_value):
-	grenade_charge_count = _value
 
 func _draw():
-	draw_line((grenade_charge_velocity * grenade_charge_count * 3).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
+	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
 
 #	if charging_grenade:
 #		print("Here")
@@ -131,15 +127,12 @@ func charge_grenade():
 		var g = get_node("Grenade")
 		# If the grenade blew up in our hands
 		if g == null:
-			grenade_charge_count = 0
-			grenade_charge_velocity = Vector2.ZERO
+			grenade_throw_velocity = Vector2.ZERO
 			charging_grenade = false
 			return
 			
 		# Do we actually need this? 
-		grenade_charge_count += 1
-		grenade_charge_count = min(grenade_charge_count, MAX_GRENADE_CHARGE)
-		grenade_charge_velocity = (get_global_mouse_position() - global_position).normalized()
+		grenade_throw_velocity = (get_global_mouse_position() - global_position)
 		
 	
 func throw_grenade():
@@ -150,8 +143,7 @@ func throw_grenade():
 	
 	# If the grenade blew up in our hands
 	if g == null:
-		grenade_charge_count = 0
-		grenade_charge_velocity = Vector2.ZERO
+		grenade_throw_velocity = Vector2.ZERO
 		charging_grenade = false
 		return
 	
@@ -159,8 +151,7 @@ func throw_grenade():
 	emit_signal("throw_grenade", grenade, self)
 	
 	# clean up
-	grenade_charge_count = 0
-	grenade_charge_velocity = Vector2.ZERO
+	grenade_throw_velocity = Vector2.ZERO
 	update()  # Calls draw again so the charging line disappears
 	charging_grenade = false
 	
