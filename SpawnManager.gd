@@ -18,11 +18,10 @@ func _process(delta):
 	if not round_started or DISABLED:
 		return
 	
-	
 	for spawner in select_spawners():
 		if zombies_on_map == MAX_ZOMBIES_AT_ONCE or zombies_left_to_spawn == 0:
 			return
-		if spawner.can_spawn_zombie:
+		if spawner.can_spawn_zombie and spawner.active:
 			spawner.spawn_zombie()
 
 func select_spawners():

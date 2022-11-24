@@ -108,4 +108,8 @@ func _on_Player_throw_grenade(grenade, _player):
 	g.global_transform.origin = player_position
 	g.apply_impulse(player_position, _player.grenade_throw_velocity)
 	
-	
+func _activate_spawners(spawner_names : Array):
+	for name in spawner_names:
+		for spawner in $SpawnManager.get_children():
+			if spawner.name == name:
+				spawner.active = true

@@ -3,7 +3,7 @@ extends Node2D
 onready var zombie = preload("res://Zombie.tscn")
 signal spawner_ready
 
-# The current level will impact many other factors 
+export var active = false
 var SPAWN_COOLDOWN = 1
 var can_spawn_zombie = true
 signal spawn_zombie
@@ -18,7 +18,7 @@ func _ready():
 	emit_signal("spawner_ready", self, global_position)
 
 func spawn_zombie():
-	if not target_window:
+	if not target_window or not active:
 		return
 	else:
 #		print("targeting windows " + str(target_window.get_instance_id()) + ' ' + str(target_window.name))

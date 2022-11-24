@@ -66,15 +66,13 @@ func melee_do_damage():
 		chosen_zombie.take_damage(melee_damage, self)
 	velocity = Vector2.ZERO
 
-func melee_attack_finished():
-	can_melee = true
-	melee_lunge = false
 	
 func melee():
 	if can_melee:
 		if len(meleeable_zombies) == 0:
 			can_melee = false
 			$AnimationPlayer.play("melee_miss")
+			$MeleeTimer.start(.3)
 		else:
 			melee_lunge = true
 			can_melee = false
@@ -86,18 +84,13 @@ func melee():
 					chosen_zombie = zombie
 
 			$AnimationPlayer.play("melee_hit")
+			$MeleeTimer.start(.5)
 			look_at(chosen_zombie.global_position)
 			velocity = (chosen_zombie.global_position - global_position)
-				
 
 func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
 
-#	if charging_grenade:
-#		print("Here")
-#		draw_line(global_position, get_global_mouse_position(), Color(0,0,0), 1, true)
-#	else:
-#		print("Dont draw line")
 
 func _ready():
 	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
@@ -123,7 +116,7 @@ func _physics_process(delta):
 	if Input.is_action_just_released("grenade"):
 		throw_grenade()
 		
-	if Input.is_action_just_pressed("melee"):
+	if Input.is_action_just_pressed("melee") and can_melee:
 		melee()
 		
 	if Input.is_action_pressed("interact"):
@@ -149,6 +142,7 @@ func _physics_process(delta):
 func charge_grenade():
 	# On the first call, we create the grenade and attach it to ourselves
 	if not charging_grenade:
+		can_melee = false
 		if grenade_count == 0:
 			return
 		charging_grenade = true
@@ -165,8 +159,6 @@ func charge_grenade():
 		var g = get_node("Grenade")
 		# If the grenade blew up in our hands
 		if g == null:
-			grenade_throw_velocity = Vector2.ZERO
-			charging_grenade = false
 			return
 			
 		# Do we actually need this? 
@@ -178,11 +170,11 @@ func throw_grenade():
 	
 	var g = get_node("Grenade")
 	
-	
 	# If the grenade blew up in our hands
 	if g == null:
 		grenade_throw_velocity = Vector2.ZERO
 		charging_grenade = false
+		can_melee = true
 		return
 	
 	remove_child(g)
@@ -192,6 +184,7 @@ func throw_grenade():
 	grenade_throw_velocity = Vector2.ZERO
 	update()  # Calls draw again so the charging line disappears
 	charging_grenade = false
+	can_melee = true
 	
 
 	
@@ -317,6 +310,7 @@ func get_input_vector():
 	if Input.is_action_pressed("down"):
 		velocity += Vector2(0, 1)
 	return velocity
+	
 func heal():
 	can_heal = false
 	health += 1
@@ -364,3 +358,8 @@ func _on_MeleeDetector_body_entered(body):
 func _on_MeleeDetector_body_exited(body):
 	print("body exited")
 	meleeable_zombies.erase(body)
+
+
+func _on_Timer_timeout():
+	can_melee = true
+	melee_lunge = false

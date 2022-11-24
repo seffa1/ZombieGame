@@ -19,7 +19,7 @@
 [ext_resource path="res://Grenade.tscn" type="PackedScene" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 1032, 768 )
+extents = Vector2( 992, 736 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
@@ -27,12 +27,12 @@ script = ExtResource( 6 )
 [node name="ZombieManager" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="ZombieManager" instance=ExtResource( 2 )]
-position = Vector2( 992, 526 )
+position = Vector2( -960, 224 )
 collision_mask = 35
 STARTING_GUN = ExtResource( 14 )
 STARTING_GRENADE = ExtResource( 17 )
-MAX_HEALTH = 5
-money = 0
+MAX_HEALTH = 999999
+money = 9999
 grenade_count = 2
 
 [node name="Walls" type="Node" parent="."]
@@ -107,7 +107,6 @@ collision_mask = 5
 [node name="Window" parent="Windows" instance=ExtResource( 8 )]
 position = Vector2( -1232, 640 )
 rotation = -4.71238
-MAX_BOARD_COUNT = 0
 
 [node name="Window2" parent="Windows" instance=ExtResource( 8 )]
 position = Vector2( 2112, 1050 )
@@ -117,11 +116,11 @@ rotation = -1.57079
 position = Vector2( 949, 1536 )
 
 [node name="Window4" parent="Windows" instance=ExtResource( 8 )]
-position = Vector2( -400, -16 )
+position = Vector2( -384, -64 )
 rotation = -3.14159
 
 [node name="Window5" parent="Windows" instance=ExtResource( 8 )]
-position = Vector2( 672, -32 )
+position = Vector2( 672, -64 )
 rotation = -3.14159
 
 [node name="SpawnManager" parent="." instance=ExtResource( 1 )]
@@ -129,6 +128,7 @@ DISABLED = false
 
 [node name="ZombieSpawner2" parent="SpawnManager" instance=ExtResource( 12 )]
 position = Vector2( -1680, 720 )
+active = true
 
 [node name="ZombieSpawner3" parent="SpawnManager" instance=ExtResource( 12 )]
 position = Vector2( 2368, 976 )
@@ -138,6 +138,7 @@ position = Vector2( 576, -352 )
 
 [node name="ZombieSpawner5" parent="SpawnManager" instance=ExtResource( 12 )]
 position = Vector2( -528, -363 )
+active = true
 
 [node name="ZombieSpawner6" parent="SpawnManager" instance=ExtResource( 12 )]
 position = Vector2( 1040, 1840 )
@@ -189,14 +190,14 @@ ROOM_NAME = "Room_1"
 
 [node name="CollisionShape2D" parent="Rooms/Room_1" index="0"]
 modulate = Color( 0.843137, 0.992157, 0, 1 )
-position = Vector2( 160, 358.25 )
+position = Vector2( 144, 352 )
 
 [node name="Room_2" parent="Rooms" instance=ExtResource( 10 )]
 collision_mask = 5
 ROOM_NAME = "Room_2"
 
 [node name="CollisionShape2D" parent="Rooms/Room_2" index="0"]
-position = Vector2( 1064, 752 )
+position = Vector2( 1056, 736 )
 shape = SubResource( 1 )
 
 [node name="GunBuys" type="Node2D" parent="."]
@@ -218,7 +219,6 @@ cost = 100
 [node name="Doors" type="Node2D" parent="."]
 
 [node name="Door" parent="Doors" instance=ExtResource( 16 )]
-visible = false
 position = Vector2( 64, 384 )
 rotation = 1.57079
 cost = 10

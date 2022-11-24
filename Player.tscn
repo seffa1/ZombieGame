@@ -94,14 +94,11 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.2, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "melee_do_damage"
-}, {
-"args": [  ],
-"method": "melee_attack_finished"
 } ]
 }
 
@@ -139,12 +136,9 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.3 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "melee_attack_finished"
-} ]
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -175,12 +169,11 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 24, 0 )
-rotation = -0.0324676
+rotation = -0.0324677
 scale = Vector2( 0.33625, 0.33625 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -189,7 +182,6 @@ zoom = Vector2( 2, 2 )
 smoothing_enabled = true
 
 [node name="RoomDetector" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 32
 
@@ -205,7 +197,6 @@ anims/take_damage = SubResource( 4 )
 [node name="HealTimer" type="Timer" parent="."]
 
 [node name="InteractDetector" type="Area2D" parent="."]
-visible = false
 z_index = 10
 collision_layer = 0
 collision_mask = 128
@@ -223,6 +214,8 @@ collision_layer = 0
 position = Vector2( 100, 0 )
 shape = SubResource( 6 )
 
+[node name="MeleeTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_RoomDetector_area_entered"]
 [connection signal="area_exited" from="RoomDetector" to="." method="_on_RoomDetector_area_exited"]
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]
@@ -231,3 +224,4 @@ shape = SubResource( 6 )
 [connection signal="timeout" from="SwitchWeaponTimer" to="." method="_on_SwitchWeaponTimer_timeout"]
 [connection signal="body_entered" from="MeleeDetector" to="." method="_on_MeleeDetector_body_entered"]
 [connection signal="body_exited" from="MeleeDetector" to="." method="_on_MeleeDetector_body_exited"]
+[connection signal="timeout" from="MeleeTimer" to="." method="_on_Timer_timeout"]

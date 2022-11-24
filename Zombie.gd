@@ -26,6 +26,9 @@ var player_rooms = {}
 var player_navigation_node  # the closest navigation node to the player
 
 # Info needed for context steering
+var DANGER_DOT_VALUE = .7  # danger vector dot the target direction that is ignored
+var ZOMBIE_DANGER_WEIGHT = .7  # How much zombies avoid each other
+var ZOMBIE_DANGER_OUTSIDE_WEIGHT = .1  # How much zombies avoid each other when outside
 var targetPosition
 var steer_force = .1
 var look_ahead = 150
@@ -113,7 +116,6 @@ func _input(event):
 func set_state(_state):
 #	print("Zombie's state set to " + str(state))
 	state = _state
-	
 
 				
 func _physics_process(delta):
@@ -183,8 +185,6 @@ func get_navigation_node():
 	var current_node = starting_node
 	var lowest_f_cost = INF
 	
-
-	
 	for neighbor in starting_node.neighbors:
 		# Distance from current node to the neighbor
 		var g_cost = (neighbor.global_position - current_node.global_position).length()
@@ -214,9 +214,8 @@ func seekTarget(targetPosition, delta):
 	if not targetPosition:
 		return
 	if closeToTarget():
-			return
+		return
 
-			
 	# Context based steering
 	set_interest(targetPosition)
 	set_danger()
@@ -278,12 +277,12 @@ func set_danger():
 			# of a wall
 			if result["collider"].get_filename() == "res://Zombie.tscn":
 				if state == "seek_window":
-					dangerWeight *= 0.1  # trying to prevent wall bounces off eachother when they havent even got inside yet
+					dangerWeight *= ZOMBIE_DANGER_OUTSIDE_WEIGHT  # trying to prevent wall bounces off eachother when they havent even got inside yet
 				else:
-					dangerWeight *= 0.5
+					dangerWeight *= ZOMBIE_DANGER_WEIGHT
 					
 			# If the danger ray is in the same direction as the target, lessen its effect
-			if interest[i] > .7:
+			if interest[i] > DANGER_DOT_VALUE:
 				dangerWeight = 0
 			danger[i] = dangerWeight
 		else:

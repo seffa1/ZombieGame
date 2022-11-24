@@ -35,8 +35,8 @@ func _on_Room_body_entered(body):
 #			print("Changing zombie state")
 			body.set_state("seek_player")
 			body.current_rooms[self.name] = self
-	
 
+	
 
 func _on_Room_body_exited(body):
 	bodies.erase(body.get_instance_id())

@@ -15,7 +15,6 @@ func _ready():
 
 	assert(player, "A Player needs to be a child of the Zombie Manager!")
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	for node in get_children():
@@ -29,5 +28,4 @@ func _process(delta):
 			# give zombie players locations
 		# We need to inform each zombie which room the player is in
 		# The zombie should then be able to figure out how to get to the player
-		
 
