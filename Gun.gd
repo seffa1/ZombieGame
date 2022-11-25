@@ -41,20 +41,18 @@ func set_clip_count(_value):
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	# i could change this is "just_pressed" for a single shot gun
-	if SINGLE_FIRE:
-		if Input.is_action_just_pressed("click"):
-			shoot()
-	else:
-		if Input.is_action_pressed("click"):
-			shoot()
-	
-	
-	
-	if Input.is_action_just_pressed("reload"):
-		reload()
-	look_at(get_global_mouse_position())
+#func _process(delta):
+#	# i could change this is "just_pressed" for a single shot gun
+#	if SINGLE_FIRE:
+#		if Input.is_action_just_pressed("click"):
+#			shoot()
+#	else:
+#		if Input.is_action_pressed("click"):
+#			shoot()
+#
+#	if Input.is_action_just_pressed("reload"):
+#		reload()
+
 	
 
 func shoot():

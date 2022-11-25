@@ -34,6 +34,7 @@ var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 
 # Guns
 var SWITCH_WEAPON_TIMER = .1 # Replace this with an animation method call
+var single_fire : bool = true  # gets set during equip / switch weapons
 onready var current_gun : PackedScene = STARTING_GUN  # Packed Scene
 onready var other_gun : PackedScene
 var current_gun_name : String
@@ -41,7 +42,8 @@ var current_gun_name : String
 var other_gun_info = {
 	"name": null,
 	"clip_count": null,
-	"ammo": null
+	"ammo": null,
+	"SINGLE_FIRE": null
 }  
 var can_switch_weapons = true
 
@@ -62,11 +64,11 @@ var melee_damage = 5
 var chosen_zombie
 
 func melee_do_damage():
-	if chosen_zombie != null:
+	if chosen_zombie != null and is_instance_valid(chosen_zombie):
 		chosen_zombie.take_damage(melee_damage, self)
 	velocity = Vector2.ZERO
 
-	
+
 func melee():
 	if can_melee:
 		if len(meleeable_zombies) == 0:
@@ -98,6 +100,7 @@ func _ready():
 	emit_signal("grenade_change", grenade_count)
 	gun_slots.append(STARTING_GUN)
 	var gun = STARTING_GUN.instance()
+	single_fire = gun.SINGLE_FIRE
 	current_gun_name = gun.name
 	emit_signal("gun_change", gun.name, "empty")
 	add_child(gun)
@@ -110,14 +113,28 @@ func _physics_process(delta):
 	if can_heal and health < MAX_HEALTH:
 		heal()
 		
-	if Input.is_action_pressed("grenade"):
-		charge_grenade()
+	# If we are not in the middle of a melee attack
+	if can_melee:
+		if Input.is_action_just_pressed("melee"):
+			melee()
+	
+		if single_fire:
+			if Input.is_action_just_pressed("click"):
+				shoot()
+		else:
+			if Input.is_action_pressed("click"):
+				shoot()
+
+		if Input.is_action_just_pressed("reload"):
+			reload()
 		
+		if Input.is_action_pressed("grenade"):
+			charge_grenade()
+			
 	if Input.is_action_just_released("grenade"):
 		throw_grenade()
 		
-	if Input.is_action_just_pressed("melee") and can_melee:
-		melee()
+	
 		
 	if Input.is_action_pressed("interact"):
 		if len(interactables) > 0:
@@ -157,8 +174,12 @@ func charge_grenade():
 		update()  # For drawing
 		# We need to manually move the grenade
 		var g = get_node("Grenade")
+		can_melee = false
 		# If the grenade blew up in our hands
 		if g == null:
+			grenade_throw_velocity = Vector2.ZERO
+			charging_grenade = false
+			can_melee = true
 			return
 			
 		# Do we actually need this? 
@@ -185,9 +206,17 @@ func throw_grenade():
 	update()  # Calls draw again so the charging line disappears
 	charging_grenade = false
 	can_melee = true
-	
 
-	
+func reload():
+	for _node in get_children():
+		if _node.get_filename() == current_gun.get_path():
+			_node.reload()
+
+func shoot():
+	for _node in get_children():
+		if _node.get_filename() == current_gun.get_path():
+			_node.shoot()
+
 func equip_gun(_gun: PackedScene):
 	""" 
 	Adds an instance of the given gun and removes the old gun from the tree. 
@@ -214,6 +243,7 @@ func equip_gun(_gun: PackedScene):
 	
 		# Add the new gun to the tree and restore its state
 		var gun2 = current_gun.instance()
+		single_fire = gun2.SINGLE_FIRE
 		add_child(gun2)
 		
 		# Update the HUD
@@ -223,6 +253,7 @@ func equip_gun(_gun: PackedScene):
 		other_gun_info['name'] = gun1.name
 		other_gun_info["clip_count"] = gun1.clip_count
 		other_gun_info["ammo"] = gun1.ammo
+		other_gun_info['SINGLE_FIRE'] = gun1.SINGLE_FIRE
 		
 	# If we already have an 'other gun' then the new gun will replace our current gun
 	else:
@@ -262,6 +293,7 @@ func switch_weapons():
 	# Add the new gun to the tree and restore its state
 	var gun2 = current_gun.instance()
 	add_child(gun2)
+	single_fire = gun2.SINGLE_FIRE
 	gun2.ammo = other_gun_info["ammo"]
 	gun2.clip_count = other_gun_info["clip_count"]
 	
@@ -272,6 +304,7 @@ func switch_weapons():
 	other_gun_info['name'] = gun1.name
 	other_gun_info["clip_count"] = gun1.clip_count
 	other_gun_info["ammo"] = gun1.ammo
+	other_gun_info['SINGLE_FIRE'] = gun1.SINGLE_FIRE
 	
 	# Remove the old gun from the tree
 	remove_child(gun1)
