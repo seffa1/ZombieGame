@@ -63,36 +63,8 @@ var melee_lunge = false
 var melee_damage = 5
 var chosen_zombie
 
-func melee_do_damage():
-	if chosen_zombie != null and is_instance_valid(chosen_zombie):
-		chosen_zombie.take_damage(melee_damage, self)
-	velocity = Vector2.ZERO
-
-
-func melee():
-	if can_melee:
-		if len(meleeable_zombies) == 0:
-			can_melee = false
-			$AnimationPlayer.play("melee_miss")
-			$MeleeTimer.start(.3)
-		else:
-			melee_lunge = true
-			can_melee = false
-			var distance = INF
-			for zombie in meleeable_zombies:
-				var d = (zombie.global_position - global_position).length()
-				if d < distance:
-					distance = d
-					chosen_zombie = zombie
-
-			$AnimationPlayer.play("melee_hit")
-			$MeleeTimer.start(.5)
-			look_at(chosen_zombie.global_position)
-			velocity = (chosen_zombie.global_position - global_position)
-
 func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
-
 
 func _ready():
 	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
@@ -133,9 +105,7 @@ func _physics_process(delta):
 			
 	if Input.is_action_just_released("grenade"):
 		throw_grenade()
-		
-	
-		
+
 	if Input.is_action_pressed("interact"):
 		if len(interactables) > 0:
 			if interactables[0].has_method("interact"):
@@ -150,11 +120,36 @@ func _physics_process(delta):
 	else:
 		movement_speed = WALK_SPEED
 	
-	# If we are lunging from a melee attack hit, then move around
-	if not melee_lunge:
-		velocity = get_input_vector()
-		look_at(get_global_mouse_position())
+
+	velocity = get_input_vector()
+	look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
+
+func melee_do_damage():
+	if chosen_zombie != null and is_instance_valid(chosen_zombie):
+		chosen_zombie.take_damage(melee_damage, self)
+	velocity = Vector2.ZERO
+
+func melee():
+	if can_melee:
+		if len(meleeable_zombies) == 0:
+			can_melee = false
+			$AnimationPlayer.play("melee_miss")
+			$MeleeTimer.start(.3)
+		else:
+			melee_lunge = true
+			can_melee = false
+			var distance = INF
+			for zombie in meleeable_zombies:
+				var d = (zombie.global_position - global_position).length()
+				if d < distance:
+					distance = d
+					chosen_zombie = zombie
+
+			$AnimationPlayer.play("melee_hit")
+			$MeleeTimer.start(.5)
+#			look_at(chosen_zombie.global_position)
+#			velocity = (chosen_zombie.global_position - global_position)
 
 func charge_grenade():
 	# On the first call, we create the grenade and attach it to ourselves
@@ -184,8 +179,7 @@ func charge_grenade():
 			
 		# Do we actually need this? 
 		grenade_throw_velocity = (get_global_mouse_position() - global_position)
-		
-	
+
 func throw_grenade():
 	# Launch the grenade in the given direction
 	
@@ -215,7 +209,10 @@ func reload():
 func shoot():
 	for _node in get_children():
 		if _node.get_filename() == current_gun.get_path():
-			_node.shoot()
+			var gun = _node
+			if gun.clip_count > 0:
+				gun.shoot()
+
 
 func equip_gun(_gun: PackedScene):
 	""" 
