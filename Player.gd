@@ -18,6 +18,9 @@ var closest_navigation_node
 export (PackedScene) var STARTING_GUN
 export (PackedScene) var STARTING_GRENADE
 
+# Animation stuff
+onready var animation_state_machine = $AnimationTree.get("parameters/playback")
+
 # Health stuff
 onready var health = MAX_HEALTH
 export var MAX_HEALTH = 1000
@@ -131,10 +134,11 @@ func melee_do_damage():
 	velocity = Vector2.ZERO
 
 func melee():
+	# TODO: Clean this up and remove these timers now that we arent doing the lunge
 	if can_melee:
 		if len(meleeable_zombies) == 0:
 			can_melee = false
-			$AnimationPlayer.play("melee_miss")
+			animation_state_machine.travel("melee_miss")
 			$MeleeTimer.start(.3)
 		else:
 			melee_lunge = true
@@ -146,8 +150,8 @@ func melee():
 					distance = d
 					chosen_zombie = zombie
 
-			$AnimationPlayer.play("melee_hit")
-			$MeleeTimer.start(.5)
+			animation_state_machine.travel("melee_hit")
+			$MeleeTimer.start(.3)
 #			look_at(chosen_zombie.global_position)
 #			velocity = (chosen_zombie.global_position - global_position)
 
@@ -210,8 +214,17 @@ func shoot():
 	for _node in get_children():
 		if _node.get_filename() == current_gun.get_path():
 			var gun = _node
-			if gun.clip_count > 0:
+			if gun.clip_count > 0 and gun.can_shoot:
 				gun.shoot()
+				
+				# Call the correct animation for the correct gun
+				# TODO: decouple this
+				match gun.name:
+					"Pistol":
+						animation_state_machine.travel("pistol_shoot")
+					
+					"Riffle":
+						$AnimationPlayer.play()
 
 
 func equip_gun(_gun: PackedScene):
@@ -354,7 +367,7 @@ func take_damage(amount):
 		queue_free()
 	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
 	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
-	$AnimationPlayer.play("take_damage")
+	animation_state_machine.travel("take_damage")
 
 func _on_RoomDetector_area_entered(area):
 	current_rooms[area.name] = area

@@ -74,6 +74,7 @@ func shoot():
 		emit_signal('shoot', Bullet, global_position, dir, damage, player_shooting)
 		clip_count -= 1
 		emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+		
 
 func reload():
 	if ammo == 0:

@@ -39,9 +39,6 @@ MAX_HEALTH = 999999
 money = 9999
 grenade_count = 2
 
-[node name="AnimatedSprite" parent="ZombieManager/Player" index="0"]
-frame = 1
-
 [node name="AnimationTree" parent="ZombieManager/Player" index="10"]
 parameters/playback = SubResource( 3 )
 
