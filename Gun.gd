@@ -12,17 +12,13 @@ export var SINGLE_FIRE = false
 export var GUN_NAME : String
 
 # TODO: These will be controlled by player animations
-export var fire_rate = .06  # seconds / bullet (.06 is an irl m16)
 export var RELOAD_SPEED = 1
-var can_shoot = true  # This variable will be moved to the player
 
 onready var ammo = STARTING_AMMO setget set_ammo
 onready var clip_count = CLIP_SIZE setget set_clip_count
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$GunTimer.wait_time = fire_rate
-	
 	# Connect this guns shoot method to the world
 	var world = get_node('/root/World')
 	self.connect("shoot", world, '_on_gun_shoot')
@@ -31,8 +27,6 @@ func _ready():
 	var hud = get_node('/root/World/HUD')
 	self.connect('updateHUD', hud, '_on_update_hud_gun')
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
-	
-	pass # Replace with function body.
 
 func set_ammo(_value):
 	ammo = _value
@@ -42,40 +36,17 @@ func set_clip_count(_value):
 	clip_count = _value
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	# i could change this is "just_pressed" for a single shot gun
-#	if SINGLE_FIRE:
-#		if Input.is_action_just_pressed("click"):
-#			shoot()
-#	else:
-#		if Input.is_action_pressed("click"):
-#			shoot()
-#
-#	if Input.is_action_just_pressed("reload"):
-#		reload()
+func shoot():	
+	# create a bullet
+	var dir = Vector2(1,0).rotated(global_rotation)
 
+	# Emit bullet to the world with a reference to the player so the player can gain points if the bullet kills a zombie.
+	var player_shooting = get_parent()
+	emit_signal('shoot', Bullet, global_position, dir, damage, player_shooting)
 	
-
-func shoot():
-	if can_shoot:
-		if clip_count == 0:
-			# tell player their gun is empty
-			return
-		
-		# Automatic guns fire on a timer (fire rate)
-		if not SINGLE_FIRE:
-			can_shoot = false
-			$GunTimer.start()
-		
-		
-		# create a bullet
-		var dir = Vector2(1,0).rotated(global_rotation)
-#		print(dir)
-		var player_shooting = get_parent()
-		emit_signal('shoot', Bullet, global_position, dir, damage, player_shooting)
-		clip_count -= 1
-		emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	# Update the clip count
+	clip_count -= 1
+	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
 		
 
 func reload():
@@ -94,6 +65,3 @@ func reload():
 	clip_count += amount_to_fill
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
 
-
-func _on_GunTimer_timeout():
-	can_shoot = true

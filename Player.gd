@@ -49,6 +49,7 @@ var other_gun_info = {
 	"SINGLE_FIRE": null
 }  
 var can_switch_weapons = true
+var can_shoot = true  # Controller by gun shoot animations
 
 # Grenades
 var MAX_GRENADE_COUNT = 10
@@ -89,10 +90,10 @@ func _physics_process(delta):
 			melee()
 	
 		if single_fire:
-			if Input.is_action_just_pressed("click"):
+			if Input.is_action_just_pressed("click") and can_shoot:
 				shoot()
 		else:
-			if Input.is_action_pressed("click"):
+			if Input.is_action_pressed("click") and can_shoot:
 				shoot()
 
 		if Input.is_action_just_pressed("reload"):
@@ -209,9 +210,9 @@ func shoot():
 	for _node in get_children():
 		if _node.get_filename() == current_gun.get_path():
 			var gun = _node
-			if gun.clip_count > 0 and gun.can_shoot:
+			if gun.clip_count > 0:
+				can_shoot = false
 				gun.shoot()
-				
 				# Call the correct animation for the correct gun
 				# TODO: decouple this
 				match gun.GUN_NAME:
@@ -380,6 +381,10 @@ func take_damage(amount):
 	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 	animation_state_machine.travel("take_damage")
 
+func _on_shootAnimation_finished():
+	can_shoot = true
+
+
 func _on_RoomDetector_area_entered(area):
 	current_rooms[area.name] = area
 
@@ -391,28 +396,22 @@ func _on_RoomDetector_area_exited(area):
 func _on_HealTimer_timeout():
 	can_heal = true
 
-
 func _on_InteractDetector_body_entered(body):
 	interactables.append(body)
-
 
 func _on_InteractDetector_body_exited(body):
 	interactables.erase(body)
 
-
 func _on_SwitchWeaponTimer_timeout():
 	can_switch_weapons = true
-
 
 func _on_MeleeDetector_body_entered(body):
 	print("Body entered")
 	meleeable_zombies.append(body)
 
-
 func _on_MeleeDetector_body_exited(body):
 	print("body exited")
 	meleeable_zombies.erase(body)
-
 
 func _on_Timer_timeout():
 	can_melee = true
