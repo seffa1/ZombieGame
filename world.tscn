@@ -39,7 +39,7 @@ money = 9999
 STARTING_GUN = ExtResource( 14 )
 grenade_count = 2
 
-[node name="AnimationTree" parent="ZombieManager/Player" index="10"]
+[node name="AnimationTree" parent="ZombieManager/Player" index="9"]
 parameters/playback = SubResource( 3 )
 
 [node name="Walls" type="Node" parent="."]

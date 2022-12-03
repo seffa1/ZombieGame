@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://assets/melee/melee_spriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -117,7 +117,7 @@ tracks/7/keys = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "melee_hit"
-length = 0.33
+length = 0.376
 step = 0.047
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -126,11 +126,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.094 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.094, 0.376 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "melee_do_damage"
+}, {
+"args": [  ],
+"method": "_on_meleeAnimation_finished"
 } ]
 }
 tracks/1/type = "value"
@@ -196,7 +199,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id=7]
 resource_name = "melee_miss"
-length = 0.33
+length = 0.376
 step = 0.047
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
@@ -205,9 +208,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0.376 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_meleeAnimation_finished"
+} ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:texture")
@@ -666,8 +672,7 @@ animation = "take_damage"
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 switch_mode = 2
 auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+priority = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
@@ -708,11 +713,10 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=54]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=55]
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=56]
 switch_mode = 2
 auto_advance = true
+priority = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=57]
 
@@ -735,7 +739,7 @@ states/riffle_walk/node = SubResource( 38 )
 states/riffle_walk/position = Vector2( 734, 571.664 )
 states/take_damage/node = SubResource( 24 )
 states/take_damage/position = Vector2( 316.75, 311.477 )
-transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_shoot", "pistol_walk", SubResource( 22 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ), "pistol_idle", "riffle_idle", SubResource( 39 ), "riffle_idle", "pistol_idle", SubResource( 40 ), "riffle_idle", "riffle_walk", SubResource( 41 ), "riffle_walk", "riffle_idle", SubResource( 42 ), "take_damage", "riffle_idle", SubResource( 47 ), "riffle_idle", "take_damage", SubResource( 48 ), "melee_hit", "riffle_idle", SubResource( 49 ), "riffle_idle", "melee_hit", SubResource( 50 ), "melee_miss", "riffle_idle", SubResource( 51 ), "riffle_idle", "melee_miss", SubResource( 52 ), "riffle_walk", "riffle_shoot", SubResource( 54 ), "riffle_shoot", "riffle_walk", SubResource( 55 ), "riffle_shoot", "riffle_idle", SubResource( 56 ), "riffle_idle", "riffle_shoot", SubResource( 57 ) ]
+transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ), "pistol_idle", "riffle_idle", SubResource( 39 ), "riffle_idle", "pistol_idle", SubResource( 40 ), "riffle_idle", "riffle_walk", SubResource( 41 ), "riffle_walk", "riffle_idle", SubResource( 42 ), "take_damage", "riffle_idle", SubResource( 47 ), "riffle_idle", "take_damage", SubResource( 48 ), "melee_hit", "riffle_idle", SubResource( 49 ), "riffle_idle", "melee_hit", SubResource( 50 ), "melee_miss", "riffle_idle", SubResource( 51 ), "riffle_idle", "melee_miss", SubResource( 52 ), "riffle_walk", "riffle_shoot", SubResource( 54 ), "riffle_shoot", "riffle_idle", SubResource( 56 ), "riffle_idle", "riffle_shoot", SubResource( 57 ) ]
 start_node = "pistol_idle"
 graph_offset = Vector2( 48, 262 )
 
@@ -799,8 +803,6 @@ collision_layer = 0
 position = Vector2( 64, 0 )
 shape = SubResource( 6 )
 
-[node name="MeleeTimer" type="Timer" parent="."]
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 10 )
 anim_player = NodePath("../AnimationPlayer")
@@ -815,4 +817,3 @@ parameters/playback = SubResource( 11 )
 [connection signal="timeout" from="SwitchWeaponTimer" to="." method="_on_SwitchWeaponTimer_timeout"]
 [connection signal="body_entered" from="MeleeDetector" to="." method="_on_MeleeDetector_body_entered"]
 [connection signal="body_exited" from="MeleeDetector" to="." method="_on_MeleeDetector_body_exited"]
-[connection signal="timeout" from="MeleeTimer" to="." method="_on_Timer_timeout"]

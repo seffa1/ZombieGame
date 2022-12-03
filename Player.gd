@@ -79,6 +79,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	update()
+#	print(charging_grenade)
 	
 	find_closest_navigation_node()
 	if can_heal and health < MAX_HEALTH:
@@ -99,8 +100,8 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("reload"):
 			reload()
 		
-		if Input.is_action_pressed("grenade"):
-			charge_grenade()
+	if Input.is_action_pressed("grenade"):
+		charge_grenade()
 			
 	if Input.is_action_just_released("grenade"):
 		throw_grenade()
@@ -119,8 +120,23 @@ func _physics_process(delta):
 	else:
 		movement_speed = WALK_SPEED
 	
-
 	velocity = get_input_vector()
+	
+	# If we are not shooting or meleeing, choose an idle or walking animation
+	if can_shoot and can_melee:
+		if velocity.length() == 0:
+			match current_gun_name:
+				"PISTOL":
+					animation_state_machine.travel("pistol_idle")
+				"RIFFLE":
+					animation_state_machine.travel("riffle_idle")
+		else:
+			match current_gun_name:
+				"PISTOL":
+					animation_state_machine.travel("pistol_walk")
+				"RIFFLE":
+					animation_state_machine.travel("riffle_walk")
+		
 	look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
 
@@ -130,34 +146,27 @@ func melee_do_damage():
 	velocity = Vector2.ZERO
 
 func melee():
-	# TODO: Clean this up and remove these timers now that we arent doing the lunge
-	if can_melee:
-		if len(meleeable_zombies) == 0:
-			can_melee = false
-			animation_state_machine.travel("melee_miss")
-			$MeleeTimer.start(.3)
-		else:
-			melee_lunge = true
-			can_melee = false
-			var distance = INF
-			for zombie in meleeable_zombies:
-				var d = (zombie.global_position - global_position).length()
-				if d < distance:
-					distance = d
-					chosen_zombie = zombie
-
-			animation_state_machine.travel("melee_hit")
-			$MeleeTimer.start(.3)
-#			look_at(chosen_zombie.global_position)
-#			velocity = (chosen_zombie.global_position - global_position)
+	can_melee = false
+	if len(meleeable_zombies) == 0:
+		print("Melee miss")
+		animation_state_machine.travel("melee_miss")
+	else:
+		var distance = INF
+		for zombie in meleeable_zombies:
+			var d = (zombie.global_position - global_position).length()
+			if d < distance:
+				distance = d
+				chosen_zombie = zombie
+		print("melee hit")
+		animation_state_machine.travel("melee_hit")
 
 func charge_grenade():
 	# On the first call, we create the grenade and attach it to ourselves
 	if not charging_grenade:
+		charging_grenade = true
 		can_melee = false
 		if grenade_count == 0:
 			return
-		charging_grenade = true
 		grenade_count -=1
 		emit_signal("grenade_change", grenade_count)
 		var g = grenade.instance()
@@ -166,19 +175,21 @@ func charge_grenade():
 		
 	# On calls while we are charging the grenade
 	else:
+		print("Here")
 		update()  # For drawing
 		# We need to manually move the grenade
 		var g = get_node("Grenade")
-		can_melee = false
 		# If the grenade blew up in our hands
 		if g == null:
 			grenade_throw_velocity = Vector2.ZERO
 			charging_grenade = false
 			can_melee = true
+			print('g is null')
 			return
 			
 		# Do we actually need this? 
 		grenade_throw_velocity = (get_global_mouse_position() - global_position)
+		print(grenade_throw_velocity)
 
 func throw_grenade():
 	# Launch the grenade in the given direction
@@ -251,6 +262,7 @@ func equip_gun(_gun: PackedScene):
 		var gun2 = current_gun.instance()
 		single_fire = gun2.SINGLE_FIRE
 		add_child(gun2)
+		current_gun_name = gun2.GUN_NAME
 		match gun2.GUN_NAME:
 			"PISTOL":
 				animation_state_machine.travel("pistol_idle")
@@ -277,6 +289,7 @@ func equip_gun(_gun: PackedScene):
 		current_gun = _gun
 		var gun = current_gun.instance()
 		add_child(gun)
+		current_gun_name = gun.GUN_NAME
 		match gun.GUN_NAME:
 			"PISTOL":
 				animation_state_machine.travel("pistol_idle")
@@ -310,6 +323,7 @@ func switch_weapons():
 	# Add the new gun to the tree and restore its state
 	var gun2 = current_gun.instance()
 	add_child(gun2)
+	current_gun_name = gun2.GUN_NAME
 	single_fire = gun2.SINGLE_FIRE
 	gun2.ammo = other_gun_info["ammo"]
 	gun2.clip_count = other_gun_info["clip_count"]
@@ -406,13 +420,10 @@ func _on_SwitchWeaponTimer_timeout():
 	can_switch_weapons = true
 
 func _on_MeleeDetector_body_entered(body):
-	print("Body entered")
 	meleeable_zombies.append(body)
 
 func _on_MeleeDetector_body_exited(body):
-	print("body exited")
 	meleeable_zombies.erase(body)
 
-func _on_Timer_timeout():
+func _on_meleeAnimation_finished():
 	can_melee = true
-	melee_lunge = false
