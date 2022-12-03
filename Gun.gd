@@ -6,13 +6,15 @@ export (PackedScene) var Bullet
 
 # Declare member variables here. Examples:
 export var CLIP_SIZE = 50
-export var RELOAD_SPEED = 1
 export var damage = 3
-export var fire_rate = .06  # seconds / bullet (.06 is an irl m16)
 export var STARTING_AMMO = 4500
 export var SINGLE_FIRE = false
+export var GUN_NAME : String
 
-var can_shoot = true
+# TODO: These will be controlled by player animations
+export var fire_rate = .06  # seconds / bullet (.06 is an irl m16)
+export var RELOAD_SPEED = 1
+var can_shoot = true  # This variable will be moved to the player
 
 onready var ammo = STARTING_AMMO setget set_ammo
 onready var clip_count = CLIP_SIZE setget set_clip_count

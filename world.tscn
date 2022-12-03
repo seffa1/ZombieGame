@@ -14,7 +14,7 @@
 [ext_resource path="res://ZombieSpawner.tscn" type="PackedScene" id=12]
 [ext_resource path="res://NavigationNodeManager.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Pistol.tscn" type="PackedScene" id=14]
-[ext_resource path="res://MachineGun.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Riffle.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Door.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Grenade.tscn" type="PackedScene" id=17]
 
@@ -33,10 +33,10 @@ script = ExtResource( 6 )
 [node name="Player" parent="ZombieManager" instance=ExtResource( 2 )]
 position = Vector2( -960, 224 )
 collision_mask = 35
-STARTING_GUN = ExtResource( 14 )
 STARTING_GRENADE = ExtResource( 17 )
 MAX_HEALTH = 999999
 money = 9999
+STARTING_GUN = ExtResource( 14 )
 grenade_count = 2
 
 [node name="AnimationTree" parent="ZombieManager/Player" index="10"]

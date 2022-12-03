@@ -12,3 +12,4 @@ RELOAD_SPEED = 3
 damage = 1
 fire_rate = 1.0
 SINGLE_FIRE = true
+GUN_NAME = "PISTOL"

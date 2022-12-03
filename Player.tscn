@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://assets/melee/melee_spriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://assets/pistol/pistol_idle/Idle_gun_000.png" type="Texture" id=4]
 [ext_resource path="res://assets/pistol/pistol_walk/walk_gun_spritesheet.png" type="Texture" id=5]
 [ext_resource path="res://assets/pistol/pistol_shot/gun_shot_spritesheet.png" type="Texture" id=6]
+[ext_resource path="res://assets/riffle/riffle_idle/idle_machine_gun_spritesheet.png" type="Texture" id=7]
+[ext_resource path="res://assets/riffle/riffle_walk/walk_machine_gun_spritesheet.png" type="Texture" id=8]
+[ext_resource path="res://assets/riffle/riffle_shot/machine_gun_shot_spritesheet.png" type="Texture" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -416,6 +419,167 @@ tracks/3/keys = {
 "values": [ Vector2( 16, 8 ) ]
 }
 
+[sub_resource type="Animation" id=33]
+resource_name = "riffle_idle"
+length = 1.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 40, 8 ) ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "riffle_shot"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 104, 16 ), Vector2( 120, 16 ), Vector2( 120, 16 ), Vector2( 104, 16 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 5 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=35]
+resource_name = "riffle_walk"
+length = 0.9
+loop = true
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 40, 8 ) ]
+}
+
 [sub_resource type="Animation" id=4]
 resource_name = "take_damage"
 length = 0.11
@@ -453,6 +617,15 @@ animation = "pistol_shoot"
 [sub_resource type="AnimationNodeAnimation" id=17]
 animation = "pistol_walk"
 
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "riffle_idle"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "riffle_shot"
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "riffle_walk"
+
 [sub_resource type="AnimationNodeAnimation" id=24]
 animation = "take_damage"
 
@@ -472,7 +645,6 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=25]
 switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=26]
 
@@ -480,30 +652,64 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=30]
 switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=31]
 switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=43]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=44]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=47]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+
 [sub_resource type="AnimationNodeStateMachine" id=10]
 states/melee_hit/node = SubResource( 27 )
-states/melee_hit/position = Vector2( 499, 107.875 )
+states/melee_hit/position = Vector2( 550, 305.012 )
 states/melee_miss/node = SubResource( 28 )
-states/melee_miss/position = Vector2( 690, 113.875 )
+states/melee_miss/position = Vector2( 752.5, 304.86 )
 states/pistol_idle/node = SubResource( 15 )
-states/pistol_idle/position = Vector2( 316, 271.5 )
+states/pistol_idle/position = Vector2( 267.5, 481 )
 states/pistol_shoot/node = SubResource( 16 )
-states/pistol_shoot/position = Vector2( 232.5, 441.5 )
+states/pistol_shoot/position = Vector2( 185, 572 )
 states/pistol_walk/node = SubResource( 17 )
-states/pistol_walk/position = Vector2( 440.5, 443.125 )
+states/pistol_walk/position = Vector2( 377, 572.062 )
+states/riffle_idle/node = SubResource( 36 )
+states/riffle_idle/position = Vector2( 640, 481 )
+states/riffle_shot/node = SubResource( 37 )
+states/riffle_shot/position = Vector2( 556.5, 571.328 )
+states/riffle_walk/node = SubResource( 38 )
+states/riffle_walk/position = Vector2( 734, 571.664 )
 states/take_damage/node = SubResource( 24 )
-states/take_damage/position = Vector2( 292.75, 108 )
-transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_shoot", "pistol_walk", SubResource( 22 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ) ]
+states/take_damage/position = Vector2( 316.75, 311.477 )
+transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_shoot", "pistol_walk", SubResource( 22 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ), "pistol_idle", "riffle_idle", SubResource( 39 ), "riffle_idle", "pistol_idle", SubResource( 40 ), "riffle_idle", "riffle_walk", SubResource( 41 ), "riffle_walk", "riffle_idle", SubResource( 42 ), "riffle_walk", "riffle_shot", SubResource( 43 ), "riffle_shot", "riffle_walk", SubResource( 44 ), "riffle_shot", "riffle_idle", SubResource( 45 ), "riffle_idle", "riffle_shot", SubResource( 46 ), "take_damage", "riffle_idle", SubResource( 47 ), "riffle_idle", "take_damage", SubResource( 48 ), "melee_hit", "riffle_idle", SubResource( 49 ), "riffle_idle", "melee_hit", SubResource( 50 ), "melee_miss", "riffle_idle", SubResource( 51 ), "riffle_idle", "melee_miss", SubResource( 52 ) ]
 start_node = "pistol_idle"
-graph_offset = Vector2( 76, 76 )
+graph_offset = Vector2( 48, 262 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=11]
 
@@ -540,6 +746,9 @@ anims/melee_miss = SubResource( 7 )
 anims/pistol_idle = SubResource( 12 )
 anims/pistol_shoot = SubResource( 13 )
 anims/pistol_walk = SubResource( 14 )
+anims/riffle_idle = SubResource( 33 )
+anims/riffle_shot = SubResource( 34 )
+anims/riffle_walk = SubResource( 35 )
 anims/take_damage = SubResource( 4 )
 
 [node name="HealTimer" type="Timer" parent="."]

@@ -15,7 +15,7 @@ var RUN_SPEED = 1200
 var movement_speed
 var current_rooms = {}  # rooms the player is in. room_name: room
 var closest_navigation_node
-export (PackedScene) var STARTING_GUN
+
 export (PackedScene) var STARTING_GRENADE
 
 # Animation stuff
@@ -31,15 +31,15 @@ var can_heal = true
 # Interactable Stuff
 var interactables = []
 export var money = 100000 setget _set_money
-var gun_slots = []
 var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 
 # Guns
+export (PackedScene) var STARTING_GUN
 var SWITCH_WEAPON_TIMER = .1 # Replace this with an animation method call
 var single_fire : bool = true  # gets set during equip / switch weapons
-onready var current_gun : PackedScene = STARTING_GUN  # Packed Scene
-onready var other_gun : PackedScene
+var current_gun : PackedScene # Packed Scene
+var other_gun : PackedScene
 var current_gun_name : String
 # Keeps track of the gun state while its not equiped
 var other_gun_info = {
@@ -73,12 +73,7 @@ func _ready():
 	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
 	emit_signal("money_change", money)
 	emit_signal("grenade_change", grenade_count)
-	gun_slots.append(STARTING_GUN)
-	var gun = STARTING_GUN.instance()
-	single_fire = gun.SINGLE_FIRE
-	current_gun_name = gun.name
-	emit_signal("gun_change", gun.name, "empty")
-	add_child(gun)
+	equip_gun(STARTING_GUN)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -219,12 +214,11 @@ func shoot():
 				
 				# Call the correct animation for the correct gun
 				# TODO: decouple this
-				match gun.name:
-					"Pistol":
+				match gun.GUN_NAME:
+					"PISTOL":
 						animation_state_machine.travel("pistol_shoot")
-					
-					"Riffle":
-						$AnimationPlayer.play()
+					"RIFFLE":
+						animation_state_machine.travel("riffle_shoot")
 
 
 func equip_gun(_gun: PackedScene):
@@ -234,13 +228,14 @@ func equip_gun(_gun: PackedScene):
 	"""
 	
 	# Get the current gun we have equiped
-	var gun1
-	for _node in get_children():
-		if _node.get_filename() == current_gun.get_path():
-			gun1 = _node
+	var gun1  # this could be null
+	if current_gun != null:
+		for _node in get_children():
+			if _node.get_filename() == current_gun.get_path():
+				gun1 = _node
 	
 	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
-	if other_gun == null:
+	if other_gun == null and gun1 != null:
 	
 		# We currently have a current gun but no other gun
 		other_gun = current_gun
@@ -255,6 +250,11 @@ func equip_gun(_gun: PackedScene):
 		var gun2 = current_gun.instance()
 		single_fire = gun2.SINGLE_FIRE
 		add_child(gun2)
+		match gun2.GUN_NAME:
+			"PISTOL":
+				animation_state_machine.travel("pistol_idle")
+			"RIFFLE":
+				animation_state_machine.travel("riffle_idle")
 		
 		# Update the HUD
 		emit_signal("gun_change", gun2.name, gun1.name)
@@ -267,14 +267,20 @@ func equip_gun(_gun: PackedScene):
 		
 	# If we already have an 'other gun' then the new gun will replace our current gun
 	else:
-		# Remove our current gun
-		for _node in get_children():
-			if _node.get_filename() == current_gun.get_path():
-				remove_child(_node)
+		# Remove our current gun if we have one
+		if current_gun != null:
+			for _node in get_children():
+				if _node.get_filename() == current_gun.get_path():
+					remove_child(_node)
 		# Equip the new gun
 		current_gun = _gun
 		var gun = current_gun.instance()
 		add_child(gun)
+		match gun.GUN_NAME:
+			"PISTOL":
+				animation_state_machine.travel("pistol_idle")
+			"RIFFLE":
+				animation_state_machine.travel("riffle_idle")
 		emit_signal("gun_change", gun.name, other_gun_info["name"])
 
 func switch_weapons():
@@ -306,6 +312,11 @@ func switch_weapons():
 	single_fire = gun2.SINGLE_FIRE
 	gun2.ammo = other_gun_info["ammo"]
 	gun2.clip_count = other_gun_info["clip_count"]
+	match gun2.GUN_NAME:
+		"PISTOL":
+			animation_state_machine.travel("pistol_idle")
+		"RIFFLE":
+			animation_state_machine.travel("riffle_idle")
 	
 	# Update the HUD
 	emit_signal("gun_change", gun2.name, gun1.name)
