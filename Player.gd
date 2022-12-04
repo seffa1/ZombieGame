@@ -269,7 +269,7 @@ func equip_gun(_gun: PackedScene):
 				animation_state_machine.travel("riffle_idle")
 		
 		# Update the HUD
-		emit_signal("gun_change", gun2.name, gun1.name)
+		emit_signal("gun_change", gun2.GUN_NAME, gun1.GUN_NAME)
 		
 		# Update other gun info with the new 'other' gun
 		other_gun_info['name'] = gun1.name
@@ -294,7 +294,7 @@ func equip_gun(_gun: PackedScene):
 				animation_state_machine.travel("pistol_idle")
 			"RIFFLE":
 				animation_state_machine.travel("riffle_idle")
-		emit_signal("gun_change", gun.name, other_gun_info["name"])
+		emit_signal("gun_change", gun.GUN_NAME, other_gun_info["name"])
 
 func switch_weapons():
 	if not can_switch_weapons:
@@ -333,10 +333,10 @@ func switch_weapons():
 			animation_state_machine.travel("riffle_idle")
 	
 	# Update the HUD
-	emit_signal("gun_change", gun2.name, gun1.name)
+	emit_signal("gun_change", gun2.GUN_NAME, gun1.GUN_NAME)
 	
 	# Update other gun info with the new 'other' gun
-	other_gun_info['name'] = gun1.name
+	other_gun_info['name'] = gun1.GUN_NAME
 	other_gun_info["clip_count"] = gun1.clip_count
 	other_gun_info["ammo"] = gun1.ammo
 	other_gun_info['SINGLE_FIRE'] = gun1.SINGLE_FIRE
