@@ -58,6 +58,7 @@ var MAX_GRENADE_CHARGE = 300  # frames
 export onready var grenade : PackedScene = STARTING_GRENADE
 export var grenade_count = 1000 setget set_grenade
 var charging_grenade = false
+var can_throw_grenade = true
 var grenade_throw_velocity = Vector2.ZERO
 
 # Melee
@@ -100,7 +101,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("reload"):
 			reload()
 		
-	if Input.is_action_pressed("grenade"):
+	if Input.is_action_pressed("grenade") and can_throw_grenade:
 		charge_grenade()
 			
 	if Input.is_action_just_released("grenade"):
@@ -147,6 +148,7 @@ func melee_do_damage():
 
 func melee():
 	can_melee = false
+	can_throw_grenade = false
 	if len(meleeable_zombies) == 0:
 		print("Melee miss")
 		animation_state_machine.travel("melee_miss")
@@ -175,21 +177,18 @@ func charge_grenade():
 		
 	# On calls while we are charging the grenade
 	else:
-		print("Here")
 		update()  # For drawing
 		# We need to manually move the grenade
 		var g = get_node("Grenade")
 		# If the grenade blew up in our hands
 		if g == null:
 			grenade_throw_velocity = Vector2.ZERO
-			charging_grenade = false
 			can_melee = true
 			print('g is null')
 			return
 			
 		# Do we actually need this? 
 		grenade_throw_velocity = (get_global_mouse_position() - global_position)
-		print(grenade_throw_velocity)
 
 func throw_grenade():
 	# Launch the grenade in the given direction
@@ -427,3 +426,4 @@ func _on_MeleeDetector_body_exited(body):
 
 func _on_meleeAnimation_finished():
 	can_melee = true
+	can_throw_grenade = true
