@@ -101,13 +101,10 @@ func _on_gun_shoot(bullet, _position, _direction, _damage, _player_shooting):
 	b.init(_damage, _player_shooting)
 	b.start(_position, _direction)
 
-
 func _on_Player_throw_grenade(grenade, _player):
-#	player_position, velocity, charge_amount, 
 	var player_position = _player.global_position
 	var velocity = _player.grenade_throw_velocity
 	
-	print("Grenade emited")
 	var g = grenade.instance()
 	g.player = _player
 	add_child(g)
@@ -121,4 +118,5 @@ func _activate_spawners(spawner_names : Array):
 				spawner.active = true
 				
 func _on_max_ammo():
-	pass
+	for player in players:
+		player.refill_ammo(true, true)

@@ -38,16 +38,8 @@ var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 export (PackedScene) var STARTING_GUN
 var SWITCH_WEAPON_TIMER = .1 # Replace this with an animation method call
 var single_fire : bool = true  # gets set during equip / switch weapons
-var current_gun : PackedScene # Packed Scene
-var other_gun : PackedScene
-var current_gun_name : String
-# Keeps track of the gun state while its not equiped
-var other_gun_info = {
-	"name": null,
-	"clip_count": null,
-	"ammo": null,
-	"SINGLE_FIRE": null
-}  
+var current_gun_instance : Node2D
+var other_gun_instance : Node2D
 var can_switch_weapons = true
 var can_shoot = true  # Controller by gun shoot animations
 
@@ -75,7 +67,9 @@ func _ready():
 	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
 	emit_signal("money_change", money)
 	emit_signal("grenade_change", grenade_count)
-	equip_gun(STARTING_GUN)
+	current_gun_instance = STARTING_GUN.instance()
+	add_child(current_gun_instance)
+	emit_signal("gun_change", current_gun_instance.GUN_NAME)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -126,13 +120,13 @@ func _physics_process(delta):
 	# If we are not shooting or meleeing, choose an idle or walking animation
 	if can_shoot and can_melee:
 		if velocity.length() == 0:
-			match current_gun_name:
+			match current_gun_instance.GUN_NAME:
 				"PISTOL":
 					animation_state_machine.travel("pistol_idle")
 				"RIFFLE":
 					animation_state_machine.travel("riffle_idle")
 		else:
-			match current_gun_name:
+			match current_gun_instance.GUN_NAME:
 				"PISTOL":
 					animation_state_machine.travel("pistol_walk")
 				"RIFFLE":
@@ -140,6 +134,106 @@ func _physics_process(delta):
 		
 	look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
+
+func reload():
+	current_gun_instance.reload()
+
+func shoot():
+	if current_gun_instance.clip_count > 0:
+		can_shoot = false
+		current_gun_instance.shoot()
+		
+		# TODO: decouple this
+		match current_gun_instance.GUN_NAME:
+			"PISTOL":
+				animation_state_machine.travel("pistol_shoot")
+			"RIFFLE":
+				animation_state_machine.travel("riffle_shoot")
+
+func refill_ammo(currentGun: bool, otherGun: bool):
+	if currentGun:
+		current_gun_instance.clip_count = current_gun_instance.CLIP_SIZE
+		current_gun_instance.ammo = current_gun_instance.STARTING_AMMO
+		current_gun_instance.updateHUD()
+		
+	if otherGun:
+		other_gun_instance.clip_count = other_gun_instance.CLIP_SIZE
+		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
+
+func equip_gun(_gun: PackedScene):
+	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
+	if other_gun_instance == null and current_gun_instance != null:
+	
+		# Remove the old gun from the tree
+		remove_child(current_gun_instance)
+		
+		# Move current gun to the other gun
+		other_gun_instance = current_gun_instance
+	
+		# Make the new gun the current gun
+		current_gun_instance = _gun.instance()
+	
+		# Add the new gun to the tree
+		single_fire = current_gun_instance.SINGLE_FIRE
+		add_child(current_gun_instance)
+
+		match current_gun_instance.GUN_NAME:
+			"PISTOL":
+				animation_state_machine.travel("pistol_idle")
+			"RIFFLE":
+				animation_state_machine.travel("riffle_idle")
+		
+		# Update the HUD
+		emit_signal("gun_change", current_gun_instance.GUN_NAME, other_gun_instance.GUN_NAME)
+
+	# If we already have an 'other gun' then the new gun will replace our current gun
+	else:
+		# Remove our current gun if we have one
+		remove_child(current_gun_instance)
+		
+		# Equip the new gun and add it as a child
+		current_gun_instance = _gun.instance()
+		add_child(current_gun_instance)
+
+		match current_gun_instance.GUN_NAME:
+			"PISTOL":
+				animation_state_machine.travel("pistol_idle")
+			"RIFFLE":
+				animation_state_machine.travel("riffle_idle")
+		emit_signal("gun_change", current_gun_instance.GUN_NAME, other_gun_instance.GUN_NAME)
+
+func switch_weapons():
+	if not can_switch_weapons:
+		return
+	
+	if not other_gun_instance:
+		print("You dont have another gun. ")
+		return
+		
+	can_switch_weapons = false
+	$SwitchWeaponTimer.start(SWITCH_WEAPON_TIMER)
+	
+	# Remove the current gun from the tree
+	remove_child(current_gun_instance)
+	
+	# Switch our gun references
+	var temp = other_gun_instance
+	other_gun_instance = current_gun_instance
+	current_gun_instance = temp
+
+	# Add the new gun to the tree and restore its state
+	add_child(current_gun_instance)
+	
+	single_fire = current_gun_instance.SINGLE_FIRE
+	
+	match current_gun_instance.GUN_NAME:
+		"PISTOL":
+			animation_state_machine.travel("pistol_idle")
+		"RIFFLE":
+			animation_state_machine.travel("riffle_idle")
+
+	emit_signal("gun_change", current_gun_instance.GUN_NAME, other_gun_instance.GUN_NAME)
+	current_gun_instance.updateHUD()
 
 func melee_do_damage():
 	if chosen_zombie != null and is_instance_valid(chosen_zombie):
@@ -210,139 +304,6 @@ func throw_grenade():
 	update()  # Calls draw again so the charging line disappears
 	charging_grenade = false
 	can_melee = true
-
-func reload():
-	for _node in get_children():
-		if _node.get_filename() == current_gun.get_path():
-			_node.reload()
-
-func shoot():
-	for _node in get_children():
-		if _node.get_filename() == current_gun.get_path():
-			var gun = _node
-			if gun.clip_count > 0:
-				can_shoot = false
-				gun.shoot()
-				# Call the correct animation for the correct gun
-				# TODO: decouple this
-				match gun.GUN_NAME:
-					"PISTOL":
-						animation_state_machine.travel("pistol_shoot")
-					"RIFFLE":
-						animation_state_machine.travel("riffle_shoot")
-
-
-func equip_gun(_gun: PackedScene):
-	""" 
-	Adds an instance of the given gun and removes the old gun from the tree. 
-	It also updates a reference of both guns we have available in an array.
-	"""
-	
-	# Get the current gun we have equiped
-	var gun1  # this could be null
-	if current_gun != null:
-		for _node in get_children():
-			if _node.get_filename() == current_gun.get_path():
-				gun1 = _node
-	
-	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
-	if other_gun == null and gun1 != null:
-	
-		# We currently have a current gun but no other gun
-		other_gun = current_gun
-	
-		# Make the current gun the other gune
-		current_gun = _gun
-	
-		# Remove the old gun from the tree
-		remove_child(gun1)
-	
-		# Add the new gun to the tree and restore its state
-		var gun2 = current_gun.instance()
-		single_fire = gun2.SINGLE_FIRE
-		add_child(gun2)
-		current_gun_name = gun2.GUN_NAME
-		match gun2.GUN_NAME:
-			"PISTOL":
-				animation_state_machine.travel("pistol_idle")
-			"RIFFLE":
-				animation_state_machine.travel("riffle_idle")
-		
-		# Update the HUD
-		emit_signal("gun_change", gun2.GUN_NAME, gun1.GUN_NAME)
-		
-		# Update other gun info with the new 'other' gun
-		other_gun_info['name'] = gun1.name
-		other_gun_info["clip_count"] = gun1.clip_count
-		other_gun_info["ammo"] = gun1.ammo
-		other_gun_info['SINGLE_FIRE'] = gun1.SINGLE_FIRE
-		
-	# If we already have an 'other gun' then the new gun will replace our current gun
-	else:
-		# Remove our current gun if we have one
-		if current_gun != null:
-			for _node in get_children():
-				if _node.get_filename() == current_gun.get_path():
-					remove_child(_node)
-		# Equip the new gun
-		current_gun = _gun
-		var gun = current_gun.instance()
-		add_child(gun)
-		current_gun_name = gun.GUN_NAME
-		match gun.GUN_NAME:
-			"PISTOL":
-				animation_state_machine.travel("pistol_idle")
-			"RIFFLE":
-				animation_state_machine.travel("riffle_idle")
-		emit_signal("gun_change", gun.GUN_NAME, other_gun_info["name"])
-
-func switch_weapons():
-	if not can_switch_weapons:
-		return
-	
-	if not other_gun:
-		print("You dont have another gun. ")
-		return
-		
-	can_switch_weapons = false
-	$SwitchWeaponTimer.start(SWITCH_WEAPON_TIMER)
-		
-	# Get the current gun we have equiped
-	var gun1
-	
-	for _node in get_children():
-		if _node.get_filename() == current_gun.get_path():
-			gun1 = _node
-	
-	# Switch our gun references
-	var temp = other_gun
-	other_gun = current_gun
-	current_gun = temp
-
-	# Add the new gun to the tree and restore its state
-	var gun2 = current_gun.instance()
-	add_child(gun2)
-	current_gun_name = gun2.GUN_NAME
-	single_fire = gun2.SINGLE_FIRE
-	gun2.ammo = other_gun_info["ammo"]
-	gun2.clip_count = other_gun_info["clip_count"]
-	match gun2.GUN_NAME:
-		"PISTOL":
-			animation_state_machine.travel("pistol_idle")
-		"RIFFLE":
-			animation_state_machine.travel("riffle_idle")
-	
-	# Update the HUD
-	emit_signal("gun_change", gun2.GUN_NAME, gun1.GUN_NAME)
-	
-	# Update other gun info with the new 'other' gun
-	other_gun_info['name'] = gun1.GUN_NAME
-	other_gun_info["clip_count"] = gun1.clip_count
-	other_gun_info["ammo"] = gun1.ammo
-	other_gun_info['SINGLE_FIRE'] = gun1.SINGLE_FIRE
-	
-	# Remove the old gun from the tree
-	remove_child(gun1)
 
 func find_closest_navigation_node():
 	# For each room we are in, check the distance to each navigation node in that room

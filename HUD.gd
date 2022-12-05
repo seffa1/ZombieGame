@@ -13,7 +13,7 @@ func _on_Player_health_change(_value):
 func _on_Player_money_change(_value):
 	$money.text = str(_value)
 
-func _on_Player_gun_change( _current_gun : String, _other_gun : String):
+func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 	$current_gun.text = _current_gun
 	$other_gun.text = _other_gun
 

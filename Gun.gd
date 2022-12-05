@@ -26,15 +26,15 @@ func _ready():
 	# Connec the updateHUD signal to the HUD
 	var hud = get_node('/root/World/HUD')
 	self.connect('updateHUD', hud, '_on_update_hud_gun')
-	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	updateHUD()
 
 func set_ammo(_value):
 	ammo = _value
-	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	updateHUD()
 	
 func set_clip_count(_value):
 	clip_count = _value
-	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	updateHUD()
 
 func shoot():	
 	# create a bullet
@@ -46,7 +46,7 @@ func shoot():
 	
 	# Update the clip count
 	clip_count -= 1
-	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	updateHUD()
 		
 
 func reload():
@@ -63,5 +63,7 @@ func reload():
 		amount_to_fill = ammo
 	ammo -= amount_to_fill
 	clip_count += amount_to_fill
-	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
+	updateHUD()
 
+func updateHUD():
+	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)
