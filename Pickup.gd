@@ -2,7 +2,7 @@ extends Node2D
 
 var blinking = false
 var blinkingFast = false
-var TIME_INTERVAL_SECONDS = 10
+var TIME_INTERVAL_SECONDS = 3
 
 signal max_ammo
 
@@ -10,6 +10,7 @@ func _ready():
 	# Connect this guns shoot method to the world
 	var world = get_node('/root/World')
 	self.connect("max_ammo", world, '_on_max_ammo')
+	$Timer.start(TIME_INTERVAL_SECONDS)
 
 # Unique effect depending on the pickup
 func pickupEffect(player):
@@ -33,3 +34,4 @@ func _on_Timer_timeout():
 func _on_Area2D_body_entered(body):
 	if body.get_filename() == "res://Player.tscn":
 		pickupEffect(body)
+	queue_free()

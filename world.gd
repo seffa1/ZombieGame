@@ -120,3 +120,11 @@ func _activate_spawners(spawner_names : Array):
 func _on_max_ammo():
 	for player in players:
 		player.refill_ammo(true, true)
+		
+func _on_pickup_spawn(_global_position):
+	print("Adding pickup to world")
+	var pickup = GLOBALS.choose_drop()
+	var p = pickup.instance()
+	p.global_position = _global_position
+	add_child(p)
+	

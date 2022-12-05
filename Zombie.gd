@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal die_signal
+signal spawn_pickup
 
 # Constants
 var WANDER_DISTANCE = 100
@@ -65,6 +66,7 @@ func _ready():
 	# Connect themselves to the world
 	var world = get_node('/root/World')
 	self.connect("die_signal", world, '_on_zombie_death')
+	self.connect("spawn_pickup", world, '_on_pickup_spawn')
 
 	# Setup the context array
 	interest.resize(num_rays)
@@ -78,15 +80,15 @@ func _ready():
 #	print(walkingSpeed)
 
 func die():
-#	print("DIE " + str(get_instance_id()))
 	emit_signal("die_signal", get_instance_id())
+	
+	# Spawn a pickup
+	var chance = 100 * GLOBALS.CHANCE_TO_DROP_PICKUP  # 25
+	if rand_range(1, 100) <= chance:		
+		emit_signal("spawn_pickup", global_position)
 	queue_free()
 	
 func _draw():
-#	print("Draw")
-#	print(interest)
-	# Draw the velocity vector
-	
 	if draw_lines:
 		draw_line(Vector2.ZERO, chosen_dir.normalized()*200, Color(0,0,0), 1, true)
 		
@@ -100,24 +102,17 @@ func _draw():
 				# Red vectors are not pointing forwards
 				draw_line(Vector2.ZERO, ray_directions[i].normalized()*look_ahead*0.1 , Color(255,0,0), 3, true)
 			elif interest[i] < 0:
-	#			print(ray_directions[i].normalized()*200 * -interest[i])
 				draw_line(Vector2.ZERO, ray_directions[i].normalized()*look_ahead *-interest[i], Color(0,0,255), 3, true)
 		
 func _input(event):
 	""" Toggle between seeking a target and wandering randomly. """
 	if not clickToMove:
 		return
-#	if event is InputEventMouseButton:
-#		if event.button_index == 1:
-#			targetPosition = event.position
-#			state = "seek_player"
-#		else:
-#			state = "wander"
+
 func set_state(_state):
 #	print("Zombie's state set to " + str(state))
 	state = _state
 
-				
 func _physics_process(delta):
 	find_closest_navigation_node()
 	
@@ -163,7 +158,6 @@ func _physics_process(delta):
 func attack_finished():
 	can_attack = true
 
-		
 func get_navigation_node():
 	""" 
 	A* pathfinding code here.
@@ -188,22 +182,13 @@ func get_navigation_node():
 	for neighbor in starting_node.neighbors:
 		# Distance from current node to the neighbor
 		var g_cost = (neighbor.global_position - current_node.global_position).length()
-#		print(g_cost)
 		# Distance from the neighbor to the ending node
 		var h_cost = (ending_node.global_position - neighbor.global_position).length()
-#		print(h_cost)
 		var f_cost = g_cost + h_cost
-#		print(f_cost)
 		if f_cost < lowest_f_cost:
 			lowest_f_cost = f_cost
 			current_node = neighbor
-	
-#	print(current_node.name)
-#	print(ending_node.name + " ending")
-	
 	return current_node
-
-
 
 func update_target(player_position):
 	# Check if we are in the same room as the player
@@ -252,8 +237,6 @@ func set_interest(targetPosition):
 #		interest[i] = d
 	# used for drawing
 	update()
-
-
 func set_danger():
 	
 	# Cast rays to find danger directions

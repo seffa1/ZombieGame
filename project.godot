@@ -13,6 +13,10 @@ config_version=4
 config/name="Practice 1"
 run/main_scene="res://world.tscn"
 
+[autoload]
+
+GLOBALS="*res://globals.gd"
+
 [display]
 
 window/size/test_width=1024

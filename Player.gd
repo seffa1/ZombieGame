@@ -150,15 +150,15 @@ func shoot():
 			"RIFFLE":
 				animation_state_machine.travel("riffle_shoot")
 
-func refill_ammo(currentGun: bool, otherGun: bool):
-	if currentGun:
+func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
+	if refillOtherGun and other_gun_instance:
+		other_gun_instance.clip_count = other_gun_instance.CLIP_SIZE
+		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
+		
+	if refillCurrentGun and current_gun_instance:
 		current_gun_instance.clip_count = current_gun_instance.CLIP_SIZE
 		current_gun_instance.ammo = current_gun_instance.STARTING_AMMO
 		current_gun_instance.updateHUD()
-		
-	if otherGun:
-		other_gun_instance.clip_count = other_gun_instance.CLIP_SIZE
-		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
 
 func equip_gun(_gun: PackedScene):
 	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
