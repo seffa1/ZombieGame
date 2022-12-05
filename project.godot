@@ -96,6 +96,7 @@ melee={
 2d_physics/layer_7="navigation_node"
 2d_physics/layer_8="interactables"
 2d_physics/layer_9="grenade"
+2d_physics/layer_10="pickup"
 
 [physics]
 

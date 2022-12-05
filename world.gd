@@ -17,9 +17,16 @@ var zombie_ids = {}  # Dict of zombie id's that are currently spawned in
 var zombies_left_to_spawn = 0  # Total zombies left to spawn
 var zombies_on_map = 0  # Current zombies on the screen
 
+var players = []
+
 
 func _ready():
+	for child in get_node("ZombieManager").get_children():
+		if child.get_filename() == "res://Player.tscn":
+			players.append(child)
+
 	start_round(current_level)
+	
 	
 func start_round(level):
 	kill_all_zombies()
@@ -35,9 +42,8 @@ func reset_player_repairs():
 			child.window_repairs_this_round = 0
 
 func give_players_grenades():
-	for child in get_node("ZombieManager").get_children():
-		if child.get_filename() == "res://Player.tscn":
-			child.grenade_count += 1
+	for player in players:
+		player.grenade_count += 1
 
 func _on_zombie_spawn(zombie, _position, _target):
 	var z = zombie.instance()
@@ -86,7 +92,7 @@ func kill_all_zombies():
 	# Makes sure there arent any zombies left after the first round
 	# the id system should have fixed this but this is just in case
 	for body in get_node("ZombieManager").get_children():
-		if body and body.name != "Player":
+		if body and body.get_filename() != "res://Player.tscn":
 			body.queue_free()
 
 func _on_gun_shoot(bullet, _position, _direction, _damage, _player_shooting):
@@ -113,3 +119,6 @@ func _activate_spawners(spawner_names : Array):
 		for spawner in $SpawnManager.get_children():
 			if spawner.name == name:
 				spawner.active = true
+				
+func _on_max_ammo():
+	pass
