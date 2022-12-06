@@ -156,6 +156,7 @@ func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
 		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
 		
 	if refillCurrentGun and current_gun_instance:
+		print("Here")
 		current_gun_instance.clip_count = current_gun_instance.CLIP_SIZE
 		current_gun_instance.ammo = current_gun_instance.STARTING_AMMO
 		current_gun_instance.updateHUD()

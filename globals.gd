@@ -1,14 +1,24 @@
 extends Node
 
 onready var maxAmmo = preload("res://MaxAmmo.tscn")
+onready var money = preload("res://Money.tscn")
 
 # Pickup drop chances
-var CHANCE_TO_DROP_PICKUP = 1
+var CHANCE_TO_DROP_PICKUP = .25
 
 var DROP_CHANCES = {
-	'maxAmmo': 1
+	'maxAmmo': .5,
+	'money': .5
 }
 
 func choose_drop():
-	return maxAmmo
+	var num = rand_range(0, 100)
+	var sum = DROP_CHANCES['maxAmmo'] * 100
+	
+	if num <= sum:  # if num < 50
+		return maxAmmo
+		
+	sum += DROP_CHANCES['money'] * 100
 
+	if num <= sum:  # if num < 100
+		return money
