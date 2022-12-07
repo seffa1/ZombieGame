@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var zombie = preload("res://Zombie.tscn")
+onready var zombie = preload("res://zombie/Zombie.tscn")
 signal spawner_ready
 
 export var active = false

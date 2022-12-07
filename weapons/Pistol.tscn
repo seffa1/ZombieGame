@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://weapons/Bullet.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/Gun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://weapons/Pistol.gd" type="Script" id=3]
+
+[node name="Pistol" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+Bullet = ExtResource( 1 )
+CLIP_SIZE = 15
+damage = 1
+SINGLE_FIRE = true
+GUN_NAME = "PISTOL"
+RELOAD_SPEED = 3

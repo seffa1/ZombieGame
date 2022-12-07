@@ -1,7 +1,7 @@
 extends Node
 
-onready var maxAmmo = preload("res://MaxAmmo.tscn")
-onready var money = preload("res://Money.tscn")
+onready var maxAmmo = preload("res://pickups/MaxAmmo.tscn")
+onready var money = preload("res://pickups/Money.tscn")
 
 # Pickup drop chances
 var CHANCE_TO_DROP_PICKUP = .25

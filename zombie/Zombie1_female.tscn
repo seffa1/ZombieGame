@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://zombie/Zombie1_female.gd" type="Script" id=1]
+[ext_resource path="res://zombie/Zombie.tscn" type="PackedScene" id=2]
+
+[node name="Zombie1_female" instance=ExtResource( 2 )]
+script = ExtResource( 1 )

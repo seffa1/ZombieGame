@@ -18,7 +18,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	for node in get_children():
-		if node.get_filename() == "res://Zombie.tscn":
+		if node.get_filename() == "res://zombie/Zombie.tscn":
 			# Should i just give each zombie a reference to the player?
 			node.player_position = player.global_position
 			node.player_rooms = player.current_rooms
