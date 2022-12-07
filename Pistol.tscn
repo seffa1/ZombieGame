@@ -12,3 +12,6 @@ damage = 1
 SINGLE_FIRE = true
 GUN_NAME = "PISTOL"
 RELOAD_SPEED = 3
+
+[node name="Muzzle" parent="." index="0"]
+position = Vector2( 64, 32 )

@@ -42,7 +42,7 @@ func shoot():
 
 	# Emit bullet to the world with a reference to the player so the player can gain points if the bullet kills a zombie.
 	var player_shooting = get_parent()
-	emit_signal('shoot', Bullet, global_position, dir, damage, player_shooting)
+	emit_signal('shoot', Bullet, $Muzzle.global_position, dir, damage, player_shooting)
 	
 	# Update the clip count
 	clip_count -= 1
