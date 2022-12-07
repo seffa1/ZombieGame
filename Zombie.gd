@@ -4,9 +4,7 @@ signal die_signal
 signal spawn_pickup
 
 # Constants
-var WANDER_DISTANCE = 100
 var BASE_WALKING_SPEED = 150
-var WANDER_TIMER_DURATION = 10
 var CLOSE_TO_TARGET = 50
 onready var START_POSITION = global_position
 var WALL_BOUNCE_ENABLED = false
@@ -48,10 +46,6 @@ var can_attack = true
 var attackable_players = []
 var attackable_windows = []
 
-# Wander state
-onready var updateWander = true
-onready var wanderTimer = $WanderTimer
-
 # DEBUG
 var clickToMove = false
 var draw_lines = false
@@ -60,8 +54,6 @@ var draw_lines = false
 func _ready():
 	randomize()
 	set_process(true)  # for drawing to happening every frame
-	randomize()
-	wanderTimer.wait_time = rand_range(0, WANDER_TIMER_DURATION)
 	
 	# Connect themselves to the world
 	var world = get_node('/root/World')
@@ -103,11 +95,6 @@ func _draw():
 				draw_line(Vector2.ZERO, ray_directions[i].normalized()*look_ahead*0.1 , Color(255,0,0), 3, true)
 			elif interest[i] < 0:
 				draw_line(Vector2.ZERO, ray_directions[i].normalized()*look_ahead *-interest[i], Color(0,0,255), 3, true)
-		
-func _input(event):
-	""" Toggle between seeking a target and wandering randomly. """
-	if not clickToMove:
-		return
 
 func set_state(_state):
 #	print("Zombie's state set to " + str(state))
@@ -143,13 +130,7 @@ func _physics_process(delta):
 		var targetNode = get_navigation_node()
 		targetPosition = targetNode.global_position
 		seekTarget(targetPosition, delta)
-		
-	if state == "wander":
-		if updateWander:
-			# Updates the target position
-			targetPosition = updateWanderTarget()
-		seekTarget(targetPosition, delta)
-		
+
 	if state == "attack":
 		if can_attack:
 			can_attack = false
@@ -237,8 +218,8 @@ func set_interest(targetPosition):
 #		interest[i] = d
 	# used for drawing
 	update()
-func set_danger():
 	
+func set_danger():
 	# Cast rays to find danger directions
 	# Gets access to the physics space
 	var space_state = get_world_2d().direct_space_state
@@ -270,6 +251,7 @@ func set_danger():
 			danger[i] = dangerWeight
 		else:
 			danger[i] = 0
+			
 func choose_direction():
 	# Dont update the direction if we are doing a wall bounce
 	if wallBounce:
@@ -324,41 +306,6 @@ func find_closest_navigation_node():
 				distance_to_node = distance
 				closest_navigation_node = navigation_node
 
-func _on_WanderTimer_timeout():
-	""" Allows the zombie to wander to a new position. """
-	updateWander = true
-
-func lookAround():
-	""" Starts the timers of the look around 'state' """
-	$LookAroundTimer.wait_time = rand_range(0, 3)
-	$LookAroundTimer.start()
-
-func _on_LookAroundTimer_timeout():
-	""" Makes the zombie look around randomly if they are at their target position. """
-	# Only rotate if we are at the target positon
-	if closeToTarget():
-		rotate(rand_range(10, 90))
-
-func updateWanderTarget():
-	""" Returns a random point to wander towards and resets the wander timer. """
-	# Reset the timer
-	updateWander = false
-	wanderTimer.wait_time = rand_range(WANDER_TIMER_DURATION, WANDER_TIMER_DURATION)
-	wanderTimer.start()
-	
-	# get current position
-	var position = global_position
-#	print('Current pos:')
-#	print(position)
-	
-	# get a random point within the wander distanceaaaaaaaa
-	var targetPositionX = rand_range(0, 500)
-	var targetPositionY = rand_range(0, 250)
-	var targetPosition = Vector2(targetPositionX, targetPositionY)
-#	print('Target pos:')
-#	print(targetPosition)
-	return targetPosition
-
 func closeToTarget():
 	""" Prevent jittering when the target position is close enough"""
 	if not targetPosition:
@@ -373,10 +320,8 @@ func take_damage(amount, player_shooting):
 		player_shooting.money += ZOMBIE_MONEY_REWARD
 		die()
 
-
 func _on_RoomDetector_area_entered(area):
 	current_rooms[area.name] = area
-
 
 func _on_RoomDetector_area_exited(area):
 	current_rooms.erase(area.name)
