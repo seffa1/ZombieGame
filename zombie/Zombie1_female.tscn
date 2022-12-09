@@ -5,3 +5,7 @@
 
 [node name="Zombie1_female" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2( -12, 1 )
+rotation = -1.5708

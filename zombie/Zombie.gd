@@ -12,6 +12,7 @@ var WALL_BOUNCE_TIMER = 1
 var DAMAGE = 1
 var ZOMBIE_MONEY_REWARD = 125
 
+# TODO: Make this an ENUM
 var state
 var walkingSpeed  # Is a random number. TODO make zombie types with inheritence with different properties
 
@@ -71,9 +72,12 @@ func _ready():
 	walkingSpeed = rand_range(BASE_WALKING_SPEED * .7, BASE_WALKING_SPEED * 1.3)
 #	print(walkingSpeed)
 
+func dying():
+	state = 'die'
+	$AnimationPlayer.play("zombie_death")
+
 func die():
 	emit_signal("die_signal", get_instance_id())
-	
 	# Spawn a pickup
 	var chance = 100 * GLOBALS.CHANCE_TO_DROP_PICKUP  # 25
 	if rand_range(1, 100) <= chance:		
@@ -101,40 +105,47 @@ func set_state(_state):
 	state = _state
 
 func _physics_process(delta):
+	if state == 'die':
+		return
+	
 	find_closest_navigation_node()
 	
 	# This is the default state and ends when the zombie enters a room
 	if state == "seek_window":
 		# Target position is set by the zombie spawner it spawned from
 		seekTarget(targetPosition, delta)
+#		$AnimationPlayer.play("zombie_walk")
 		
 		if len(attackable_windows) > 0 and attackable_windows[0].board_count > 0:
 			if can_attack:
 				can_attack = false
-				$AnimationPlayer.play("attack")
+				$AnimationPlayer.play("zombie_attack")
 	else:
 		if len(attackable_players) > 0:
 			set_state("attack")
 		else:
 			for room in current_rooms:
-					if room in player_rooms:
-						state = "seek_player"
-					else:
-						state = "seek_node"
+				if room in player_rooms:
+					state = "seek_player"
+				else:
+					state = "seek_node"
 
-	if state == "seek_player":
+	if state == "seek_player" and can_attack:
 		targetPosition = player_position
 		seekTarget(targetPosition, delta)
+		$AnimationPlayer.play("zombie_walk")
 		
-	if state == "seek_node":
+	if state == "seek_node" and can_attack:
 		var targetNode = get_navigation_node()
 		targetPosition = targetNode.global_position
 		seekTarget(targetPosition, delta)
+		$AnimationPlayer.play("zombie_walk")
 
 	if state == "attack":
 		if can_attack:
 			can_attack = false
-			$AnimationPlayer.play("attack")
+			print("attack")
+			$AnimationPlayer.play("zombie_attack")
 
 func attack_finished():
 	can_attack = true
@@ -318,7 +329,7 @@ func take_damage(amount, player_shooting):
 	health -= amount
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD
-		die()
+		dying()
 
 func _on_RoomDetector_area_entered(area):
 	current_rooms[area.name] = area
