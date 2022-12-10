@@ -447,7 +447,7 @@ texture = SubResource( 15 )
 [node name="Doors" type="Node2D" parent="."]
 
 [node name="Door" parent="Doors" instance=ExtResource( 16 )]
-position = Vector2( 64, 384 )
+position = Vector2( 129, 384 )
 rotation = 1.57079
 cost = 10
 
