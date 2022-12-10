@@ -12,6 +12,9 @@ var WALL_BOUNCE_TIMER = 1
 var DAMAGE = 1
 var ZOMBIE_MONEY_REWARD = 125
 
+# Animation stuff
+onready var animation_state_machine = $AnimationTree.get("parameters/playback")
+
 # TODO: Make this an ENUM
 var state
 var walkingSpeed  # Is a random number. TODO make zombie types with inheritence with different properties
@@ -74,7 +77,7 @@ func _ready():
 
 func dying():
 	state = 'die'
-	$AnimationPlayer.play("zombie_death")
+	animation_state_machine.travel('zombie_death')
 
 func die():
 	emit_signal("die_signal", get_instance_id())
@@ -101,7 +104,6 @@ func _draw():
 				draw_line(Vector2.ZERO, ray_directions[i].normalized()*look_ahead *-interest[i], Color(0,0,255), 3, true)
 
 func set_state(_state):
-#	print("Zombie's state set to " + str(state))
 	state = _state
 
 func _physics_process(delta):
@@ -114,12 +116,11 @@ func _physics_process(delta):
 	if state == "seek_window":
 		# Target position is set by the zombie spawner it spawned from
 		seekTarget(targetPosition, delta)
-#		$AnimationPlayer.play("zombie_walk")
 		
 		if len(attackable_windows) > 0 and attackable_windows[0].board_count > 0:
 			if can_attack:
 				can_attack = false
-				$AnimationPlayer.play("zombie_attack")
+				animation_state_machine.travel('zombie_attack')
 	else:
 		if len(attackable_players) > 0:
 			set_state("attack")
@@ -133,19 +134,19 @@ func _physics_process(delta):
 	if state == "seek_player" and can_attack:
 		targetPosition = player_position
 		seekTarget(targetPosition, delta)
-		$AnimationPlayer.play("zombie_walk")
+		animation_state_machine.travel('zombie_walk')
 		
 	if state == "seek_node" and can_attack:
 		var targetNode = get_navigation_node()
 		targetPosition = targetNode.global_position
 		seekTarget(targetPosition, delta)
-		$AnimationPlayer.play("zombie_walk")
+		animation_state_machine.travel('zombie_walk')
 
 	if state == "attack":
 		if can_attack:
 			can_attack = false
 			print("attack")
-			$AnimationPlayer.play("zombie_attack")
+			animation_state_machine.travel('zombie_attack')
 
 func attack_finished():
 	can_attack = true
@@ -198,7 +199,6 @@ func seekTarget(targetPosition, delta):
 	set_danger()
 	choose_direction()
 
-
 	desired_velocity = chosen_dir.rotated(rotation) * walkingSpeed
 #	velocity = velocity.linear_interpolate(desired_velocity, steer_force)
 #	rotation = velocity.angle()
@@ -207,7 +207,7 @@ func seekTarget(targetPosition, delta):
 
 	# This feels wrong
 	# Update the rotation of the children
-	$Sprite.rotation = lerp_angle($Sprite.rotation, velocity.angle(), steer_force)
+	$Sprite.rotation = lerp_angle($Sprite.rotation, velocity.angle() - 90, steer_force)
 	$HurtBox.rotation = lerp_angle($HurtBox.rotation, velocity.angle(), steer_force)
 	$PlayerDetector.rotation = lerp_angle($PlayerDetector.rotation, velocity.angle(), steer_force)
 	$WindowDetector.rotation = lerp_angle($WindowDetector.rotation, velocity.angle(), steer_force)
