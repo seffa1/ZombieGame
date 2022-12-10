@@ -60,6 +60,14 @@ var melee_lunge = false
 var melee_damage = 5
 var chosen_zombie
 
+# Perks
+var jugernaut = false
+var double_tap = false
+var stamina_up = false
+var revive = false
+var speed_cola = false
+
+
 func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
 
@@ -103,8 +111,8 @@ func _physics_process(delta):
 
 	if Input.is_action_pressed("interact"):
 		if len(interactables) > 0:
+			# Only interact with one thing at a time
 			if interactables[0].has_method("interact"):
-				# All interactions should return the money gained or lost from the interaction
 				interactables[0].interact(self)
 				
 	if Input.is_action_just_pressed("switch_weapons"):

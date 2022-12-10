@@ -7,12 +7,6 @@ export (int) var cost
 var can_be_bought = true
 var CAN_BE_BOUGHT_TIMER = 1
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
 func interact(_player):
 	if can_be_bought:
 		can_be_bought = false
