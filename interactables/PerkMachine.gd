@@ -12,10 +12,7 @@ func interact(_player):
 			print("You dont have enough money to buy this perl.")
 		else:
 			_player.money -= COST
-			give_perk(_player)
-
-func give_perk(player):
-	assert(false, 'give_perk method not declared!')
+			assert(false, 'give_perk method not declared!')
 
 func _on_Timer_timeout():
 	can_be_bought = true

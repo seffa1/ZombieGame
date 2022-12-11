@@ -22,15 +22,15 @@ export (PackedScene) var STARTING_GRENADE
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
 
 # Health stuff
-onready var health = MAX_HEALTH
-export var MAX_HEALTH = 1000
+onready var health = max_health
+var max_health = 3
 var HEALTH_REGEN_AFTER_DAMAGE_RATE = 3  # how long you have to wait to start healing after taking damage
 var HEALTH_REGENERATION_RATE = 1  # seconds / health you gain after the health regen after damage rate is over with
 var can_heal = true
 
 # Interactable Stuff
 var interactables = []
-export var money = 100000 setget _set_money
+var money = 100000 setget _set_money
 var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 
@@ -61,18 +61,24 @@ var melee_damage = 5
 var chosen_zombie
 
 # Perks
-var jugernaut = false
+var jugernaut = false setget set_jugernaut
 var double_tap = false
 var stamina_up = false
 var revive = false
 var speed_cola = false
 
+func set_jugernaut(_value : bool):
+	jugernaut = _value
+	if jugernaut:
+		max_health = 5
+	else:
+		max_health = 3
 
 func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
 
 func _ready():
-	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
+	emit_signal("health_change", (float(health) / float(max_health) * 100))
 	emit_signal("money_change", money)
 	emit_signal("grenade_change", grenade_count)
 	current_gun_instance = STARTING_GUN.instance()
@@ -85,7 +91,7 @@ func _physics_process(delta):
 #	print(charging_grenade)
 	
 	find_closest_navigation_node()
-	if can_heal and health < MAX_HEALTH:
+	if can_heal and health < max_health:
 		heal()
 		
 	# If we are not in the middle of a melee attack
@@ -352,7 +358,7 @@ func get_input_vector():
 func heal():
 	can_heal = false
 	health += 1
-	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
+	emit_signal("health_change", (float(health) / float(max_health) * 100))
 	$HealTimer.start(HEALTH_REGENERATION_RATE)
 
 func take_damage(amount):
@@ -360,7 +366,7 @@ func take_damage(amount):
 	health -= amount
 	if health <= 0:
 		queue_free()
-	emit_signal("health_change", (float(health) / float(MAX_HEALTH) * 100))
+	emit_signal("health_change", (float(health) / float(max_health) * 100))
 	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 	animation_state_machine.travel("take_damage")
 
