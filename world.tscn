@@ -399,7 +399,6 @@ position = Vector2( -352, 1072 )
 position = Vector2( 576, 112 )
 
 [node name="Rooms" type="Node2D" parent="."]
-visible = false
 
 [node name="Room_1" parent="Rooms" instance=ExtResource( 9 )]
 position = Vector2( -720, 416 )

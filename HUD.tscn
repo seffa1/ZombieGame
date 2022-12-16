@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
+[ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
+[ext_resource path="res://assets/perks/items_0007_slow_enemies.png" type="Texture" id=3]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -131,3 +133,24 @@ margin_right = 56.0
 margin_bottom = 46.0
 rect_scale = Vector2( 3, 3 )
 text = "2"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+visible = false
+anchor_left = 0.133
+anchor_top = 0.907
+anchor_right = 0.133
+anchor_bottom = 0.907
+margin_left = -0.192001
+margin_top = -0.200012
+margin_right = 359.808
+margin_bottom = 39.8
+alignment = 1
+
+[node name="juggernaut" type="Sprite" parent="HBoxContainer"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="HBoxContainer"]
+position = Vector2( 48, 0 )
+scale = Vector2( 0.223776, 0.223776 )
+texture = ExtResource( 3 )

@@ -22,7 +22,7 @@ export (PackedScene) var STARTING_GRENADE
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
 
 # Health stuff
-onready var health = max_health
+onready var health = max_health 
 var max_health = 3
 var HEALTH_REGEN_AFTER_DAMAGE_RATE = 3  # how long you have to wait to start healing after taking damage
 var HEALTH_REGENERATION_RATE = 1  # seconds / health you gain after the health regen after damage rate is over with

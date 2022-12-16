@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
+
 
 func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 #	print(str(clip_count) + ' / ' + str(CLIP_SIZE) + '          ' + str(ammo) + ' left')
@@ -19,3 +21,7 @@ func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 
 func _on_Player_grenade_change(_value):
 	$Grenades/grenade_count.text = str(_value)
+	
+func _on_Player_Juggernaut_change(_value : bool):
+#	$HBoxContainer.juggernaut.show()
+	return
