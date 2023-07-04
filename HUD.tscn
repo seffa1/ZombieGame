@@ -1,8 +1,119 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
 [ext_resource path="res://assets/perks/items_0007_slow_enemies.png" type="Texture" id=3]
+[ext_resource path="res://perkHUDtoggler.gd" type="Script" id=4]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.196078 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "hidePerk"
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.0717937, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.196078 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "showPerk"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 6.06286, 119.428, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.14902 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.14902 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends AnimationPlayer
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.196078 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "hidePerk"
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.0717937, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.196078 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "showPerk"
+tracks/0/type = "value"
+tracks/0/path = NodePath("juggernaut:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 6.06286, 119.428, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.196078 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.14902 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -82,8 +193,41 @@ margin_right = 619.0
 margin_bottom = 21.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
-value = 50.0
+value = 60.0
 percent_visible = false
+
+[node name="health" type="Label" parent="HealthBar"]
+margin_left = 88.0
+margin_top = 17.0
+margin_right = 103.0
+margin_bottom = 31.0
+rect_scale = Vector2( 2.12, 1.6486 )
+text = "100"
+
+[node name="divider" type="Label" parent="HealthBar"]
+margin_left = 152.0
+margin_top = 17.0
+margin_right = 157.0
+margin_bottom = 31.0
+rect_scale = Vector2( 2.12, 1.6486 )
+text = "/"
+
+[node name="hitPoints" type="Label" parent="HealthBar"]
+margin_left = 232.0
+margin_top = 17.0
+margin_right = 293.0
+margin_bottom = 48.0
+rect_scale = Vector2( 2.12, 1.6486 )
+text = "hit points
+"
+
+[node name="maxHealth" type="Label" parent="HealthBar"]
+margin_left = 168.0
+margin_top = 17.0
+margin_right = 191.0
+margin_bottom = 31.0
+rect_scale = Vector2( 2.12, 1.6486 )
+text = "100"
 
 [node name="money" type="Label" parent="."]
 margin_left = 50.0
@@ -135,22 +279,44 @@ rect_scale = Vector2( 3, 3 )
 text = "2"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-visible = false
 anchor_left = 0.133
 anchor_top = 0.907
 anchor_right = 0.133
 anchor_bottom = 0.907
-margin_left = -0.192001
-margin_top = -0.200012
-margin_right = 359.808
-margin_bottom = 39.8
+margin_left = 111.808
+margin_top = 23.8
+margin_right = 375.808
+margin_bottom = 63.8
 alignment = 1
 
 [node name="juggernaut" type="Sprite" parent="HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.196078 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
+script = ExtResource( 4 )
 
-[node name="Sprite2" type="Sprite" parent="HBoxContainer"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/juggernaut"]
+root_node = NodePath("../..")
+anims/RESET = SubResource( 1 )
+anims/hidePerk = SubResource( 4 )
+anims/showPerk = SubResource( 2 )
+script = SubResource( 3 )
+
+[node name="juggernaut" type="Sprite" parent="HBoxContainer/juggernaut"]
+modulate = Color( 1, 1, 1, 0.196078 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+script = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/juggernaut/juggernaut"]
+root_node = NodePath("../..")
+anims/RESET = SubResource( 5 )
+anims/hidePerk = SubResource( 6 )
+anims/showPerk = SubResource( 7 )
+script = SubResource( 3 )
+
+[node name="speedCola" type="Sprite" parent="HBoxContainer"]
+modulate = Color( 1, 1, 1, 0.196078 )
 position = Vector2( 48, 0 )
 scale = Vector2( 0.223776, 0.223776 )
 texture = ExtResource( 3 )

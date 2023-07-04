@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
-
+var PERK_ALPHA_TOGGLE_VALUE = 50
 
 func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 #	print(str(clip_count) + ' / ' + str(CLIP_SIZE) + '          ' + str(ammo) + ' left')
@@ -9,8 +9,12 @@ func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 	$clip_count.text = str(clip_count)
 	$ammo.text = str(ammo)
 
-func _on_Player_health_change(_value):
-	$HealthBar.value = _value
+func _on_Player_health_change(_health, _maxHealth):
+	# 3 or 5
+	$HealthBar/health.text = str(_health * 20)
+	$HealthBar/maxHealth.text = str(_maxHealth * 20)
+	#1 - 3 or 1 - 5
+	$HealthBar.value = _health * 20  # 20-60 or 20-100
 
 func _on_Player_money_change(_value):
 	$money.text = str(_value)
@@ -22,6 +26,10 @@ func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 func _on_Player_grenade_change(_value):
 	$Grenades/grenade_count.text = str(_value)
 	
-func _on_Player_Juggernaut_change(_value : bool):
-#	$HBoxContainer.juggernaut.show()
+func _on_Player_jugernaut_change(_value : bool):
+	print("Player jug change")
+	if _value:
+		$HBoxContainer/juggernaut.showPerk(true)
+	else:
+		$HBoxContainer/juggernaut.showPerk(false)
 	return
