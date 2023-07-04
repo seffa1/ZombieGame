@@ -5,6 +5,7 @@ signal money_change
 signal gun_change
 signal grenade_change
 signal throw_grenade
+signal game_over
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -365,10 +366,18 @@ func take_damage(amount):
 	can_heal = false
 	health -= amount
 	if health <= 0:
-		queue_free()
+		gameOver()
+		
+		
 	emit_signal("health_change", (float(health) / float(max_health) * 100))
 	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 	animation_state_machine.travel("take_damage")
+
+func gameOver():
+	# TODO: replace with death animation
+	emit_signal("game_over")
+	queue_free()
+	
 
 func _on_shootAnimation_finished():
 	can_shoot = true

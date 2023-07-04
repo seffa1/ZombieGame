@@ -128,3 +128,11 @@ func _on_pickup_spawn(_global_position):
 	p.global_position = _global_position
 	add_child(p)
 	
+func _on_Player_game_over():
+	# kill all zombies and the player
+	for body in get_node("ZombieManager").get_children():
+		body.queue_free()
+	# make sure the spawner doesnt try to spawn anything
+	zombies_left_to_spawn = 0
+	# go to game over screen
+	get_tree().change_scene("res://GameOver.tscn")

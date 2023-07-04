@@ -561,6 +561,7 @@ tile_data = PoolIntArray( -9, 0, 0, -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -3, 
 [node name="Jugernaut" parent="PerkMachines" instance=ExtResource( 22 )]
 position = Vector2( 1089, 59 )
 
+[connection signal="game_over" from="ZombieManager/Player" to="." method="_on_Player_game_over"]
 [connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
 [connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
 [connection signal="health_change" from="ZombieManager/Player" to="HUD" method="_on_Player_health_change"]
