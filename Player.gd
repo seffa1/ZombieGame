@@ -377,16 +377,19 @@ func heal():
 func take_damage(amount):
 	can_heal = false
 	health -= amount
+	emit_signal("health_change", health, max_health)
+	
 	if health <= 0:
 		deathState = true
 		emit_signal("playerDeath")
 		# start death animation
 		print("traveling to death animation")
 		animation_state_machine.travel("death")
+	else:
+		$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
+		animation_state_machine.travel("take_damage")
 		
-	emit_signal("health_change", health, max_health)
-	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
-	animation_state_machine.travel("take_damage")
+	
 
 func _on_deathAnimation_finished():
 	print("Death animation finished")
