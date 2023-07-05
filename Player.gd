@@ -7,6 +7,7 @@ signal grenade_change
 signal throw_grenade
 signal game_over
 signal jugernaut_change
+signal playerDeath
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -22,6 +23,7 @@ export (PackedScene) var STARTING_GRENADE
 
 # Animation stuff
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
+var deathState = false
 
 # Health stuff
 onready var health = max_health
@@ -92,9 +94,11 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	
 	update()
 #	print(charging_grenade)
-	
+	if deathState:
+		return
 	find_closest_navigation_node()
 	if can_heal and health < max_health:
 		heal()
@@ -374,14 +378,21 @@ func take_damage(amount):
 	can_heal = false
 	health -= amount
 	if health <= 0:
-		gameOver()
+		deathState = true
+		emit_signal("playerDeath")
+		# start death animation
+		print("traveling to death animation")
+		animation_state_machine.travel("death")
+		
 	emit_signal("health_change", health, max_health)
 	$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 	animation_state_machine.travel("take_damage")
 
+func _on_deathAnimation_finished():
+	print("Death animation finished")
+	gameOver()
 
 func gameOver():
-	# TODO: replace with death animation
 	emit_signal("game_over")
 	queue_free()
 	

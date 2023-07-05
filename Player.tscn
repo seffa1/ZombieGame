@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://assets/melee/melee_spriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/riffle/riffle_walk/walk_machine_gun_spritesheet.png" type="Texture" id=8]
 [ext_resource path="res://assets/riffle/riffle_shot/machine_gun_shot_spritesheet.png" type="Texture" id=9]
 [ext_resource path="res://assets/shadows/Man.png" type="Texture" id=10]
+[ext_resource path="res://assets/death/death_spritesheet.png" type="Texture" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -114,6 +115,85 @@ tracks/7/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=58]
+resource_name = "death"
+length = 4.0
+step = 0.2
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 3.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_deathAnimation_finished"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 7 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 5, 6, 7 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 24, 24 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -637,6 +717,9 @@ radius = 84.0
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 64, 80 )
 
+[sub_resource type="AnimationNodeAnimation" id=59]
+animation = "death"
+
 [sub_resource type="AnimationNodeAnimation" id=27]
 animation = "melee_hit"
 
@@ -721,7 +804,11 @@ priority = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=57]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
+
 [sub_resource type="AnimationNodeStateMachine" id=10]
+states/death/node = SubResource( 59 )
+states/death/position = Vector2( 110.5, 270 )
 states/melee_hit/node = SubResource( 27 )
 states/melee_hit/position = Vector2( 550, 305.012 )
 states/melee_miss/node = SubResource( 28 )
@@ -740,9 +827,10 @@ states/riffle_walk/node = SubResource( 38 )
 states/riffle_walk/position = Vector2( 734, 571.664 )
 states/take_damage/node = SubResource( 24 )
 states/take_damage/position = Vector2( 316.75, 311.477 )
-transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ), "pistol_idle", "riffle_idle", SubResource( 39 ), "riffle_idle", "pistol_idle", SubResource( 40 ), "riffle_idle", "riffle_walk", SubResource( 41 ), "riffle_walk", "riffle_idle", SubResource( 42 ), "take_damage", "riffle_idle", SubResource( 47 ), "riffle_idle", "take_damage", SubResource( 48 ), "melee_hit", "riffle_idle", SubResource( 49 ), "riffle_idle", "melee_hit", SubResource( 50 ), "melee_miss", "riffle_idle", SubResource( 51 ), "riffle_idle", "melee_miss", SubResource( 52 ), "riffle_walk", "riffle_shoot", SubResource( 54 ), "riffle_shoot", "riffle_idle", SubResource( 56 ), "riffle_idle", "riffle_shoot", SubResource( 57 ) ]
+transitions = [ "pistol_idle", "pistol_walk", SubResource( 18 ), "pistol_walk", "pistol_idle", SubResource( 19 ), "pistol_idle", "pistol_shoot", SubResource( 20 ), "pistol_shoot", "pistol_idle", SubResource( 21 ), "pistol_walk", "pistol_shoot", SubResource( 23 ), "take_damage", "pistol_idle", SubResource( 25 ), "pistol_idle", "take_damage", SubResource( 26 ), "pistol_idle", "melee_hit", SubResource( 29 ), "melee_hit", "pistol_idle", SubResource( 30 ), "melee_miss", "pistol_idle", SubResource( 31 ), "pistol_idle", "melee_miss", SubResource( 32 ), "pistol_idle", "riffle_idle", SubResource( 39 ), "riffle_idle", "pistol_idle", SubResource( 40 ), "riffle_idle", "riffle_walk", SubResource( 41 ), "riffle_walk", "riffle_idle", SubResource( 42 ), "take_damage", "riffle_idle", SubResource( 47 ), "riffle_idle", "take_damage", SubResource( 48 ), "melee_hit", "riffle_idle", SubResource( 49 ), "riffle_idle", "melee_hit", SubResource( 50 ), "melee_miss", "riffle_idle", SubResource( 51 ), "riffle_idle", "melee_miss", SubResource( 52 ), "riffle_walk", "riffle_shoot", SubResource( 54 ), "riffle_shoot", "riffle_idle", SubResource( 56 ), "riffle_idle", "riffle_shoot", SubResource( 57 ), "pistol_idle", "death", SubResource( 60 ) ]
 start_node = "pistol_idle"
-graph_offset = Vector2( 48, 262 )
+end_node = "death"
+graph_offset = Vector2( 62, 200 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=11]
 
@@ -782,6 +870,7 @@ shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
+anims/death = SubResource( 58 )
 anims/melee_hit = SubResource( 8 )
 anims/melee_miss = SubResource( 7 )
 anims/pistol_idle = SubResource( 12 )

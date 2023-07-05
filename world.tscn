@@ -581,6 +581,7 @@ visible = false
 [connection signal="health_change" from="ZombieManager/Player" to="HUD" method="_on_Player_health_change"]
 [connection signal="jugernaut_change" from="ZombieManager/Player" to="HUD" method="_on_Player_jugernaut_change"]
 [connection signal="money_change" from="ZombieManager/Player" to="HUD" method="_on_Player_money_change"]
+[connection signal="playerDeath" from="ZombieManager/Player" to="." method="_on_Player_playerDeath"]
 [connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
 
 [editable path="ZombieManager/Player"]

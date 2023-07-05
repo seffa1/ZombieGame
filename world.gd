@@ -136,3 +136,13 @@ func _on_Player_game_over():
 	zombies_left_to_spawn = 0
 	# go to game over screen
 	get_tree().change_scene("res://GameOver.tscn")
+
+
+func _on_Player_playerDeath():
+	print("player death - stopping zombies")
+	# get all zombies and change their state
+	for body in get_node("ZombieManager").get_children():
+		if body and body.get_filename() != "res://Player.tscn":
+			# TODO - set zombies state to "playerDeath"
+			# TODO - make that state just play the zombie idle animation
+			return
