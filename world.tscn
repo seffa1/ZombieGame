@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://Obstacles/Obstacle.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/pistol/pistol_buy.png" type="Texture" id=21]
 [ext_resource path="res://interactables/Jugernaut.tscn" type="PackedScene" id=22]
+[ext_resource path="res://PauseScreen.tscn" type="PackedScene" id=23]
+[ext_resource path="res://TitleScreen.tscn" type="PackedScene" id=24]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
@@ -561,6 +563,18 @@ tile_data = PoolIntArray( -9, 0, 0, -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -3, 
 [node name="Jugernaut" parent="PerkMachines" instance=ExtResource( 22 )]
 position = Vector2( 1089, 59 )
 
+[node name="PauseScreen" parent="." instance=ExtResource( 23 )]
+pause_mode = 2
+
+[node name="quit" parent="PauseScreen/CanvasLayer" index="2"]
+margin_top = 334.0
+margin_bottom = 354.0
+
+[node name="TitleScreen" parent="." instance=ExtResource( 24 )]
+
+[node name="CanvasLayer" parent="TitleScreen" index="0"]
+visible = false
+
 [connection signal="game_over" from="ZombieManager/Player" to="." method="_on_Player_game_over"]
 [connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
 [connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
@@ -581,3 +595,5 @@ position = Vector2( 1089, 59 )
 [editable path="Obstacles/Obstacle2"]
 [editable path="Obstacles/Obstacle5"]
 [editable path="Obstacles/Obstacle6"]
+[editable path="PauseScreen"]
+[editable path="TitleScreen"]

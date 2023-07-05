@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://TitleScreen.gd" type="Script" id=1]
+
+[node name="TitleScreen" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="header" type="Label" parent="CanvasLayer"]
+margin_left = 127.0
+margin_top = 75.0
+margin_right = 265.0
+margin_bottom = 123.0
+rect_scale = Vector2( 5.71069, 4.92547 )
+text = "ZOMBIE SLAYER
+
+"
+align = 1
+
+[node name="subHeading" type="Label" parent="CanvasLayer"]
+margin_left = 424.0
+margin_top = 166.0
+margin_right = 562.0
+margin_bottom = 197.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "stay alive at all cost..."
+align = 1
+
+[node name="highScore" type="Label" parent="CanvasLayer"]
+margin_left = -46.0
+margin_top = 242.0
+margin_right = 92.0
+margin_bottom = 273.0
+rect_scale = Vector2( 3.22472, 3.55261 )
+text = "HIGH SCORE:"
+align = 1
+
+[node name="highestRound" type="Label" parent="CanvasLayer"]
+margin_left = 43.0001
+margin_top = 311.0
+margin_right = 181.0
+margin_bottom = 342.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Round:"
+
+[node name="mostKills" type="Label" parent="CanvasLayer"]
+margin_left = 43.0
+margin_top = 387.0
+margin_right = 181.0
+margin_bottom = 418.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Kills"
+
+[node name="roundsFired" type="Label" parent="CanvasLayer"]
+margin_left = 43.0
+margin_top = 461.0
+margin_right = 181.0
+margin_bottom = 492.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Shots Fired:"
+
+[node name="quit" type="Button" parent="CanvasLayer"]
+margin_left = 542.0
+margin_top = 453.0
+margin_right = 632.0
+margin_bottom = 473.0
+rect_scale = Vector2( 3, 3 )
+text = "QUIT"
+
+[node name="start" type="Button" parent="CanvasLayer"]
+margin_left = 542.0
+margin_top = 274.0
+margin_right = 632.0
+margin_bottom = 294.0
+rect_scale = Vector2( 3, 3 )
+text = "START"
+
+[node name="load" type="Button" parent="CanvasLayer"]
+margin_left = 542.0
+margin_top = 364.0
+margin_right = 632.0
+margin_bottom = 384.0
+rect_scale = Vector2( 3, 3 )
+text = "LOAD"
+
+[connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/load" to="." method="_on_load_pressed"]
