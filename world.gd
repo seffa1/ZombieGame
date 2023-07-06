@@ -220,3 +220,5 @@ func _on_Player_game_over():
 func _on_zombie_bullet_hit():
 	bulletsHit += 1
 
+func _on_Player_playerStaminaChange(value):
+	$HUD/StaminaBar.value = value

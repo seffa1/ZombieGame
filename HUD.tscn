@@ -1,9 +1,17 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
 [ext_resource path="res://assets/perks/items_0007_slow_enemies.png" type="Texture" id=3]
 [ext_resource path="res://perkHUDtoggler.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.760784, 0.0784314, 0.0784314, 1 )
+
+[sub_resource type="Theme" id=9]
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.0980392, 0.576471, 0.309804, 1 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -127,12 +135,20 @@ rect_scale = Vector2( 3, 3 )
 text = "10"
 
 [node name="level_count" type="Label" parent="."]
-margin_left = 24.0
-margin_top = 29.0
-margin_right = 64.0
-margin_bottom = 44.0
+margin_left = 974.0
+margin_top = 49.0
+margin_right = 1014.0
+margin_bottom = 64.0
 rect_scale = Vector2( 3, 3 )
 text = "1"
+
+[node name="level_count2" type="Label" parent="."]
+margin_left = 816.0
+margin_top = 46.0
+margin_right = 860.0
+margin_bottom = 61.0
+rect_scale = Vector2( 3, 3 )
+text = "Round:"
 
 [node name="CLIP_SIZE" type="Label" parent="."]
 margin_left = 774.0
@@ -189,45 +205,58 @@ text = "0"
 [node name="HealthBar" type="ProgressBar" parent="."]
 margin_left = 24.0
 margin_top = 7.0
-margin_right = 619.0
-margin_bottom = 21.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )
+margin_right = 499.0
+margin_bottom = 38.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_styles/fg = SubResource( 8 )
 value = 60.0
 percent_visible = false
 
 [node name="health" type="Label" parent="HealthBar"]
-margin_left = 88.0
-margin_top = 17.0
-margin_right = 103.0
-margin_bottom = 31.0
+margin_left = 478.0
+margin_top = 4.0
+margin_right = 502.0
+margin_bottom = 18.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "100"
 
 [node name="divider" type="Label" parent="HealthBar"]
-margin_left = 152.0
-margin_top = 17.0
-margin_right = 157.0
-margin_bottom = 31.0
+margin_left = 542.0
+margin_top = 4.0
+margin_right = 547.0
+margin_bottom = 18.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "/"
 
 [node name="hitPoints" type="Label" parent="HealthBar"]
-margin_left = 232.0
-margin_top = 17.0
-margin_right = 293.0
-margin_bottom = 48.0
+margin_left = 622.0
+margin_top = 4.0
+margin_right = 683.0
+margin_bottom = 35.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "hit points
 "
 
 [node name="maxHealth" type="Label" parent="HealthBar"]
-margin_left = 168.0
-margin_top = 17.0
-margin_right = 191.0
-margin_bottom = 31.0
+margin_left = 558.0
+margin_top = 4.0
+margin_right = 582.0
+margin_bottom = 18.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "100"
+
+[node name="StaminaBar" type="ProgressBar" parent="."]
+margin_left = 24.0
+margin_top = 54.0
+margin_right = 499.0
+margin_bottom = 85.0
+theme = SubResource( 9 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_styles/fg = SubResource( 10 )
+value = 100.0
+percent_visible = false
 
 [node name="money" type="Label" parent="."]
 margin_left = 50.0

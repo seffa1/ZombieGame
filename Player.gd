@@ -8,24 +8,28 @@ signal throw_grenade
 signal game_over
 signal jugernaut_change
 signal playerDeath
+signal playerStaminaChange
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+# Movement
 var velocity  = Vector2()
-var WALK_SPEED = 200
-var RUN_SPEED = 350
+var WALK_SPEED = 170
+var RUN_SPEED = 300
 var movement_speed
 var current_rooms = {}  # rooms the player is in. room_name: room
 var closest_navigation_node
 var stamina = 100
 var MAX_STAMINA = 100
-var SPRINT_OR_DASH_TIME_THRESHOLD = .3 # (second: if you let go of run within this time, you wont run, but instead dash
+var SPRINT_OR_DASH_TIME_THRESHOLD = .2 # (second: if you let go of run within this time, you wont run, but instead dash
 var pressedRun = false
 var dashing = false
 var DASH_TIME = .2
-var DASH_SPEED = 1000
+var DASH_SPEED = 800
 var sprintOrRunThreshold = false
+var STAMINA_REGENERATION_RATE = .05 # seconds / point depleted (smaller the number, faster the regeneration)
+
+# 1s / 20 points/s = 1/20 seconds / point: 
+var RUN_STAMINA_DEPLETION_RATE = .03  # seconds / point depleted (smaller the number, faster the depletion)
+var DASH_STAMINA_COST = 25  # flat rate that you must have before you can dash
 
 export (PackedScene) var STARTING_GRENADE
 
@@ -139,32 +143,35 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("run"):
 		# the first time you press run, start the dash-or-run timer
-		print("starting threshold timer")
 		$sprintOrDashTimer.start(SPRINT_OR_DASH_TIME_THRESHOLD)
 		sprintOrRunThreshold = true
 		
 	if Input.is_action_just_released("run"):
 		# if we release run during the threshold period, then we're dashing
-		print("run release, threshold is " + str(sprintOrRunThreshold))
-		if sprintOrRunThreshold:
+		if sprintOrRunThreshold and stamina >= DASH_STAMINA_COST:
+			setStamina(stamina - DASH_STAMINA_COST)
 			dashing = true
 		else:
 			dashing = false
 
 	if Input.is_action_pressed("run"):
-		# dont start sprinting until after the threshold
-		if !sprintOrRunThreshold:
+		if stamina > 0:
 			movement_speed = RUN_SPEED
+			if $staminaDepletionRate.is_stopped():
+				$staminaDepletionRate.start(RUN_STAMINA_DEPLETION_RATE)
 		else:
 			movement_speed = WALK_SPEED
+
 	else:
 		if dashing:
 			movement_speed = DASH_SPEED
 			if $dashTimer.is_stopped():
-				print("starting dash timer")
 				$dashTimer.start(DASH_TIME)
 		else:
 			movement_speed = WALK_SPEED
+			if $staminaRegenTimer.is_stopped():
+				print("starting regen timer: " + str(STAMINA_REGENERATION_RATE))
+				$staminaRegenTimer.start(STAMINA_REGENERATION_RATE)
 
 	velocity = get_input_vector()
 	
@@ -186,8 +193,15 @@ func _physics_process(delta):
 	look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
 
+func setStamina(value):
+	stamina = value
+	if stamina > MAX_STAMINA:
+		stamina = MAX_STAMINA
+	if stamina < 0:
+		stamina = 0
+	emit_signal("playerStaminaChange", value)
+	
 func _on_dashTimer_timeout():
-	print("dashing to false")
 	dashing = false
 
 func _on_sprintOrDashTimer_timeout():
@@ -214,7 +228,6 @@ func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
 		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
 		
 	if refillCurrentGun and current_gun_instance:
-		print("Here")
 		current_gun_instance.clip_count = current_gun_instance.CLIP_SIZE
 		current_gun_instance.ammo = current_gun_instance.STARTING_AMMO
 		current_gun_instance.updateHUD()
@@ -266,7 +279,6 @@ func switch_weapons():
 		return
 	
 	if not other_gun_instance:
-		print("You dont have another gun. ")
 		return
 		
 	can_switch_weapons = false
@@ -303,7 +315,6 @@ func melee():
 	can_melee = false
 	can_throw_grenade = false
 	if len(meleeable_zombies) == 0:
-		print("Melee miss")
 		animation_state_machine.travel("melee_miss")
 	else:
 		var distance = INF
@@ -312,7 +323,6 @@ func melee():
 			if d < distance:
 				distance = d
 				chosen_zombie = zombie
-		print("melee hit")
 		animation_state_machine.travel("melee_hit")
 
 func charge_grenade():
@@ -337,15 +347,13 @@ func charge_grenade():
 		if g == null:
 			grenade_throw_velocity = Vector2.ZERO
 			can_melee = true
-			print('g is null')
 			return
-			
+
 		# Do we actually need this? 
 		grenade_throw_velocity = (get_global_mouse_position() - global_position)
 
 func throw_grenade():
 	# Launch the grenade in the given direction
-	
 	var g = get_node("Grenade")
 	
 	# If the grenade blew up in our hands
@@ -413,35 +421,26 @@ func take_damage(amount):
 	if health <= 0:
 		deathState = true
 		emit_signal("playerDeath")
-		# start death animation
-		print("traveling to death animation")
 		animation_state_machine.travel("death")
 	else:
 		$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 		animation_state_machine.travel("take_damage")
-		
-	
 
 func _on_deathAnimation_finished():
-	print("Death animation finished")
 	gameOver()
 
 func gameOver():
 	emit_signal("game_over")
 	queue_free()
-	
 
 func _on_shootAnimation_finished():
 	can_shoot = true
 
-
 func _on_RoomDetector_area_entered(area):
 	current_rooms[area.name] = area
 
-
 func _on_RoomDetector_area_exited(area):
 	current_rooms.erase(area.name)
-
 
 func _on_HealTimer_timeout():
 	can_heal = true
@@ -465,8 +464,9 @@ func _on_meleeAnimation_finished():
 	can_melee = true
 	can_throw_grenade = true
 
+func _on_staminaRegenTimer_timeout():
+	setStamina(stamina + 1)
+	print("added stamina")
 
-
-
-
-
+func _on_staminaDepletionRate_timeout():
+	setStamina(stamina - 1)
