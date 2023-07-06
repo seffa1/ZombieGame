@@ -406,8 +406,6 @@ func _set_money(_amount):
 		plusOrMinus = "+ "
 	else:
 		plusOrMinus = "- "
-	var message = plusOrMinus + str(difference)
-	emit_signal("playerLog", message)
 
 func get_input_vector():
 	velocity = Vector2()

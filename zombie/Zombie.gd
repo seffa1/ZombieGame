@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal die_signal
 signal spawn_pickup
 signal zombieBulletHit
+signal moneyPopup
 
 # Constants
 var BASE_WALKING_SPEED = 150
@@ -63,6 +64,7 @@ func _ready():
 	# Connect themselves to the world
 	var world = get_node('/root/World')
 	self.connect("die_signal", world, '_on_zombie_death')
+	self.connect("moneyPopup", world, '_on_money_popup')
 	self.connect("spawn_pickup", world, '_on_pickup_spawn')
 	self.connect("zombieBulletHit", world, '_on_zombie_bullet_hit')
 
@@ -338,6 +340,8 @@ func take_damage(amount, player_shooting):
 	emit_signal("zombieBulletHit")
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD
+		var message = "+ $" + str(ZOMBIE_MONEY_REWARD)
+		emit_signal("moneyPopup", message, global_position)
 		dying()
 
 func _on_RoomDetector_area_entered(area):
