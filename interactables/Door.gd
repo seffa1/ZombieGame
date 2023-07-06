@@ -4,6 +4,7 @@ var can_be_bought = true
 var CAN_BE_BOUGHT_TIMER = 1
 export var cost : int = 150
 signal activate_spawners
+onready var interactableName = "Open Door: " + str(cost)
 
 var spawners_to_activate_on_open = [
 	"ZombieSpawner3",

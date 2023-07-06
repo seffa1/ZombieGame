@@ -292,6 +292,15 @@ rect_scale = Vector2( 1.3, 1.3 )
 text = "empty
 "
 
+[node name="interactable" type="Label" parent="."]
+margin_left = 431.0
+margin_top = 358.0
+margin_right = 506.0
+margin_bottom = 389.0
+rect_scale = Vector2( 1.3, 1.3 )
+text = "
+"
+
 [node name="Grenades" type="Label" parent="."]
 margin_left = 536.0
 margin_top = 512.0

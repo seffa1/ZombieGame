@@ -9,11 +9,12 @@ signal game_over
 signal jugernaut_change
 signal playerDeath
 signal playerStaminaChange
+signal interactablesUpdated
 
 # Movement
 var velocity  = Vector2()
 var WALK_SPEED = 170
-var RUN_SPEED = 300
+var RUN_SPEED = 375
 var movement_speed
 var current_rooms = {}  # rooms the player is in. room_name: room
 var closest_navigation_node
@@ -447,9 +448,11 @@ func _on_HealTimer_timeout():
 
 func _on_InteractDetector_body_entered(body):
 	interactables.append(body)
+	emit_signal("interactablesUpdated", interactables)
 
 func _on_InteractDetector_body_exited(body):
 	interactables.erase(body)
+	emit_signal("interactablesUpdated", interactables)
 
 func _on_SwitchWeaponTimer_timeout():
 	can_switch_weapons = true

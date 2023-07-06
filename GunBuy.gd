@@ -7,6 +7,8 @@ export (int) var cost
 var can_be_bought = true
 var CAN_BE_BOUGHT_TIMER = 1
 
+onready var interactableName = "Buy " + gun_name + ": " + str(cost)
+
 func interact(_player):
 	if can_be_bought:
 		can_be_bought = false

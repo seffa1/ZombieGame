@@ -3,6 +3,9 @@ extends Node2D
 var can_be_bought = true
 var CAN_BE_BOUGHT_TIMER = 1
 var COST = 2500
+export (String) var perkName
+
+onready var interactableName = "Buy " + perkName + ": " + str(COST)
 
 func interact(_player):
 	if can_be_bought:

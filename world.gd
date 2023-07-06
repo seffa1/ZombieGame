@@ -222,3 +222,10 @@ func _on_zombie_bullet_hit():
 
 func _on_Player_playerStaminaChange(value):
 	$HUD/StaminaBar.value = value
+
+func _on_Player_interactablesUpdated(interactables: Array):
+	# update interactable HUD
+	if len(interactables) == 0:
+		$HUD/interactable.text = ""
+	else:
+		$HUD/interactable.text = str(interactables[0].interactableName)

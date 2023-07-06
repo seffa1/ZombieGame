@@ -562,6 +562,7 @@ tile_data = PoolIntArray( -9, 0, 0, -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -3, 
 
 [node name="Jugernaut" parent="PerkMachines" instance=ExtResource( 22 )]
 position = Vector2( 1089, 59 )
+perkName = "Juggernaut"
 
 [node name="PauseScreen" parent="." instance=ExtResource( 23 )]
 pause_mode = 2
@@ -579,6 +580,7 @@ visible = false
 [connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
 [connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
 [connection signal="health_change" from="ZombieManager/Player" to="HUD" method="_on_Player_health_change"]
+[connection signal="interactablesUpdated" from="ZombieManager/Player" to="." method="_on_Player_interactablesUpdated"]
 [connection signal="jugernaut_change" from="ZombieManager/Player" to="HUD" method="_on_Player_jugernaut_change"]
 [connection signal="money_change" from="ZombieManager/Player" to="HUD" method="_on_Player_money_change"]
 [connection signal="playerDeath" from="ZombieManager/Player" to="." method="_on_Player_playerDeath"]
