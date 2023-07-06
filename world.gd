@@ -229,3 +229,6 @@ func _on_Player_interactablesUpdated(interactables: Array):
 		$HUD/interactable.text = ""
 	else:
 		$HUD/interactable.text = str(interactables[0].interactableName)
+
+func _on_Player_playerLog(message: String):
+	$HUD.updateLog(message)

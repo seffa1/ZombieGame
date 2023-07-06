@@ -9,6 +9,7 @@ script = ExtResource( 3 )
 Bullet = ExtResource( 1 )
 CLIP_SIZE = 15
 damage = 1
+STARTING_AMMO = 30
 SINGLE_FIRE = true
 GUN_NAME = "PISTOL"
 RELOAD_SPEED = 3

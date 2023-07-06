@@ -52,18 +52,20 @@ func shoot():
 func reload():
 	if ammo == 0:
 		# Tell the player there is no ammo left
-		return
+		return 'No more ammo!'
 	if clip_count == CLIP_SIZE:
 		# Tell the player your ammo is full
-		return
-	# Play reload animation
-	# On animation finish, do the rest of the logic below
+		return 'Ammo is full'
+	# TODO Play reload animation - On animation finish, do the rest of the logic below
+	
+	# reload the gun
 	var amount_to_fill = CLIP_SIZE - clip_count
 	if amount_to_fill > ammo:
 		amount_to_fill = ammo
 	ammo -= amount_to_fill
 	clip_count += amount_to_fill
 	updateHUD()
+	return "Gun reloaded"
 
 func updateHUD():
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)

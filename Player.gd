@@ -10,6 +10,7 @@ signal jugernaut_change
 signal playerDeath
 signal playerStaminaChange
 signal interactablesUpdated
+signal playerLog
 
 # Movement
 var velocity  = Vector2()
@@ -84,6 +85,7 @@ func set_jugernaut(_value : bool):
 	jugernaut = _value
 	if jugernaut:
 		max_health = 5
+		emit_signal("playerLog", "Juggernaut aquired, max health increased")
 	else:
 		max_health = 3
 	health = max_health
@@ -171,7 +173,6 @@ func _physics_process(delta):
 		else:
 			movement_speed = WALK_SPEED
 			if $staminaRegenTimer.is_stopped():
-				print("starting regen timer: " + str(STAMINA_REGENERATION_RATE))
 				$staminaRegenTimer.start(STAMINA_REGENERATION_RATE)
 
 	velocity = get_input_vector()
@@ -209,7 +210,9 @@ func _on_sprintOrDashTimer_timeout():
 	sprintOrRunThreshold = false
 
 func reload():
-	current_gun_instance.reload()
+	# returns a string based on if the gun could be reloaded
+	var reloadMessage = current_gun_instance.reload()
+	emit_signal("playerLog", reloadMessage)
 
 func shoot():
 	if current_gun_instance.clip_count > 0:
@@ -232,6 +235,7 @@ func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
 		current_gun_instance.clip_count = current_gun_instance.CLIP_SIZE
 		current_gun_instance.ammo = current_gun_instance.STARTING_AMMO
 		current_gun_instance.updateHUD()
+	emit_signal("playerLog", "Max Ammo")
 
 func equip_gun(_gun: PackedScene):
 	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
@@ -393,8 +397,17 @@ func set_grenade(_value : int):
 	emit_signal("grenade_change", grenade_count)
 
 func _set_money(_amount):
+	var previousAmount = money
 	money = _amount
 	emit_signal("money_change", money)
+	var difference = money - previousAmount
+	var plusOrMinus
+	if money >= 0:
+		plusOrMinus = "+ "
+	else:
+		plusOrMinus = "- "
+	var message = plusOrMinus + str(difference)
+	emit_signal("playerLog", message)
 
 func get_input_vector():
 	velocity = Vector2()
@@ -431,6 +444,7 @@ func _on_deathAnimation_finished():
 	gameOver()
 
 func gameOver():
+	emit_signal("playerLog", "You died")
 	emit_signal("game_over")
 	queue_free()
 
@@ -469,7 +483,6 @@ func _on_meleeAnimation_finished():
 
 func _on_staminaRegenTimer_timeout():
 	setStamina(stamina + 1)
-	print("added stamina")
 
 func _on_staminaDepletionRate_timeout():
 	setStamina(stamina - 1)

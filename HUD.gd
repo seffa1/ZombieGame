@@ -3,6 +3,14 @@ extends CanvasLayer
 var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
 var PERK_ALPHA_TOGGLE_VALUE = 50
 
+func updateLog(message: String):
+	print("LOG: " + message)
+	$playerLog.text = message
+	$logAnimation.play("showMessage")
+
+func _on_log_show_message_finished():
+	$playerLog.text = ""
+
 func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 #	print(str(clip_count) + ' / ' + str(CLIP_SIZE) + '          ' + str(ammo) + ' left')
 	$CLIP_SIZE.text = str(CLIP_SIZE)
