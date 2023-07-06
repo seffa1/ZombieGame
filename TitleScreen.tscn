@@ -130,29 +130,38 @@ text = "0
 "
 
 [node name="quit" type="Button" parent="CanvasLayer"]
-margin_left = 542.0
-margin_top = 453.0
-margin_right = 632.0
-margin_bottom = 473.0
+margin_left = 536.0
+margin_top = 430.0
+margin_right = 629.0
+margin_bottom = 450.0
 rect_scale = Vector2( 3, 3 )
 text = "QUIT"
 
+[node name="clearScores" type="Button" parent="CanvasLayer"]
+margin_left = 536.0
+margin_top = 512.0
+margin_right = 629.0
+margin_bottom = 532.0
+rect_scale = Vector2( 3, 3 )
+text = "RESET SCORE"
+
 [node name="start" type="Button" parent="CanvasLayer"]
-margin_left = 542.0
-margin_top = 274.0
-margin_right = 632.0
-margin_bottom = 294.0
+margin_left = 536.0
+margin_top = 256.0
+margin_right = 627.0
+margin_bottom = 276.0
 rect_scale = Vector2( 3, 3 )
 text = "START"
 
 [node name="load" type="Button" parent="CanvasLayer"]
-margin_left = 542.0
-margin_top = 364.0
-margin_right = 632.0
-margin_bottom = 384.0
+margin_left = 536.0
+margin_top = 344.0
+margin_right = 628.0
+margin_bottom = 364.0
 rect_scale = Vector2( 3, 3 )
 text = "LOAD"
 
 [connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/clearScores" to="." method="_on_clearScores_pressed"]
 [connection signal="pressed" from="CanvasLayer/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="CanvasLayer/load" to="." method="_on_load_pressed"]
