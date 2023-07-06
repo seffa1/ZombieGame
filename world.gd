@@ -11,14 +11,19 @@ var ZOMBIES_PER_LEVEL = {
 	"6": 1000
 }
 
-# Counters
-var current_level = 1
+const SAVE_DIR = "user://highscore/"
+
+# Zombie / player trackers
 var zombie_ids = {}  # Dict of zombie id's that are currently spawned in
 var zombies_left_to_spawn = 0  # Total zombies left to spawn
 var zombies_on_map = 0  # Current zombies on the screen
-
 var players = []
 
+# High Score counters
+var current_level = 1
+var bulletsFired = 0
+var bulletsHit = 0 
+var kills = 0
 
 func _ready():
 	for child in get_node("ZombieManager").get_children():
@@ -26,7 +31,6 @@ func _ready():
 			players.append(child)
 
 	start_round(current_level)
-	
 	
 func start_round(level):
 	kill_all_zombies()
@@ -66,6 +70,7 @@ func _on_zombie_death(id):
 	# things at the same time and thus triggers the death signal twice
 	if id in zombie_ids:
 		zombie_ids.erase(id)
+		kills += 1
 		zombies_on_map -= 1 
 		$SpawnManager.zombies_on_map = zombies_on_map
 		$HUD/zombies_on_map.text = str(zombies_on_map)
@@ -87,7 +92,6 @@ func _on_spawner_ready(spawner, spawner_position):
 		assert(false, "There are no navigation nodes for zombie spawner to target.")
 	spawner.target_window = selected_window_node
 			
-			
 func kill_all_zombies():
 	# Makes sure there arent any zombies left after the first round
 	# the id system should have fixed this but this is just in case
@@ -98,6 +102,7 @@ func kill_all_zombies():
 func _on_gun_shoot(bullet, _position, _direction, _damage, _player_shooting):
 	var b = bullet.instance()
 	add_child(b)
+	bulletsFired += 1
 	b.init(_damage, _player_shooting)
 	b.start(_position, _direction)
 
@@ -128,21 +133,90 @@ func _on_pickup_spawn(_global_position):
 	p.global_position = _global_position
 	add_child(p)
 	
-func _on_Player_game_over():
-	# kill all zombies and the player
-	for body in get_node("ZombieManager").get_children():
-		body.queue_free()
-	# make sure the spawner doesnt try to spawn anything
-	zombies_left_to_spawn = 0
-	# go to game over screen
-	get_tree().change_scene("res://GameOver.tscn")
-
-
 func _on_Player_playerDeath():
 	print("player death - stopping zombies")
 	# get all zombies and change their state
 	for body in get_node("ZombieManager").get_children():
 		if body and body.get_filename() != "res://Player.tscn":
-			# TODO - set zombies state to "playerDeath"
-			# TODO - make that state just play the zombie idle animation
-			return
+			body.state = 'playerDeath'
+	
+func updateHighScore():
+	"""
+	Load the current high score data if it exsits. Compare it to the currect score. 
+	If we got a new high score returns true, else, 
+	"""
+	var newHighScore = false
+	
+	var dataToSave
+	
+	# Load old data
+	# This is the built in user directory at: Project -> Open User Data
+	var save_path = SAVE_DIR + "highscore.dat"
+	
+	var oldSaveData
+	var file = File.new()
+	if file.file_exists(save_path):
+		var error = file.open(save_path, File.READ)
+		print("high score save file found")
+		
+		if error == OK:
+			oldSaveData = file.get_var()
+			file.close()
+			print("high score game data loaded")
+			
+			# if we got a new highest level, save current game data
+			if current_level > oldSaveData["current_level"]:
+				newHighScore = true
+		
+			# if we got the save level but more kills, save current game data
+			elif current_level == oldSaveData["current_level"] and kills > oldSaveData["kills"]:
+				newHighScore = true
+	else:
+		# if there is no save file we'll assume its a new highscore
+		newHighScore = true
+		
+	if newHighScore:
+		print("New highscore, saving score...")
+		# Save new high score data
+		dataToSave = {
+			"current_level": current_level,
+			"bulletsFired": bulletsFired,
+			"bulletsHit": bulletsHit,
+			"kills": kills
+		}
+		var dir = Directory.new()
+	
+		if !dir.dir_exists(SAVE_DIR):
+			dir.make_dir_recursive(SAVE_DIR)
+		
+		var fileWrite = File.new()
+		var error = fileWrite.open(save_path, File.WRITE)
+		assert(error == OK, "High score save file could not be opened")
+		if error == OK:
+			fileWrite.store_var(dataToSave)
+			fileWrite.close()
+			print("high score data saved")
+		
+	return newHighScore
+
+func _on_Player_game_over():
+	# kill all zombies and the player
+	for body in get_node("ZombieManager").get_children():
+		body.queue_free()
+	
+	# make sure the spawner doesnt try to spawn anything
+	zombies_left_to_spawn = 0
+	
+	# updates high score and returns if we got a new high score
+	var newHighScore = updateHighScore()
+	
+	# go to game over screen or high score screen
+	if newHighScore:
+		# TODO - high score scene
+		get_tree().change_scene("res://GameOver.tscn")
+	else:
+		get_tree().change_scene("res://GameOver.tscn")
+
+func _on_zombie_bullet_hit():
+	bulletsHit += 1
+

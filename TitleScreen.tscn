@@ -34,37 +34,100 @@ text = "stay alive at all cost..."
 align = 1
 
 [node name="highScore" type="Label" parent="CanvasLayer"]
-margin_left = -46.0
+margin_left = -37.0
 margin_top = 242.0
-margin_right = 92.0
+margin_right = 101.0
 margin_bottom = 273.0
 rect_scale = Vector2( 3.22472, 3.55261 )
-text = "HIGH SCORE:"
+text = "-- HIGH SCORE --"
 align = 1
 
 [node name="highestRound" type="Label" parent="CanvasLayer"]
-margin_left = 43.0001
-margin_top = 311.0
-margin_right = 181.0
-margin_bottom = 342.0
+margin_left = 44.0
+margin_top = 326.0
+margin_right = 182.0
+margin_bottom = 357.0
 rect_scale = Vector2( 2.77156, 2.461 )
 text = "Round:"
 
-[node name="mostKills" type="Label" parent="CanvasLayer"]
-margin_left = 43.0
-margin_top = 387.0
-margin_right = 181.0
-margin_bottom = 418.0
+[node name="highestRoundVal" type="Label" parent="CanvasLayer"]
+margin_left = 186.0
+margin_top = 326.0
+margin_right = 264.0
+margin_bottom = 357.0
 rect_scale = Vector2( 2.77156, 2.461 )
-text = "Kills"
+text = "0
+"
+
+[node name="mostKills" type="Label" parent="CanvasLayer"]
+margin_left = 44.0
+margin_top = 377.0
+margin_right = 182.0
+margin_bottom = 408.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Kills:"
+
+[node name="mostKillsVal" type="Label" parent="CanvasLayer"]
+margin_left = 159.0
+margin_top = 377.0
+margin_right = 297.0
+margin_bottom = 408.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "0
+"
 
 [node name="roundsFired" type="Label" parent="CanvasLayer"]
-margin_left = 43.0
-margin_top = 461.0
-margin_right = 181.0
-margin_bottom = 492.0
+margin_left = 44.0
+margin_top = 431.0
+margin_right = 182.0
+margin_bottom = 462.0
 rect_scale = Vector2( 2.77156, 2.461 )
 text = "Shots Fired:"
+
+[node name="roundsFiredVal" type="Label" parent="CanvasLayer"]
+margin_left = 274.0
+margin_top = 431.0
+margin_right = 412.0
+margin_bottom = 462.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "0
+"
+
+[node name="roundsHit" type="Label" parent="CanvasLayer"]
+margin_left = 44.0
+margin_top = 478.0
+margin_right = 182.0
+margin_bottom = 509.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Shots Hit:"
+
+[node name="roundsHitVal" type="Label" parent="CanvasLayer"]
+margin_left = 233.0
+margin_top = 478.0
+margin_right = 371.0
+margin_bottom = 509.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "0
+"
+
+[node name="Accuracy" type="Label" parent="CanvasLayer"]
+margin_left = 44.0
+margin_top = 529.0
+margin_right = 182.0
+margin_bottom = 560.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "Accuracy:
+"
+
+[node name="AccuracyVal" type="Label" parent="CanvasLayer"]
+margin_left = 233.0
+margin_top = 529.0
+margin_right = 371.0
+margin_bottom = 577.0
+rect_scale = Vector2( 2.77156, 2.461 )
+text = "0
+
+"
 
 [node name="quit" type="Button" parent="CanvasLayer"]
 margin_left = 542.0

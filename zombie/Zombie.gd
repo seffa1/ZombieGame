@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal die_signal
 signal spawn_pickup
+signal zombieBulletHit
 
 # Constants
 var BASE_WALKING_SPEED = 150
@@ -63,6 +64,7 @@ func _ready():
 	var world = get_node('/root/World')
 	self.connect("die_signal", world, '_on_zombie_death')
 	self.connect("spawn_pickup", world, '_on_pickup_spawn')
+	self.connect("zombieBulletHit", world, '_on_zombie_bullet_hit')
 
 	# Setup the context array
 	interest.resize(num_rays)
@@ -108,6 +110,10 @@ func set_state(_state):
 
 func _physics_process(delta):
 	if state == 'die':
+		return
+		
+	if state == 'playerDeath':
+		animation_state_machine.travel('zombie_walk')
 		return
 	
 	find_closest_navigation_node()
@@ -265,6 +271,7 @@ func set_danger():
 			
 func choose_direction():
 	# Dont update the direction if we are doing a wall bounce
+	# Only on if WALL_BOUNCE_ENABLED is true
 	if wallBounce:
 		return
 	# Eliminate interest in slots with danger
@@ -290,6 +297,7 @@ func choose_direction():
 	
 	# This happens if our target is on the other side of a wall
 	# so we 'push' him away from the wall for a second
+	# only works if WALL_BOUNCE_ENABLED is true
 	var targetVector = (targetPosition - global_position).normalized()
 	if chosen_dir.dot(targetVector) < 0:
 #		print("Chosen direction away from target")
@@ -327,6 +335,7 @@ func closeToTarget():
 func take_damage(amount, player_shooting):
 #	print(amount)
 	health -= amount
+	emit_signal("zombieBulletHit")
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD
 		dying()
