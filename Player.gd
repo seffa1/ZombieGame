@@ -13,11 +13,19 @@ signal playerDeath
 # var a = 2
 # var b = "text"
 var velocity  = Vector2()
-var WALK_SPEED = 300
-var RUN_SPEED = 1200
+var WALK_SPEED = 200
+var RUN_SPEED = 350
 var movement_speed
 var current_rooms = {}  # rooms the player is in. room_name: room
 var closest_navigation_node
+var stamina = 100
+var MAX_STAMINA = 100
+var SPRINT_OR_DASH_TIME_THRESHOLD = .3 # (second: if you let go of run within this time, you wont run, but instead dash
+var pressedRun = false
+var dashing = false
+var DASH_TIME = .2
+var DASH_SPEED = 1000
+var sprintOrRunThreshold = false
 
 export (PackedScene) var STARTING_GRENADE
 
@@ -66,10 +74,6 @@ var chosen_zombie
 
 # Perks
 var jugernaut = false setget set_jugernaut
-var double_tap = false
-var stamina_up = false
-var revive = false
-var speed_cola = false
 
 func set_jugernaut(_value : bool):
 	jugernaut = _value
@@ -132,12 +136,36 @@ func _physics_process(delta):
 				
 	if Input.is_action_just_pressed("switch_weapons"):
 		switch_weapons()
-	
+		
+	if Input.is_action_just_pressed("run"):
+		# the first time you press run, start the dash-or-run timer
+		print("starting threshold timer")
+		$sprintOrDashTimer.start(SPRINT_OR_DASH_TIME_THRESHOLD)
+		sprintOrRunThreshold = true
+		
+	if Input.is_action_just_released("run"):
+		# if we release run during the threshold period, then we're dashing
+		print("run release, threshold is " + str(sprintOrRunThreshold))
+		if sprintOrRunThreshold:
+			dashing = true
+		else:
+			dashing = false
+
 	if Input.is_action_pressed("run"):
-		movement_speed = RUN_SPEED
+		# dont start sprinting until after the threshold
+		if !sprintOrRunThreshold:
+			movement_speed = RUN_SPEED
+		else:
+			movement_speed = WALK_SPEED
 	else:
-		movement_speed = WALK_SPEED
-	
+		if dashing:
+			movement_speed = DASH_SPEED
+			if $dashTimer.is_stopped():
+				print("starting dash timer")
+				$dashTimer.start(DASH_TIME)
+		else:
+			movement_speed = WALK_SPEED
+
 	velocity = get_input_vector()
 	
 	# If we are not shooting or meleeing, choose an idle or walking animation
@@ -157,6 +185,13 @@ func _physics_process(delta):
 		
 	look_at(get_global_mouse_position())
 	velocity = move_and_slide(velocity.normalized() * movement_speed)
+
+func _on_dashTimer_timeout():
+	print("dashing to false")
+	dashing = false
+
+func _on_sprintOrDashTimer_timeout():
+	sprintOrRunThreshold = false
 
 func reload():
 	current_gun_instance.reload()
@@ -340,8 +375,6 @@ func find_closest_navigation_node():
 				distance_to_node = distance
 				closest_navigation_node = navigation_node
 
-
-
 func set_grenade(_value : int):
 	grenade_count = _value
 	if grenade_count > MAX_GRENADE_COUNT:
@@ -353,8 +386,6 @@ func set_grenade(_value : int):
 func _set_money(_amount):
 	money = _amount
 	emit_signal("money_change", money)
-	
-
 
 func get_input_vector():
 	velocity = Vector2()
@@ -433,3 +464,9 @@ func _on_MeleeDetector_body_exited(body):
 func _on_meleeAnimation_finished():
 	can_melee = true
 	can_throw_grenade = true
+
+
+
+
+
+
