@@ -1,6 +1,7 @@
 extends Node2D
 
 var messagePopup = preload("res://messagePopup.tscn")
+var damagePopup = preload("res://damagePopup.tscn")
 
 # Constants
 var ZOMBIES_PER_LEVEL = {
@@ -218,16 +219,26 @@ func _on_Player_game_over():
 	else:
 		get_tree().change_scene("res://GameOver.tscn")
 
+func _on_damage_popup(message, position):
+	""" 
+	Creates new instance of our money popup, sets its message, position, and attaches it to world
+	"""
+	if message == "":
+		return
+	var popUpMessage = damagePopup.instance()
+	add_child(popUpMessage)
+	popUpMessage.init(message, position)
+
 func _on_money_popup(message, position):
+	""" 
+	Creates new instance of our money popup, sets its message, position, and attaches it to world
+	"""
 	if message == "":
 		return
 	var popUpMessage = messagePopup.instance()
-	
-	print("adding message")
+
 	add_child(popUpMessage)
-	print("initing message")
 	popUpMessage.init(message, position)
-	print("POPUP: " + message)
 
 func _on_zombie_bullet_hit():
 	bulletsHit += 1

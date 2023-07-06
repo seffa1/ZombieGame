@@ -43,7 +43,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=1]
 resource_name = "showMessage"
-length = 0.6
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Label:rect_position")
 tracks/0/interp = 1
@@ -51,10 +51,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 9 ), Vector2( 0, -2 ) ]
+"values": [ Vector2( 0, 9 ), Vector2( -27, -14 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Label:modulate")
@@ -63,7 +63,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6 ),
+"times": PoolRealArray( 0, 0.1, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -75,7 +75,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.6 ),
+"times": PoolRealArray( 0.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -83,7 +83,7 @@ tracks/2/keys = {
 } ]
 }
 
-[node name="MessagePopup" type="Control"]
+[node name="DamagePopup" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
@@ -93,8 +93,11 @@ modulate = Color( 1, 1, 1, 0 )
 margin_top = 9.0
 margin_right = 44.0
 margin_bottom = 23.0
-rect_scale = Vector2( 4.18023, 3.8906 )
-text = "+ $125"
+rect_scale = Vector2( 3.24641, 2.37051 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "10"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )

@@ -10,8 +10,5 @@ func init(message, position):
 	$Label.text = message
 	$AnimationPlayer.play("showMessage")
 
-
-	
-
 func showMessageComplete():
 	queue_free()
