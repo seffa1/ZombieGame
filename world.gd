@@ -129,14 +129,14 @@ func _on_max_ammo():
 		player.refill_ammo(true, true)
 		
 func _on_pickup_spawn(_global_position):
-	print("Adding pickup to world")
+	#print("Adding pickup to world")
 	var pickup = GLOBALS.choose_drop()
 	var p = pickup.instance()
 	p.global_position = _global_position
 	add_child(p)
 	
 func _on_Player_playerDeath():
-	print("player death - stopping zombies")
+	#print("player death - stopping zombies")
 	# get all zombies and change their state
 	for body in get_node("ZombieManager").get_children():
 		if body and body.get_filename() != "res://Player.tscn":
@@ -255,3 +255,6 @@ func _on_Player_interactablesUpdated(interactables: Array):
 
 func _on_Player_playerLog(message: String):
 	$HUD.updateLog(message)
+
+func _on_camera_shake(intensity, duration):
+	$screenShaker.shake(intensity, duration)

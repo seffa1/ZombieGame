@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://PauseScreen.tscn" type="PackedScene" id=23]
 [ext_resource path="res://TitleScreen.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/light.png" type="Texture" id=25]
+[ext_resource path="res://screenShaker.tscn" type="PackedScene" id=26]
 
 [sub_resource type="Animation" id=22]
 length = 0.001
@@ -748,6 +749,8 @@ visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
+[node name="screenShaker" parent="." instance=ExtResource( 26 )]
+
 [connection signal="game_over" from="ZombieManager/Player" to="." method="_on_Player_game_over"]
 [connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
 [connection signal="gun_change" from="ZombieManager/Player" to="HUD" method="_on_Player_gun_change"]
@@ -758,6 +761,7 @@ visible = false
 [connection signal="playerDeath" from="ZombieManager/Player" to="." method="_on_Player_playerDeath"]
 [connection signal="playerLog" from="ZombieManager/Player" to="." method="_on_Player_playerLog"]
 [connection signal="playerStaminaChange" from="ZombieManager/Player" to="." method="_on_Player_playerStaminaChange"]
+[connection signal="shakeCamera" from="ZombieManager/Player" to="." method="_on_camera_shake"]
 [connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
 
 [editable path="ZombieManager/Player"]

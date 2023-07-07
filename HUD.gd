@@ -4,7 +4,7 @@ var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
 var PERK_ALPHA_TOGGLE_VALUE = 50
 
 func updateLog(message: String):
-	print("LOG: " + message)
+	# print("LOG: " + message)
 	$playerLog.text = message
 	$logAnimation.play("showMessage")
 
@@ -35,7 +35,7 @@ func _on_Player_grenade_change(_value):
 	$Grenades/grenade_count.text = str(_value)
 	
 func _on_Player_jugernaut_change(_value : bool):
-	print("Player jug change")
+	# print("Player jug change")
 	if _value:
 		$HBoxContainer/juggernaut.showPerk(true)
 	else:

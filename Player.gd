@@ -11,6 +11,7 @@ signal playerDeath
 signal playerStaminaChange
 signal interactablesUpdated
 signal playerLog
+signal shakeCamera
 
 # Movement
 var velocity  = Vector2()
@@ -97,6 +98,7 @@ func _draw():
 
 func _ready():
 	GLOBALS.player = self
+	GLOBALS.camera = $Camera2D
 	emit_signal("health_change", health, max_health)
 	emit_signal("money_change", money)
 	emit_signal("grenade_change", grenade_count)
@@ -432,6 +434,8 @@ func heal():
 func take_damage(amount):
 	can_heal = false
 	health -= amount
+	emit_signal("shakeCamera", 20, .1)
+	
 	emit_signal("health_change", health, max_health)
 	
 	if health <= 0:

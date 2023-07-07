@@ -156,7 +156,7 @@ func _physics_process(delta):
 	if state == "attack":
 		if can_attack:
 			can_attack = false
-			print("attack")
+			# print("attack")
 			animation_state_machine.travel('zombie_attack')
 
 func attack_finished():

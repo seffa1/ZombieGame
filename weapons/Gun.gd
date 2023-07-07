@@ -2,6 +2,7 @@ extends Node2D
 
 signal shoot
 signal updateHUD
+signal shakeScreen
 export (PackedScene) var Bullet
 
 # Declare member variables here. Examples:
@@ -22,6 +23,7 @@ func _ready():
 	# Connect this guns shoot method to the world
 	var world = get_node('/root/World')
 	self.connect("shoot", world, '_on_gun_shoot')
+	self.connect("shakeScreen", world, '_on_camera_shake')
 	
 	# Connec the updateHUD signal to the HUD
 	var hud = get_node('/root/World/HUD')
@@ -46,6 +48,10 @@ func shoot():
 	
 	# Update the clip count
 	clip_count -= 1
+	
+	# shake screen
+	emit_signal("shakeScreen", 5, .1)
+	
 	updateHUD()
 		
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://weapons/Grenade.gd" type="Script" id=1]
+[ext_resource path="res://screenShaker.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 45.2548
@@ -104,6 +105,8 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
 shape = SubResource( 4 )
 disabled = true
+
+[node name="screenShaker" parent="." instance=ExtResource( 2 )]
 
 [connection signal="timeout" from="FuseTimer" to="." method="_on_FuseTimer_timeout"]
 [connection signal="body_entered" from="hurt_box" to="." method="_on_hurt_box_body_entered"]

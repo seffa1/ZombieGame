@@ -16,7 +16,7 @@ func interact(_player):
 		if _player.money < cost:
 			print("You dont have enough money to buy this gun.")
 		else:
-			print("You bought a gun " + gun_name)
+			# print("You bought a gun " + gun_name)
 			var gun_scene : PackedScene = gun
 			
 			_player.equip_gun(gun_scene)
