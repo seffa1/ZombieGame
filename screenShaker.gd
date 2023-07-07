@@ -30,7 +30,6 @@ func _ready():
 	camera = GLOBALS.camera
 	
 func shake(intensity, duration):
-	print("SHAKE TRIGGERED")
 	
 	# Set the shake parameters
 	if intensity > camera_shake_intensity and duration > camera_shake_duration:
