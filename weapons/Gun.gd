@@ -1,5 +1,7 @@
 extends Node2D
 
+var muzzleflash = preload("res://muzzleFlash.tscn")
+
 signal shoot
 signal updateHUD
 signal shakeScreen
@@ -46,6 +48,12 @@ func shoot():
 	var player_shooting = get_parent()
 	emit_signal('shoot', Bullet, $Muzzle.global_position, dir, damage, player_shooting)
 	
+	# spawn a muzzle flash, set position, rotation
+	var muzzleFlash_instance = muzzleflash.instance()
+	get_tree().current_scene.add_child(muzzleFlash_instance)
+	muzzleFlash_instance.global_position = $Muzzle.global_position
+	muzzleFlash_instance.rotation = dir
+
 	# Update the clip count
 	clip_count -= 1
 	
