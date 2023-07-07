@@ -339,7 +339,11 @@ func closeToTarget():
 func take_damage(amount, player_shooting):
 #	print(amount)
 	health -= amount
-	emit_signal("damagePopup", str(amount), global_position)
+	var messagePosition = global_position
+	randomize()
+	messagePosition.y -= rand_range(0, 30)
+	messagePosition.x += rand_range(-30, 30)
+	emit_signal("damagePopup", str(amount), messagePosition)
 	emit_signal("zombieBulletHit")
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD

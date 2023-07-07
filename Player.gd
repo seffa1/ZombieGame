@@ -15,7 +15,7 @@ signal playerLog
 # Movement
 var velocity  = Vector2()
 var WALK_SPEED = 170
-var RUN_SPEED = 375
+var RUN_SPEED = 395
 var movement_speed
 var current_rooms = {}  # rooms the player is in. room_name: room
 var closest_navigation_node
@@ -25,7 +25,7 @@ var SPRINT_OR_DASH_TIME_THRESHOLD = .2 # (second: if you let go of run within th
 var pressedRun = false
 var dashing = false
 var DASH_TIME = .2
-var DASH_SPEED = 800
+var DASH_SPEED = 900
 var sprintOrRunThreshold = false
 var STAMINA_REGENERATION_RATE = .05 # seconds / point depleted (smaller the number, faster the regeneration)
 

@@ -81,12 +81,12 @@ region_rect = Rect2( 1440, 2329, 111, 110 )
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 position = Vector2( 1.90735e-06, 1.90735e-06 )
-scale = Vector2( 0.06, 0.06 )
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 
 [node name="powerUp" type="Sprite" parent="."]
 position = Vector2( -2.38419e-07, -3.57628e-07 )
-scale = Vector2( 0.1761, 0.1761 )
+scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]

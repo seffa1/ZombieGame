@@ -7,7 +7,14 @@ var MONEY_FOR_REPAIR = 30
 onready var board_count = MAX_BOARD_COUNT
 var can_be_repaired = true
 var BREAK_ANIMATION_STEP = .1
+signal playerLog
+signal moneyPopup
+var interactableName = "Repair Window"
 
+func _ready():
+	var world = get_node('/root/World')
+	self.connect("playerLog", world, '_on_Player_playerLog')
+	self.connect("moneyPopup", world, '_on_money_popup')
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -40,15 +47,23 @@ func interact(_player):
 		
 		if _player.window_repairs_this_round < _player.MAX_WINDOW_REPAIRS_PER_ROUND:
 			_player.money += MONEY_FOR_REPAIR
+			emit_signal("playerLog", "Repairing window")
+			var messagePosition = global_position
+			var message = "+ $" + str(MONEY_FOR_REPAIR)
+			emit_signal("moneyPopup", message, messagePosition)
 		_player.window_repairs_this_round += 1
-		
 		$AnimationPlayer.play("repair")
+	else:
+		if $playerLogTimer.is_stopped():
+			emit_signal("playerLog", "Already repaired")
+			$playerLogTimer.start(1)
 
 func repair_board_animation_finished():
 	board_count += 1
 	can_be_repaired = true
 	if board_count > MAX_BOARD_COUNT:
 		board_count = MAX_BOARD_COUNT
+	# jumps to a frame in the break animation and then stops it
 	$breakAnimation.play("break")
 	$breakAnimation.seek( (MAX_BOARD_COUNT - board_count - 1) * BREAK_ANIMATION_STEP, true )
 	$breakAnimation.stop(false)

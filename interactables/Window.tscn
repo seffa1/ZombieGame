@@ -171,3 +171,6 @@ margin_right = 191.0
 margin_bottom = 9.0
 rect_pivot_offset = Vector2( 96, 0 )
 color = Color( 0.47451, 0.203922, 0.0862745, 1 )
+
+[node name="playerLogTimer" type="Timer" parent="."]
+one_shot = true
