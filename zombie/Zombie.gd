@@ -387,3 +387,11 @@ func _on_WindowDetector_body_entered(body):
 
 func _on_WindowDetector_body_exited(body):
 	attackable_windows.erase(body)
+
+func _onZombieDeathAnimation():
+	"""
+	Triggered by death animation. Disabled hit and hurt boxes
+	"""
+	$HurtBox/CollisionShape2D.disabled = true
+	$CollisionShape2D.disabled = true
+

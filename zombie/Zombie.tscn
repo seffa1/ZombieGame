@@ -438,9 +438,12 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 3 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.3, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
+"args": [  ],
+"method": "_onZombieDeathAnimation"
+}, {
 "args": [  ],
 "method": "die"
 } ]

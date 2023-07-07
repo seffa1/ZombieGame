@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-signal shakeCamera
+signal shakeScreen
 
 # Explode
 var FUSE_TIMER = 3
@@ -18,7 +18,8 @@ func _ready():
 	self.connect("shakeScreen", world, '_on_camera_shake')
 
 func _on_FuseTimer_timeout():
-	emit_signal("shakeCamera", 100, .5)
+	print("Grenade exploding!")
+	emit_signal("shakeScreen", 50, .5)
 	$AnimationPlayer.play("explode")
 
 func _on_explode_animation_finished():
