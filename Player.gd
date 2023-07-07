@@ -96,13 +96,17 @@ func _draw():
 	draw_line((grenade_throw_velocity).rotated(-rotation), Vector2(), Color(0,0,0), 1, true)
 
 func _ready():
+	GLOBALS.player = self
 	emit_signal("health_change", health, max_health)
 	emit_signal("money_change", money)
 	emit_signal("grenade_change", grenade_count)
 	current_gun_instance = STARTING_GUN.instance()
 	add_child(current_gun_instance)
 	emit_signal("gun_change", current_gun_instance.GUN_NAME)
-	
+
+func _exit_tree():
+	GLOBALS.player = null
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	
@@ -313,7 +317,7 @@ func switch_weapons():
 
 func melee_do_damage():
 	if chosen_zombie != null and is_instance_valid(chosen_zombie):
-		chosen_zombie.take_damage(melee_damage, self)
+		chosen_zombie.take_damage(melee_damage, self, "melee")
 	velocity = Vector2.ZERO
 
 func melee():

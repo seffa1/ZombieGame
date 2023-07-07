@@ -36,6 +36,6 @@ func _on_Timer_timeout():
 func _on_Bullet_body_entered(body):
 	# Damage an enemy
 	if body.has_method('take_damage'):
-		body.take_damage(bullet_damage, player_shooting)
+		body.take_damage(bullet_damage, player_shooting, "bullet")
 		
 	queue_free()

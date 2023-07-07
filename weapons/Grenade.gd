@@ -23,5 +23,5 @@ func _on_explode_animation_finished():
 func _on_hurt_box_body_entered(body):
 	assert(player, "Player not set for this grenade. ")
 	if body.name != "player" and body.has_method("take_damage"):
-		body.take_damage(DAMAGE, player)
+		body.take_damage(DAMAGE, player, "grenade")
 

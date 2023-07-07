@@ -17,6 +17,7 @@ var ZOMBIE_MONEY_REWARD = 125
 
 # Animation stuff
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
+var blood = preload("res://blood.tscn")
 
 # TODO: Make this an ENUM
 var state
@@ -336,15 +337,28 @@ func closeToTarget():
 	
 	return (targetPosition - global_position).length() < CLOSE_TO_TARGET
 
-func take_damage(amount, player_shooting):
-#	print(amount)
+func take_damage(amount, player_shooting, type):
+	"""
+	type is either "bullet", "grenade", "melee" and effects the blood particles
+	""" 
 	health -= amount
+	
+	# spawn blood particles
+	var blood_instance = blood.instance()
+	get_tree().current_scene.add_child(blood_instance)
+	blood_instance.global_position = global_position
+	blood_instance.rotation = global_position.angle_to_point(GLOBALS.player.global_position)
+	blood_instance.startEmitting(type)
+	
+	# spawn damage popup
 	var messagePosition = global_position
 	randomize()
 	messagePosition.y -= rand_range(0, 30)
 	messagePosition.x += rand_range(-30, 30)
 	emit_signal("damagePopup", str(amount), messagePosition)
 	emit_signal("zombieBulletHit")
+	
+	# check if dead
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD
 		var message = "+ $" + str(ZOMBIE_MONEY_REWARD)
