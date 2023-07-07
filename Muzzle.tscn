@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="Muzzle" type="Position2D"]
+position = Vector2( 64, 32 )
+__meta__ = {
+"_gizmo_extents_": 19.5
+}
