@@ -7,4 +7,4 @@ func _ready():
 
 
 func _on_animation_finished():
-	return
+	queue_free()

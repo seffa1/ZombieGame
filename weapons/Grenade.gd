@@ -2,6 +2,8 @@ extends RigidBody2D
 
 signal shakeScreen
 
+var grenadeflash = preload("res://muzzleFlash.tscn")
+
 # Explode
 var FUSE_TIMER = 3
 var DAMAGE = 6
@@ -21,6 +23,12 @@ func _on_FuseTimer_timeout():
 	print("Grenade exploding!")
 	emit_signal("shakeScreen", 50, .5)
 	$AnimationPlayer.play("explode")
+	
+	# spawn a grenade flash and set position
+	var grenadeFlash_instance = grenadeflash.instance()
+	get_tree().current_scene.add_child(grenadeFlash_instance)
+	grenadeFlash_instance.global_position = global_position
+
 
 func _on_explode_animation_finished():
 	queue_free()

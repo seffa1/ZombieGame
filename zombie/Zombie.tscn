@@ -562,7 +562,7 @@ end_node = "zombie_death"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
 [node name="Zombie" type="KinematicBody2D"]
-z_index = 1
+z_index = 2
 z_as_relative = false
 collision_mask = 6
 script = ExtResource( 2 )

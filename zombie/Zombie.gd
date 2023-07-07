@@ -394,4 +394,5 @@ func _onZombieDeathAnimation():
 	"""
 	$HurtBox/CollisionShape2D.disabled = true
 	$CollisionShape2D.disabled = true
+	z_index = 1  # so walking zombies go over dead ones
 
