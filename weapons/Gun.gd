@@ -52,6 +52,9 @@ func shoot():
 	var muzzleFlash_instance = muzzleflash.instance()
 	get_tree().current_scene.add_child(muzzleFlash_instance)
 	muzzleFlash_instance.global_position = $Muzzle.global_position
+	
+	# emit laser 
+	$Muzzle/LaserBeam2D.is_casting = true
 
 	# Update the clip count
 	clip_count -= 1
