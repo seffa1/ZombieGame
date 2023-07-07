@@ -48,11 +48,10 @@ func shoot():
 	var player_shooting = get_parent()
 	emit_signal('shoot', Bullet, $Muzzle.global_position, dir, damage, player_shooting)
 	
-	# spawn a muzzle flash, set position, rotation
+	# spawn a muzzle flash and set position
 	var muzzleFlash_instance = muzzleflash.instance()
 	get_tree().current_scene.add_child(muzzleFlash_instance)
 	muzzleFlash_instance.global_position = $Muzzle.global_position
-	muzzleFlash_instance.rotation = dir
 
 	# Update the clip count
 	clip_count -= 1

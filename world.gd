@@ -127,6 +127,7 @@ func _activate_spawners(spawner_names : Array):
 func _on_max_ammo():
 	for player in players:
 		player.refill_ammo(true, true)
+		_on_money_popup("Max Ammo", player.global_position)
 		
 func _on_pickup_spawn(_global_position):
 	#print("Adding pickup to world")

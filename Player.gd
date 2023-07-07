@@ -60,7 +60,7 @@ var single_fire : bool = true  # gets set during equip / switch weapons
 var current_gun_instance : Node2D
 var other_gun_instance : Node2D
 var can_switch_weapons = true
-var can_shoot = true  # Controller by gun shoot animations
+var can_shoot = true  # Controlled by gun shoot animations
 
 # Grenades
 var MAX_GRENADE_COUNT = 10
