@@ -13,6 +13,8 @@ var ZOMBIES_PER_LEVEL = {
 	"6": 1000
 }
 
+export var NO_ZOMBIES = false
+
 const SAVE_DIR = "user://highscore/"
 
 # Zombie / player trackers
@@ -31,8 +33,9 @@ func _ready():
 	for child in get_node("ZombieManager").get_children():
 		if child.get_filename() == "res://Player.tscn":
 			players.append(child)
-
-	start_round(current_level)
+	# for testing purposes
+	if !NO_ZOMBIES:
+		start_round(current_level)
 	
 func start_round(level):
 	kill_all_zombies()

@@ -9,3 +9,6 @@ script = ExtResource( 3 )
 Bullet = ExtResource( 1 )
 STARTING_AMMO = 250
 GUN_NAME = "RIFFLE"
+
+[editable path="Muzzle"]
+[editable path="Muzzle/LaserBeam2D"]

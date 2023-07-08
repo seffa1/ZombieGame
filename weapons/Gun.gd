@@ -20,6 +20,11 @@ export var RELOAD_SPEED = 1
 onready var ammo = STARTING_AMMO setget set_ammo
 onready var clip_count = CLIP_SIZE setget set_clip_count
 
+# Check for laser toggle
+func _process(delta):
+	if Input.is_action_just_pressed("toggleLaser"):
+		$Muzzle/LaserSite.is_casting = !$Muzzle/LaserSite.is_casting
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Connect this guns shoot method to the world
@@ -53,9 +58,6 @@ func shoot():
 	get_tree().current_scene.add_child(muzzleFlash_instance)
 	muzzleFlash_instance.global_position = $Muzzle.global_position
 	
-	# emit laser 
-	$Muzzle/LaserBeam2D.is_casting = true
-
 	# Update the clip count
 	clip_count -= 1
 	

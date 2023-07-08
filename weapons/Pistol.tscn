@@ -13,3 +13,6 @@ STARTING_AMMO = 30
 SINGLE_FIRE = true
 GUN_NAME = "PISTOL"
 RELOAD_SPEED = 3
+
+[editable path="Muzzle"]
+[editable path="Muzzle/LaserBeam2D"]
