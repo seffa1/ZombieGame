@@ -203,7 +203,7 @@ func updateHighScore():
 	return newHighScore
 
 func _on_Player_game_over():
-	# kill all zombies and the player
+	# kill all zombies and the players
 	for body in get_node("ZombieManager").get_children():
 		body.queue_free()
 	
