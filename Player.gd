@@ -86,6 +86,9 @@ func set_jugernaut(_value : bool):
 	jugernaut = _value
 	if jugernaut:
 		max_health = 5
+		# play sound
+		$powerUp.play()
+		
 		emit_signal("playerLog", "Juggernaut aquired, max health increased")
 	else:
 		max_health = 3
@@ -237,6 +240,9 @@ func shoot():
 		current_gun_instance.playEmptyClipSound()
 
 func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
+	# play sound
+	$equipGun.play()
+	
 	if refillOtherGun and other_gun_instance:
 		other_gun_instance.clip_count = other_gun_instance.CLIP_SIZE
 		other_gun_instance.ammo = other_gun_instance.STARTING_AMMO
@@ -248,6 +254,9 @@ func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
 	emit_signal("playerLog", "Max Ammo")
 
 func equip_gun(_gun: PackedScene):
+	# play sound
+	$equipGun.play()
+	
 	# If we dont have a second gun, make the current gun our 'other gun' and equip the new one
 	if other_gun_instance == null and current_gun_instance != null:
 	

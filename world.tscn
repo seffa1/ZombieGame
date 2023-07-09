@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://screenShaker.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Fire.tscn" type="PackedScene" id=27]
 [ext_resource path="res://LightFlickering2.tscn" type="PackedScene" id=28]
+[ext_resource path="res://pickups/Money.tscn" type="PackedScene" id=29]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
@@ -366,10 +367,12 @@ glow_hdr_scale = 1.97
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
-NO_ZOMBIES = true
 
 [node name="Ambient" type="CanvasModulate" parent="."]
 color = Color( 0.247059, 0.14902, 0.14902, 1 )
+
+[node name="Money" parent="." instance=ExtResource( 29 )]
+position = Vector2( -647, 686 )
 
 [node name="Fire" parent="." instance=ExtResource( 27 )]
 modulate = Color( 1, 1, 1, 0.431373 )

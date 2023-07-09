@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_Game_Item_Power_Up_4_Sound_FX_Arcade_Synth_Bling_Electronic_Casino_Kids_Mobile_Positive_Achievement_Score_Special.wav-4806b1b78d4213ad01d23c612c1c6ffc.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fx/ESM_Game_Item_Power_Up_4_Sound_FX_Arcade_Synth_Bling_Electronic_Casino_Kids_Mobile_Positive_Achievement_Score_Special.wav"
+dest_files=[ "res://.import/ESM_Game_Item_Power_Up_4_Sound_FX_Arcade_Synth_Bling_Electronic_Casino_Kids_Mobile_Positive_Achievement_Score_Special.wav-4806b1b78d4213ad01d23c612c1c6ffc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

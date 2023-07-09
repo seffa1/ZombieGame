@@ -116,5 +116,6 @@ func _on_shellHitTimer_timeout():
 	shellHitSound.volume_db = int(loudness)
 	
 	# add to world
+	shellHitSound.global_position = global_position
 	get_tree().current_scene.add_child(shellHitSound)
 	

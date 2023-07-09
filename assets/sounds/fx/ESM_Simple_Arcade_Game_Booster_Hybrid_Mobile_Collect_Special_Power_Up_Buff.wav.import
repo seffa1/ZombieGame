@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_Simple_Arcade_Game_Booster_Hybrid_Mobile_Collect_Special_Power_Up_Buff.wav-097faa0cec0b8d356aaff9fe37384e56.sample"
+
+[deps]
+
+source_file="res://assets/sounds/fx/ESM_Simple_Arcade_Game_Booster_Hybrid_Mobile_Collect_Special_Power_Up_Buff.wav"
+dest_files=[ "res://.import/ESM_Simple_Arcade_Game_Booster_Hybrid_Mobile_Collect_Special_Power_Up_Buff.wav-097faa0cec0b8d356aaff9fe37384e56.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav-fe3eb3d8210a9dc7b55aaf58a83b0f2c.sample"
+
+[deps]
+
+source_file="res://assets/sounds/songSamples/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav"
+dest_files=[ "res://.import/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav-fe3eb3d8210a9dc7b55aaf58a83b0f2c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
