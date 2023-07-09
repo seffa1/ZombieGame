@@ -25,6 +25,10 @@ func _process(delta):
 	if Input.is_action_just_pressed("toggleLaser"):
 		$Muzzle/LaserSite.is_casting = !$Muzzle/LaserSite.is_casting
 
+func _playSoundShoot():
+	# Sound must be defined for each gun 
+	return
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Connect this guns shoot method to the world
@@ -36,6 +40,9 @@ func _ready():
 	var hud = get_node('/root/World/HUD')
 	self.connect('updateHUD', hud, '_on_update_hud_gun')
 	updateHUD()
+	
+	# Laser defaults to on
+	$Muzzle/LaserSite.is_casting = true
 
 func set_ammo(_value):
 	ammo = _value
@@ -57,6 +64,9 @@ func shoot():
 	var muzzleFlash_instance = muzzleflash.instance()
 	get_tree().current_scene.add_child(muzzleFlash_instance)
 	muzzleFlash_instance.global_position = $Muzzle.global_position
+	
+	# Play sound effect
+	_playSoundShoot()
 	
 	# Update the clip count
 	clip_count -= 1
