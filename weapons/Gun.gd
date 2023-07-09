@@ -1,6 +1,7 @@
 extends Node2D
 
 var muzzleflash = preload("res://muzzleFlash.tscn")
+const ShellHitSound = preload("res://shellHitSound.tscn")
 
 signal shoot
 signal updateHUD
@@ -106,8 +107,14 @@ func playEmptyClipSound():
 	$emptyClipSound.play()
 
 func _on_shellHitTimer_timeout():
-	# player shell hit sound
+	# create shell sound instace that autoplays and then kills iteself
+	var shellHitSound = ShellHitSound.instance()
+	
+	# vary the volume
 	randomize()
-	var loudness = rand_range(-16, 10)  # create some variance in the levels
-	$shellHitSound.volume_db = loudness
-	$shellHitSound.play()
+	var loudness = rand_range(-16, -10)  # create some variance in the levels
+	shellHitSound.volume_db = int(loudness)
+	
+	# add to world
+	get_tree().current_scene.add_child(shellHitSound)
+	

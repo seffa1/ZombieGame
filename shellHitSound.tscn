@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://weapons/shellHitSound.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/guns/ESM_Bullet_Shell_Drop_6_Gun_Military_Pistol_Shot_Machine_Rifle_Metal.wav" type="AudioStream" id=2]
+
+[node name="shellHitSound" type="AudioStreamPlayer2D"]
+stream = ExtResource( 2 )
+volume_db = -10.0
+autoplay = true
+script = ExtResource( 1 )
