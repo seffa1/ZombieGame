@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://TitleScreen.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/light.png" type="Texture" id=25]
 [ext_resource path="res://screenShaker.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Fire.tscn" type="PackedScene" id=27]
 [ext_resource path="res://LightFlickering2.tscn" type="PackedScene" id=28]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
@@ -264,6 +265,13 @@ extents = Vector2( 179, 45.5 )
 [sub_resource type="OccluderPolygon2D" id=18]
 polygon = PoolVector2Array( 177, 38.9996, 179, -49.0004, -181, -46.9995, -179, 41.0005 )
 
+[sub_resource type="RectangleShape2D" id=31]
+resource_local_to_scene = true
+extents = Vector2( 52, 45.5 )
+
+[sub_resource type="OccluderPolygon2D" id=32]
+polygon = PoolVector2Array( 35.0001, 37.9999, 27.9999, -36.0001, -37.0001, -29.9999, -47.9999, 36.0001 )
+
 [sub_resource type="RectangleShape2D" id=13]
 resource_local_to_scene = true
 extents = Vector2( 45, 35 )
@@ -361,6 +369,16 @@ script = ExtResource( 6 )
 
 [node name="Ambient" type="CanvasModulate" parent="."]
 color = Color( 0.247059, 0.14902, 0.14902, 1 )
+
+[node name="Fire" parent="." instance=ExtResource( 27 )]
+modulate = Color( 1, 1, 1, 0.431373 )
+position = Vector2( 1181, 944 )
+scale = Vector2( 0.73986, 0.656598 )
+amount = 7
+speed_scale = 1.48566
+
+[node name="AnimationPlayer" parent="Fire" index="0"]
+autoplay = "PullIn"
 
 [node name="Light2D" parent="." instance=ExtResource( 28 )]
 position = Vector2( 197, 1342 )
@@ -664,6 +682,23 @@ shape = SubResource( 12 )
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Obstacles/Obstacle2"]
 occluder = SubResource( 18 )
 
+[node name="Obstacle7" parent="Obstacles" instance=ExtResource( 20 )]
+position = Vector2( 597, 430 )
+rotation = -3.14159
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" parent="Obstacles/Obstacle7" index="0"]
+region_rect = Rect2( 29, 2346, 74, 76 )
+
+[node name="CollisionShape2D" parent="Obstacles/Obstacle7" index="1"]
+position = Vector2( -21, -1.50006 )
+shape = SubResource( 31 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Obstacles/Obstacle7"]
+occluder = SubResource( 32 )
+
 [node name="Obstacle5" parent="Obstacles" instance=ExtResource( 20 )]
 position = Vector2( -592, 843 )
 rotation = 3.14159
@@ -764,6 +799,7 @@ position = Vector2( -936, 1261 )
 [connection signal="shakeCamera" from="ZombieManager/Player" to="." method="_on_camera_shake"]
 [connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
 
+[editable path="Fire"]
 [editable path="Light2D"]
 [editable path="ZombieManager/Player"]
 [editable path="SpawnManager"]
@@ -775,6 +811,7 @@ position = Vector2( -936, 1261 )
 [editable path="Obstacles/Obstacle4"]
 [editable path="Obstacles/Obstacle"]
 [editable path="Obstacles/Obstacle2"]
+[editable path="Obstacles/Obstacle7"]
 [editable path="Obstacles/Obstacle5"]
 [editable path="Obstacles/Obstacle6"]
 [editable path="PerkMachines/Jugernaut"]

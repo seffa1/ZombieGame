@@ -18,6 +18,7 @@ var ZOMBIE_MONEY_REWARD = 125
 # Animation stuff
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
 var blood = preload("res://blood.tscn")
+var isStinky
 
 # TODO: Make this an ENUM
 var state
@@ -70,6 +71,13 @@ func _ready():
 	self.connect("damagePopup", world, '_on_damage_popup')
 	self.connect("spawn_pickup", world, '_on_pickup_spawn')
 	self.connect("zombieBulletHit", world, '_on_zombie_bullet_hit')
+	
+	# fx init
+	if rand_range(0, 10) > 7:
+		$StinkCloud.emitting = true
+	else:
+		print("True")
+		$StinkCloud.emitting = false
 
 	# Setup the context array
 	interest.resize(num_rays)
