@@ -938,6 +938,9 @@ volume_db = -10.0
 stream = ExtResource( 13 )
 volume_db = -13.0
 
+[node name="Listener2D" type="Listener2D" parent="."]
+current = true
+
 [connection signal="area_entered" from="RoomDetector" to="." method="_on_RoomDetector_area_entered"]
 [connection signal="area_exited" from="RoomDetector" to="." method="_on_RoomDetector_area_exited"]
 [connection signal="timeout" from="HealTimer" to="." method="_on_HealTimer_timeout"]

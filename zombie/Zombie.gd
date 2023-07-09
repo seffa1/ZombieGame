@@ -19,6 +19,7 @@ var ZOMBIE_MONEY_REWARD = 125
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
 var blood = preload("res://blood.tscn")
 var isStinky
+var canGroan = true
 
 # TODO: Make this an ENUM
 var state
@@ -92,6 +93,7 @@ func _ready():
 
 func dying():
 	state = 'die'
+	$dieSound.play()
 	animation_state_machine.travel('zombie_death')
 
 func die():
@@ -120,8 +122,26 @@ func _draw():
 
 func set_state(_state):
 	state = _state
+	
+func shouldGroan():
+	""" A random chance to groan. """
+	randomize()
+	if randi() % 700 == 99:
+		print("Should groan!")
+		return true
+	else:
+		return false
+
+func _on_groanTimer_timeout():
+	canGroan = true
 
 func _physics_process(delta):
+	if canGroan:  # max, once ever 6 seconds
+		if shouldGroan():  
+			canGroan = false
+			$groanSound.play()
+			$groanTimer.start()
+	
 	if state == 'die':
 		return
 		
@@ -139,6 +159,7 @@ func _physics_process(delta):
 		if len(attackable_windows) > 0 and attackable_windows[0].board_count > 0:
 			if can_attack:
 				can_attack = false
+				$attackSound.play()
 				animation_state_machine.travel('zombie_attack')
 	else:
 		if len(attackable_players) > 0:
@@ -366,6 +387,14 @@ func take_damage(amount, player_shooting, type):
 	emit_signal("damagePopup", str(amount), messagePosition)
 	emit_signal("zombieBulletHit")
 	
+	# play random take damage sound
+	if $takeHitSoundTimer.is_stopped():
+		$takeHitSoundTimer.start()
+		if randi() % 2 == 0:
+			$takeHitSound.play()
+		else:
+			$takeHitSound2.play()
+	
 	# check if dead
 	if health <= 0:
 		player_shooting.money += ZOMBIE_MONEY_REWARD
@@ -403,4 +432,7 @@ func _onZombieDeathAnimation():
 	$HurtBox/CollisionShape2D.disabled = true
 	$CollisionShape2D.disabled = true
 	z_index = 1  # so walking zombies go over dead ones
+
+
+
 

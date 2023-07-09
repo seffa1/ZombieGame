@@ -1,5 +1,8 @@
 extends Area2D
 
+const BulletImpactSoundFlesh = preload("res://bulletImpactFlesh.tscn")
+const BulletImpactSoundFlesh2 = preload("res://bulletImpactFlesh2.tscn")
+const BulletImpactSoundWood = preload("res://bulletImpactWood.tscn")
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -37,5 +40,21 @@ func _on_Bullet_body_entered(body):
 	# Damage an enemy
 	if body.has_method('take_damage'):
 		body.take_damage(bullet_damage, player_shooting, "bullet")
+	
+		# play a random flesh impact sound
+		randomize()
+		if randi() % 2 == 0:  # int from 0 - 1
+			# make flesh sound and add to world ( auto plays and deletes itself )
+			var bulletImpactSoundFlesh = BulletImpactSoundFlesh.instance()
+			get_tree().current_scene.add_child(bulletImpactSoundFlesh)
+		else:
+			var bulletImpactSoundFlesh2 = BulletImpactSoundFlesh2.instance()
+			get_tree().current_scene.add_child(bulletImpactSoundFlesh2)
 		
+	else:
+		# play non-flesh impact sound
+		var bulletImpactSoundWood = BulletImpactSoundWood.instance()
+		get_tree().current_scene.add_child(bulletImpactSoundWood)
+		
+	
 	queue_free()

@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BulletImpactBody_BW.54388.wav-29ebc7f5c03794bbf733e751f40e4677.sample"
+
+[deps]
+
+source_file="res://assets/sounds/bulletImpacts/BulletImpactBody_BW.54388.wav"
+dest_files=[ "res://.import/BulletImpactBody_BW.54388.wav-29ebc7f5c03794bbf733e751f40e4677.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -304,7 +304,8 @@ func switch_weapons():
 	
 	if not other_gun_instance:
 		return
-		
+	
+	$equipGun.play()
 	can_switch_weapons = false
 	$SwitchWeaponTimer.start(SWITCH_WEAPON_TIMER)
 	

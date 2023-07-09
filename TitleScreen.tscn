@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/songSamples/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav" type="AudioStream" id=2]
 
 [node name="TitleScreen" type="Node2D"]
 pause_mode = 2
@@ -160,6 +161,11 @@ margin_right = 628.0
 margin_bottom = 364.0
 rect_scale = Vector2( 3, 3 )
 text = "LOAD"
+
+[node name="titleAmbiance1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/clearScores" to="." method="_on_clearScores_pressed"]

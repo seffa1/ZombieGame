@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://bulletImpactFlesh.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/bulletImpacts/BRS_Bullet_Hit_Body_Flesh_16.wav" type="AudioStream" id=2]
+
+[node name="bulletImpactFlesh" type="AudioStreamPlayer2D"]
+stream = ExtResource( 2 )
+volume_db = -8.0
+autoplay = true
+script = ExtResource( 1 )
