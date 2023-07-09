@@ -16,6 +16,7 @@ GUN_NAME = "RIFFLE"
 
 [node name="gunShotSound" parent="." index="1"]
 stream = ExtResource( 7 )
+volume_db = -15.0
 
 [node name="emptyClipSound" parent="." index="2"]
 stream = ExtResource( 4 )

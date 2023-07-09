@@ -43,6 +43,9 @@ func _ready():
 		start_round(current_level)
 	
 func start_round(level):
+	# play sound
+	if level > 1:
+		$startRound.play()
 	kill_all_zombies()
 	reset_player_repairs()
 	give_players_grenades()

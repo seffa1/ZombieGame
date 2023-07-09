@@ -23,9 +23,11 @@ func _on_quit_pressed():
 	get_tree().quit()
 	
 func _on_start_pressed():
+	# start the game
+	$impact.play()
 	get_tree().paused = false
 	$CanvasLayer.visible = false
-	$titleAmbiance1.volume_db = -999
+	$titleAmbiance1.volume_db = -30
 	get_parent().find_node("HUD").visible = true
 
 func _on_load_pressed():
