@@ -231,6 +231,10 @@ func shoot():
 				animation_state_machine.travel("pistol_shoot")
 			"RIFFLE":
 				animation_state_machine.travel("riffle_shoot")
+	
+	else:
+		# clip empty, play sound
+		current_gun_instance.playEmptyClipSound()
 
 func refill_ammo(refillCurrentGun: bool, refillOtherGun: bool):
 	if refillOtherGun and other_gun_instance:

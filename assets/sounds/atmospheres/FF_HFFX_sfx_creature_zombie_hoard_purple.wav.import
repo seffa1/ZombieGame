@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FF_HFFX_sfx_creature_zombie_hoard_purple.wav-603e3009ad99a6734159bb7bf3d51697.sample"
+
+[deps]
+
+source_file="res://assets/sounds/atmospheres/FF_HFFX_sfx_creature_zombie_hoard_purple.wav"
+dest_files=[ "res://.import/FF_HFFX_sfx_creature_zombie_hoard_purple.wav-603e3009ad99a6734159bb7bf3d51697.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

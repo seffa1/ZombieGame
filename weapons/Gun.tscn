@@ -13,5 +13,25 @@ script = ExtResource( 1 )
 collision_mask = 3
 max_length = 1400.0
 
+[node name="gunShotSound" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[node name="emptyClipSound" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+
+[node name="reloadSound" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
+
+[node name="shellHitSound" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0
+
+[node name="noMoreAmmoOrFull" type="AudioStreamPlayer" parent="."]
+
+[node name="shellHitTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="shellHitTimer" to="." method="_on_shellHitTimer_timeout"]
+
 [editable path="Muzzle"]
 [editable path="Muzzle/LaserSite"]

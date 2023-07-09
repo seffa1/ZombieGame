@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_HCREA_cinematic_FX_voice_one_shot_creahmn_zombie_attack_deal_damage_aggressive_04_A#.wav-b48b841d88ee6129ea3c5e28e01d4d1e.sample"
+
+[deps]
+
+source_file="res://assets/sounds/zombies/ESM_HCREA_cinematic_FX_voice_one_shot_creahmn_zombie_attack_deal_damage_aggressive_04_A#.wav"
+dest_files=[ "res://.import/ESM_HCREA_cinematic_FX_voice_one_shot_creahmn_zombie_attack_deal_damage_aggressive_04_A#.wav-b48b841d88ee6129ea3c5e28e01d4d1e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

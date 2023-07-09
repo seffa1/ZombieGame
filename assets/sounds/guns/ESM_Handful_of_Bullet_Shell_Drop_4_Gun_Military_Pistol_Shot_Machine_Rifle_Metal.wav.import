@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_Handful_of_Bullet_Shell_Drop_4_Gun_Military_Pistol_Shot_Machine_Rifle_Metal.wav-0db8f3c3118ace89d74e7e3920500dfe.sample"
+
+[deps]
+
+source_file="res://assets/sounds/guns/ESM_Handful_of_Bullet_Shell_Drop_4_Gun_Military_Pistol_Shot_Machine_Rifle_Metal.wav"
+dest_files=[ "res://.import/ESM_Handful_of_Bullet_Shell_Drop_4_Gun_Military_Pistol_Shot_Machine_Rifle_Metal.wav-0db8f3c3118ace89d74e7e3920500dfe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

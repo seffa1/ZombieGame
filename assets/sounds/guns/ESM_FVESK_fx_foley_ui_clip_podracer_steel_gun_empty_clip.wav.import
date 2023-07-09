@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_FVESK_fx_foley_ui_clip_podracer_steel_gun_empty_clip.wav-6caa958ea94a92b014518e62e2ac40d4.sample"
+
+[deps]
+
+source_file="res://assets/sounds/guns/ESM_FVESK_fx_foley_ui_clip_podracer_steel_gun_empty_clip.wav"
+dest_files=[ "res://.import/ESM_FVESK_fx_foley_ui_clip_podracer_steel_gun_empty_clip.wav-6caa958ea94a92b014518e62e2ac40d4.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

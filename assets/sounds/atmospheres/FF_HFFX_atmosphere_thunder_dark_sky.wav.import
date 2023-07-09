@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FF_HFFX_atmosphere_thunder_dark_sky.wav-001b1f4cb6f13cab8b96cd99740c5424.sample"
+
+[deps]
+
+source_file="res://assets/sounds/atmospheres/FF_HFFX_atmosphere_thunder_dark_sky.wav"
+dest_files=[ "res://.import/FF_HFFX_atmosphere_thunder_dark_sky.wav-001b1f4cb6f13cab8b96cd99740c5424.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
