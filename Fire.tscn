@@ -5,12 +5,11 @@
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.136646, 0.754202, 0.900621, 1 )
-colors = PoolColorArray( 1, 0.854902, 0, 0, 0.340696, 0.214135, 0.0208884, 1, 0.294118, 0.0745098, 0, 0.313726, 1, 0.207843, 0, 0.203922, 1, 0.152941, 0, 0 )
+[sub_resource type="Gradient" id=12]
+colors = PoolColorArray( 0.181583, 0.173137, 0.173137, 1, 1, 1, 1, 0 )
 
 [sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+gradient = SubResource( 12 )
 width = 100
 
 [sub_resource type="ParticlesMaterial" id=4]

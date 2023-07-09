@@ -366,6 +366,7 @@ glow_hdr_scale = 1.97
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
+NO_ZOMBIES = true
 
 [node name="Ambient" type="CanvasModulate" parent="."]
 color = Color( 0.247059, 0.14902, 0.14902, 1 )
