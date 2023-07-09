@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_GB_fx_foley_one_shot_woodbrk_wood_tree_explode_02_impact_destroy_scatter.wav-06d48982985518ff56484e441a675c2f.sample"
+
+[deps]
+
+source_file="res://assets/sounds/doorsAndWindows/ESM_GB_fx_foley_one_shot_woodbrk_wood_tree_explode_02_impact_destroy_scatter.wav"
+dest_files=[ "res://.import/ESM_GB_fx_foley_one_shot_woodbrk_wood_tree_explode_02_impact_destroy_scatter.wav-06d48982985518ff56484e441a675c2f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

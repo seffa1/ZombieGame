@@ -25,6 +25,7 @@ func interact(_player):
 		can_be_bought = false
 		$InteractionTimer.start(CAN_BE_BOUGHT_TIMER)
 		if _player.money < cost:
+			$notEnoughMoney.play()
 			emit_signal("playerLog", "Not enough money")
 		else:
 			# Open Door

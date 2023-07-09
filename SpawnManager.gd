@@ -8,12 +8,10 @@ var round_started = false
 var zombies_left_to_spawn = 0
 var zombies_on_map = 0
 
-
-
 func start_level(_zombies_left_to_spawn):
 	zombies_left_to_spawn = _zombies_left_to_spawn
 	round_started = true
-	
+
 func _process(delta):
 	if not round_started or DISABLED:
 		return
@@ -28,3 +26,6 @@ func select_spawners():
 	# This will select the 3 or 4 spawners which are the closest to the player and spawn zombies
 	# from those spawners.
 	return get_children()
+
+
+

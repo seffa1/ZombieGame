@@ -156,6 +156,7 @@ func _physics_process(delta):
 		# Target position is set by the zombie spawner it spawned from
 		seekTarget(targetPosition, delta)
 		
+		# if a window in attack range and it has boards left
 		if len(attackable_windows) > 0 and attackable_windows[0].board_count > 0:
 			if can_attack:
 				can_attack = false

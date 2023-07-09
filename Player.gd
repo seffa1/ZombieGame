@@ -29,6 +29,8 @@ var DASH_TIME = .2
 var DASH_SPEED = 900
 var sprintOrRunThreshold = false
 var STAMINA_REGENERATION_RATE = .05 # seconds / point depleted (smaller the number, faster the regeneration)
+var RUNNING_SPEED_SOUND_FX_THRESHOLD = 390  # the velocity we must get to before walking sound changes to running
+
 
 # 1s / 20 points/s = 1/20 seconds / point: 
 var RUN_STAMINA_DEPLETION_RATE = .03  # seconds / point depleted (smaller the number, faster the depletion)
@@ -39,6 +41,8 @@ export (PackedScene) var STARTING_GRENADE
 # Animation stuff
 onready var animation_state_machine = $AnimationTree.get("parameters/playback")
 var deathState = false
+onready var tweenWalkingPitch = $TweenWalkingPitch
+onready var tweenWalkingVolumne = $TweenWalkingVolume
 
 # Health stuff
 onready var health = max_health
@@ -49,7 +53,7 @@ var can_heal = true
 
 # Interactable Stuff
 var interactables = []
-var money = 100000 setget _set_money
+var money = 0 setget _set_money
 var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 
@@ -202,7 +206,36 @@ func _physics_process(delta):
 					animation_state_machine.travel("riffle_walk")
 		
 	look_at(get_global_mouse_position())
-	velocity = move_and_slide(velocity.normalized() * movement_speed)
+	var newVelocity = velocity.normalized() * movement_speed
+	velocity = move_and_slide(newVelocity)
+	
+	# find walking speed sound and volume
+	var pitch_scale
+	var volume
+
+	
+	if newVelocity.length() >= RUNNING_SPEED_SOUND_FX_THRESHOLD:
+		pitch_scale = 1.5  # increasing walking speed
+		volume = -3
+	elif newVelocity.length() >= WALK_SPEED:
+		pitch_scale = 0.8 # decrease walking speed
+		volume = -2
+	else:
+		pitch_scale = 0.8 
+		volume = -99  # no sound if standing still
+	
+	# Tween the pitch
+	var DURATION = .1
+	if tweenWalkingPitch.is_active():
+		tweenWalkingPitch.stop_all()
+	tweenWalkingPitch.interpolate_property($walking, "pitch_scale", $walking.pitch_scale, pitch_scale, DURATION)
+	tweenWalkingPitch.start()
+	
+	# Tween the volume from current to new value
+	if tweenWalkingVolumne.is_active():
+		tweenWalkingVolumne.stop_all()
+	tweenWalkingVolumne.interpolate_property($walking, "volume_db", $walking.volume_db, volume, DURATION)
+	tweenWalkingVolumne.start()
 
 func setStamina(value):
 	stamina = value
@@ -221,7 +254,10 @@ func _on_sprintOrDashTimer_timeout():
 func reload():
 	# returns a string based on if the gun could be reloaded
 	var reloadMessage = current_gun_instance.reload()
-	emit_signal("playerLog", reloadMessage)
+	
+	# Only log if ammo is already full or empty
+	if reloadMessage != "Gun reloaded":
+		emit_signal("playerLog", reloadMessage)
 
 func shoot():
 	if current_gun_instance.clip_count > 0:
@@ -453,10 +489,12 @@ func take_damage(amount):
 	emit_signal("health_change", health, max_health)
 	
 	if health <= 0:
+		$die.play()
 		deathState = true
 		emit_signal("playerDeath")
 		animation_state_machine.travel("death")
 	else:
+		$takeDamage1.play()
 		$HealTimer.start(HEALTH_REGEN_AFTER_DAMAGE_RATE)
 		animation_state_machine.travel("take_damage")
 

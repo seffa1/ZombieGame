@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/sounds/doorsAndWindows/ESM_Horror_Game_Notification_New_Rank_Upgrade_4_UI_Hit.wav" type="AudioStream" id=1]
+
+[node name="notEnoughMoney" type="AudioStreamPlayer2D"]
+stream = ExtResource( 1 )
+volume_db = -10.0
+max_distance = 1000.0

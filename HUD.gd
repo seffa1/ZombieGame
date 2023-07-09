@@ -5,6 +5,7 @@ var PERK_ALPHA_TOGGLE_VALUE = 50
 
 func updateLog(message: String):
 	# print("LOG: " + message)
+	$notificationSound.play()
 	$playerLog.text = message
 	$logAnimation.play("showMessage")
 

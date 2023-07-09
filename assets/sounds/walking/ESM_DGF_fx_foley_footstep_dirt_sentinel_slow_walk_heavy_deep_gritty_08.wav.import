@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_DGF_fx_foley_footstep_dirt_sentinel_slow_walk_heavy_deep_gritty_08.wav-6ae7b3f61f16bd26f3c4c7bca14f62de.sample"
+
+[deps]
+
+source_file="res://assets/sounds/walking/ESM_DGF_fx_foley_footstep_dirt_sentinel_slow_walk_heavy_deep_gritty_08.wav"
+dest_files=[ "res://.import/ESM_DGF_fx_foley_footstep_dirt_sentinel_slow_walk_heavy_deep_gritty_08.wav-6ae7b3f61f16bd26f3c4c7bca14f62de.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

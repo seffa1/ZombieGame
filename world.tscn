@@ -26,10 +26,10 @@
 [ext_resource path="res://TitleScreen.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/light.png" type="Texture" id=25]
 [ext_resource path="res://screenShaker.tscn" type="PackedScene" id=26]
-[ext_resource path="res://Fire.tscn" type="PackedScene" id=27]
 [ext_resource path="res://LightFlickering2.tscn" type="PackedScene" id=28]
 [ext_resource path="res://pickups/Money.tscn" type="PackedScene" id=29]
 [ext_resource path="res://assets/sounds/atmospheres/FF_HFX_signature_lilac.wav" type="AudioStream" id=30]
+[ext_resource path="res://newRoundStartTimer.tscn" type="PackedScene" id=31]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
@@ -375,16 +375,6 @@ color = Color( 0.247059, 0.14902, 0.14902, 1 )
 [node name="Money" parent="." instance=ExtResource( 29 )]
 position = Vector2( -647, 686 )
 
-[node name="Fire" parent="." instance=ExtResource( 27 )]
-modulate = Color( 1, 1, 1, 0.431373 )
-position = Vector2( 1181, 944 )
-scale = Vector2( 0.73986, 0.656598 )
-amount = 7
-speed_scale = 1.48566
-
-[node name="AnimationPlayer" parent="Fire" index="0"]
-autoplay = "PullIn"
-
 [node name="Light2D" parent="." instance=ExtResource( 28 )]
 position = Vector2( 197, 1342 )
 scale = Vector2( 3.09578, 2.93335 )
@@ -583,7 +573,7 @@ texture = ExtResource( 21 )
 occluder = SubResource( 20 )
 
 [node name="MachineGunBuy" parent="GunBuys" instance=ExtResource( 5 )]
-position = Vector2( -416, 1371 )
+position = Vector2( 672, 1369 )
 rotation = 3.14159
 __meta__ = {
 "_edit_group_": true
@@ -793,8 +783,10 @@ position = Vector2( -936, 1261 )
 
 [node name="startRound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 30 )
-volume_db = -30.0
+volume_db = -35.0
 pitch_scale = 0.49
+
+[node name="newRoundStartTimer" parent="." instance=ExtResource( 31 )]
 
 [connection signal="game_over" from="ZombieManager/Player" to="." method="_on_Player_game_over"]
 [connection signal="grenade_change" from="ZombieManager/Player" to="HUD" method="_on_Player_grenade_change"]
@@ -808,8 +800,8 @@ pitch_scale = 0.49
 [connection signal="playerStaminaChange" from="ZombieManager/Player" to="." method="_on_Player_playerStaminaChange"]
 [connection signal="shakeCamera" from="ZombieManager/Player" to="." method="_on_camera_shake"]
 [connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
+[connection signal="timeout" from="newRoundStartTimer" to="." method="_on_newRoundStartTimer_timeout"]
 
-[editable path="Fire"]
 [editable path="Light2D"]
 [editable path="ZombieManager/Player"]
 [editable path="SpawnManager"]

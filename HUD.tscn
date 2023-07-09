@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
 [ext_resource path="res://assets/perks/items_0007_slow_enemies.png" type="Texture" id=3]
 [ext_resource path="res://perkHUDtoggler.gd" type="Script" id=4]
+[ext_resource path="res://assets/sounds/fx/ESM_Horror_Game_Notification_New_Message_Recieved_3_Drum_Only.wav" type="AudioStream" id=5]
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.760784, 0.0784314, 0.0784314, 1 )
@@ -445,3 +446,7 @@ text = "log"
 [node name="logAnimation" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 11 )
 anims/showMessage = SubResource( 12 )
+
+[node name="notificationSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -10.0

@@ -25,16 +25,22 @@ func _process(delta):
 		# Dont let the zombies pass through
 		$CollisionShape2D.one_way_collision = false
 		
-	# update the board breaking animation manually, make sure it doesnt play
-	# board count 6 = 0
-	# ( MAX (6) - count (6) - 1 ) * step (.1) = 0
-	# ( MAX (6) - count (0) - 1) * step (.1) = .6
-	
-	
 func take_damage(amount):
 	board_count -= 1
 	if board_count < 0:
 		board_count = 0
+	if board_count == 0:
+		$windowBreak.play()
+	else:
+		if randi() % 2 == 0:  # 0 or 1
+			$boardRemoved1.play()
+		else:
+			$boardRemoved2.play()
+			
+	# update the board breaking animation manually, make sure it doesnt play
+	# board count 6 = 0
+	# ( MAX (6) - count (6) - 1 ) * step (.1) = 0
+	# ( MAX (6) - count (0) - 1) * step (.1) = .6
 	$breakAnimation.play("break")
 	$breakAnimation.seek( (MAX_BOARD_COUNT - board_count - 1) * BREAK_ANIMATION_STEP, true )
 	$breakAnimation.stop(false)
@@ -47,12 +53,14 @@ func interact(_player):
 		
 		if _player.window_repairs_this_round < _player.MAX_WINDOW_REPAIRS_PER_ROUND:
 			_player.money += MONEY_FOR_REPAIR
+			$giveMoneyReward.play()  # play sound
 			emit_signal("playerLog", "Repairing window")
 			var messagePosition = global_position
 			var message = "+ $" + str(MONEY_FOR_REPAIR)
 			emit_signal("moneyPopup", message, messagePosition)
 		_player.window_repairs_this_round += 1
 		$AnimationPlayer.play("repair")
+		$boardRemoved1.play()
 	else:
 		if $playerLogTimer.is_stopped():
 			emit_signal("playerLog", "Already repaired")

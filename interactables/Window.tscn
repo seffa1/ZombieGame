@@ -1,6 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://interactables/Window.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/doorsAndWindows/ESM_GB_fx_foley_one_shot_woodbrk_wood_tree_explode_02_impact_destroy_scatter.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/doorsAndWindows/BRS_Wood_Splinter_Plywd_Fst_4.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/doorsAndWindows/SPLC-1310_FX_Oneshot_Wood_Hit_Break.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/fx/PFS2_Money_Coin_Drop_04.wav" type="AudioStream" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 101, 13 )
@@ -174,3 +178,23 @@ color = Color( 0.47451, 0.203922, 0.0862745, 1 )
 
 [node name="playerLogTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="windowBreak" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+max_distance = 1000.0
+
+[node name="boardRemoved1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+volume_db = -10.0
+max_distance = 1000.0
+
+[node name="boardRemoved2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+max_distance = 1000.0
+
+[node name="giveMoneyReward" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+volume_db = -10.0
+max_distance = 1000.0

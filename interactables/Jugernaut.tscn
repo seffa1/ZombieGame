@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://interactables/PerkMachine.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interactables/Jugernaut.gd" type="Script" id=2]
+[ext_resource path="res://notEnoughMoney.tscn" type="PackedScene" id=3]
 
 [node name="Jugernaut" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -11,3 +12,5 @@ one_shot = true
 
 [node name="playerLogTimer" type="Timer" parent="." index="6"]
 one_shot = true
+
+[node name="notEnoughMoney" parent="." index="7" instance=ExtResource( 3 )]

@@ -15,6 +15,7 @@ func interact(_player):
 		if _player.money < COST:
 			var message = "You dont have enough money to buy this perk."
 			if $playerLogTimer.is_stopped():
+				$notEnoughMoney.play()
 				emit_signal("playerLog", message)
 				$playerLogTimer.start(1)
 		else:

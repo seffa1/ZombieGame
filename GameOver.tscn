@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://GameOver.gd" type="Script" id=1]
+[ext_resource path="res://assets/sounds/atmospheres/FF_HFX_hit_lilac.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/zombies/ESM_Horror_Game_Vocal_Creature_Evil_Clown_Cackle_Wet.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/songSamples/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav" type="AudioStream" id=4]
 
 [node name="GameOver" type="Node2D"]
 script = ExtResource( 1 )
@@ -35,6 +38,22 @@ margin_right = 305.0
 margin_bottom = 351.0
 rect_scale = Vector2( 3, 3 )
 text = "PLAY AGAIN"
+
+[node name="impact" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+autoplay = true
+
+[node name="laugh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -20.0
+pitch_scale = 0.5
+autoplay = true
+
+[node name="mainTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/playAgain" to="." method="_on_playAgain_pressed"]
