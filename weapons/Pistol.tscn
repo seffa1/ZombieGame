@@ -14,5 +14,8 @@ SINGLE_FIRE = true
 GUN_NAME = "PISTOL"
 RELOAD_SPEED = 3
 
+[node name="Muzzle" parent="." index="0"]
+position = Vector2( 89, 34 )
+
 [editable path="Muzzle"]
-[editable path="Muzzle/LaserBeam2D"]
+[editable path="Muzzle/LaserSite"]

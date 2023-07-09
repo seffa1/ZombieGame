@@ -26,7 +26,7 @@
 [ext_resource path="res://TitleScreen.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/light.png" type="Texture" id=25]
 [ext_resource path="res://screenShaker.tscn" type="PackedScene" id=26]
-[ext_resource path="res://LightBasic.tscn" type="PackedScene" id=27]
+[ext_resource path="res://LightFlickering2.tscn" type="PackedScene" id=28]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
@@ -345,26 +345,31 @@ polygon = PoolVector2Array( -52, -59, -53, 51, 54, 52, 55, -63 )
 
 [sub_resource type="Environment" id=30]
 background_mode = 4
+ambient_light_color = Color( 0.909804, 0.654902, 0.654902, 1 )
+ambient_light_energy = 5.15
 glow_enabled = true
-glow_intensity = 0.69
-glow_strength = 1.04
+glow_intensity = 0.0
+glow_strength = 0.85
+glow_bloom = 0.05
 glow_blend_mode = 0
 glow_hdr_threshold = 0.0
-glow_hdr_luminance_cap = 3.67
-glow_hdr_scale = 1.81
+glow_hdr_luminance_cap = 7.16
+glow_hdr_scale = 1.97
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
-NO_ZOMBIES = true
 
 [node name="Ambient" type="CanvasModulate" parent="."]
-color = Color( 0.160784, 0.0941176, 0.0941176, 1 )
+color = Color( 0.247059, 0.14902, 0.14902, 1 )
 
-[node name="Light2D" parent="." instance=ExtResource( 27 )]
-shadow_filter_smooth = 14.0
+[node name="Light2D" parent="." instance=ExtResource( 28 )]
+position = Vector2( 197, 1342 )
+scale = Vector2( 3.09578, 2.93335 )
+energy = 1.0
 
 [node name="ambientLight" type="Light2D" parent="."]
 position = Vector2( 2033, 11 )
+scale = Vector2( 0.959443, 1.03953 )
 texture = ExtResource( 25 )
 texture_scale = 2.5
 energy = 0.65
@@ -405,6 +410,17 @@ shadow_filter_smooth = 11.1
 
 [node name="ambientLight4" type="Light2D" parent="."]
 position = Vector2( -720, -1389 )
+texture = ExtResource( 25 )
+texture_scale = 2.5
+energy = 0.65
+shadow_enabled = true
+shadow_gradient_length = 1.3
+shadow_filter = 3
+shadow_filter_smooth = 11.1
+
+[node name="ambientLight6" type="Light2D" parent="."]
+position = Vector2( -592, 787 )
+scale = Vector2( 0.432259, 0.409032 )
 texture = ExtResource( 25 )
 texture_scale = 2.5
 energy = 0.65
@@ -730,6 +746,9 @@ visible = false
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 30 )
 
+[node name="Light2D" parent="WorldEnvironment" instance=ExtResource( 28 )]
+position = Vector2( -936, 1261 )
+
 [node name="screenShaker" parent="." instance=ExtResource( 26 )]
 
 [connection signal="game_over" from="ZombieManager/Player" to="." method="_on_Player_game_over"]
@@ -745,6 +764,7 @@ environment = SubResource( 30 )
 [connection signal="shakeCamera" from="ZombieManager/Player" to="." method="_on_camera_shake"]
 [connection signal="throw_grenade" from="ZombieManager/Player" to="." method="_on_Player_throw_grenade"]
 
+[editable path="Light2D"]
 [editable path="ZombieManager/Player"]
 [editable path="SpawnManager"]
 [editable path="Rooms/Room_1"]
