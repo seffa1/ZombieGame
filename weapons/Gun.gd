@@ -96,6 +96,7 @@ func on_reload_animation_finished():
 	clip_count += amount_to_fill
 	updateHUD()
 	isReloading = false
+	$reloadSound.play()  # play sound
 	
 	return "Gun reloaded"
 
@@ -116,7 +117,8 @@ func reload():
 	
 	# trigger reload sound and animation
 	isReloading = true
-	$reloadSound.play()  # play sound
+	$reloadStartSound.play()
+	
 	emit_signal("gunReload") # Trigger HUD reload bar 
 
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://weapons/Gun.gd" type="Script" id=1]
 [ext_resource path="res://Muzzle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://LaserSite.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sounds/guns/ESM_FVESK_fx_foley_ui_clip_podracer_steel_gun_empty_clip.wav" type="AudioStream" id=4]
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 1 )
@@ -27,6 +28,10 @@ volume_db = -10.0
 [node name="shellHitTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="reloadStartSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
 
 [connection signal="timeout" from="shellHitTimer" to="." method="_on_shellHitTimer_timeout"]
 
