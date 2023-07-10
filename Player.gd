@@ -155,9 +155,16 @@ func _physics_process(delta):
 				interactables[0].interact(self)
 				
 	if Input.is_action_just_pressed("switch_weapons"):
+		# cant switch weapons if reloading
+		if current_gun_instance.isReloading:
+			return
 		switch_weapons()
 		
 	if Input.is_action_just_pressed("run"):
+		# cant run if reloading
+		if current_gun_instance.isReloading:
+			return
+		
 		# the first time you press run, start the dash-or-run timer
 		$sprintOrDashTimer.start(SPRINT_OR_DASH_TIME_THRESHOLD)
 		sprintOrRunThreshold = true
@@ -214,7 +221,6 @@ func _physics_process(delta):
 	var pitch_scale
 	var volume
 
-	
 	if newVelocity.length() >= RUNNING_SPEED_SOUND_FX_THRESHOLD:
 		pitch_scale = 1.5  # increasing walking speed
 		volume = 0
@@ -257,7 +263,7 @@ func reload():
 	var reloadMessage = current_gun_instance.reload()
 	
 	# Only log if ammo is already full or empty
-	if reloadMessage != "Gun reloaded":
+	if reloadMessage == "Ammo is full" or reloadMessage == "No more ammo!":
 		emit_signal("playerLog", reloadMessage)
 
 func shoot():

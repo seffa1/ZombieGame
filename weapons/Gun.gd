@@ -6,6 +6,7 @@ const ShellHitSound = preload("res://shellHitSound.tscn")
 signal shoot
 signal updateHUD
 signal shakeScreen
+signal gunReload
 export (PackedScene) var Bullet
 
 # Declare member variables here. Examples:
@@ -32,16 +33,17 @@ func _ready():
 	self.connect("shoot", world, '_on_gun_shoot')
 	self.connect("shakeScreen", world, '_on_camera_shake')
 	
+	
 	# Connec the updateHUD signal to the HUD
 	var hud = get_node('/root/World/HUD')
 	self.connect('updateHUD', hud, '_on_update_hud_gun')
+	self.connect("gunReload", hud, '_on_reload')
 	updateHUD()
 	
 	# Laser defaults to on
 	$Muzzle/LaserSite.is_casting = true
 	
-	# reload bar defaults to off
-	$reloadBar.visible = false
+
 
 func set_ammo(_value):
 	ammo = _value
@@ -81,15 +83,18 @@ func shoot():
 	
 	updateHUD()
 
-func _on_reload_animation_finished():
+func on_reload_animation_finished():
+	"""
+	Called by the world node when HUD animation completes. Dont really like this approach.
+	"""
 	# reload the gun
+	print("Gun reloaded")
 	var amount_to_fill = CLIP_SIZE - clip_count
 	if amount_to_fill > ammo:
 		amount_to_fill = ammo
 	ammo -= amount_to_fill
 	clip_count += amount_to_fill
 	updateHUD()
-	$reloadBar.visible = false
 	isReloading = false
 	
 	return "Gun reloaded"
@@ -109,13 +114,11 @@ func reload():
 		# Tell the player your ammo is full
 		return 'Ammo is full'
 	
-	# reload the gun
-	$reloadBar.visible = true
+	# trigger reload sound and animation
 	isReloading = true
 	$reloadSound.play()  # play sound
-	$reloadAnimation.play("reload")  # play the animation
+	emit_signal("gunReload") # Trigger HUD reload bar 
 
-	
 
 func updateHUD():
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)

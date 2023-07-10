@@ -42,3 +42,13 @@ func _on_Player_jugernaut_change(_value : bool):
 	else:
 		$HBoxContainer/juggernaut.showPerk(false)
 	return
+	
+func _on_reload():
+	print("Reloading")
+	$reloadAnimation.play("reload")
+	
+
+
+func reload_animation_finished():
+	GLOBALS.player.current_gun_instance.on_reload_animation_finished()
+	

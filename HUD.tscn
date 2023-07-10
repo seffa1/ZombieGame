@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
 [ext_resource path="res://assets/perks/items_0007_slow_enemies.png" type="Texture" id=3]
 [ext_resource path="res://perkHUDtoggler.gd" type="Script" id=4]
 [ext_resource path="res://assets/sounds/fx/ESM_Horror_Game_Notification_New_Message_Recieved_3_Drum_Only.wav" type="AudioStream" id=5]
+[ext_resource path="res://reloadBar.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.760784, 0.0784314, 0.0784314, 1 )
@@ -193,6 +194,74 @@ tracks/2/keys = {
 "values": [ Vector2( 23, 584 ), Vector2( 23, 569 ), Vector2( 23, 569 ), Vector2( 23, 563 ) ]
 }
 
+[sub_resource type="Animation" id=14]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("reloadBar:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("reloadBar:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "reload"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "reload_animation_finished"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("reloadBar:value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 100.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("reloadBar:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 1 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
 
@@ -213,10 +282,10 @@ rect_scale = Vector2( 3, 3 )
 text = "1"
 
 [node name="level_count2" type="Label" parent="."]
-margin_left = 804.0
-margin_top = 4.0
-margin_right = 848.0
-margin_bottom = 19.0
+margin_left = 800.0
+margin_top = 8.0
+margin_right = 844.0
+margin_bottom = 23.0
 rect_scale = Vector2( 3, 3 )
 text = "Round:"
 
@@ -450,3 +519,14 @@ anims/showMessage = SubResource( 12 )
 [node name="notificationSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 volume_db = -10.0
+
+[node name="reloadBar" parent="." instance=ExtResource( 6 )]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 480.0
+margin_top = 256.0
+margin_right = 536.0
+margin_bottom = 270.0
+
+[node name="reloadAnimation" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 14 )
+anims/reload = SubResource( 13 )

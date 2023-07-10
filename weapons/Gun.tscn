@@ -1,38 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://weapons/Gun.gd" type="Script" id=1]
 [ext_resource path="res://Muzzle.tscn" type="PackedScene" id=2]
 [ext_resource path="res://LaserSite.tscn" type="PackedScene" id=3]
-[ext_resource path="res://reloadBar.tscn" type="PackedScene" id=4]
-
-[sub_resource type="Animation" id=1]
-resource_name = "reload"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:value")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 100.0 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath("..")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "_on_reload_animation_finished"
-} ]
-}
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 1 )
@@ -58,19 +28,7 @@ volume_db = -10.0
 wait_time = 0.5
 one_shot = true
 
-[node name="reloadBar" parent="." instance=ExtResource( 4 )]
-margin_left = -29.0
-margin_top = -50.0
-margin_right = 139.0
-margin_bottom = -36.0
-script = null
-
-[node name="reloadAnimation" type="AnimationPlayer" parent="."]
-root_node = NodePath("../reloadBar")
-anims/reload = SubResource( 1 )
-
 [connection signal="timeout" from="shellHitTimer" to="." method="_on_shellHitTimer_timeout"]
 
 [editable path="Muzzle"]
 [editable path="Muzzle/LaserSite"]
-[editable path="reloadBar"]

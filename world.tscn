@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://SpawnManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
@@ -66,6 +66,10 @@ tracks/0/keys = {
 }
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
+
+[sub_resource type="StyleBoxFlat" id=35]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+draw_center = false
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 992, 736 )
@@ -402,6 +406,7 @@ glow_hdr_scale = 1.97
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
+NO_ZOMBIES = true
 
 [node name="Ambient" type="CanvasModulate" parent="."]
 color = Color( 0.352941, 0.184314, 0.184314, 1 )
@@ -501,6 +506,9 @@ parameters/playback = SubResource( 3 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
 
+[node name="reloadBar" parent="HUD" index="22"]
+custom_styles/bg = SubResource( 35 )
+
 [node name="Windows" type="Node" parent="."]
 
 [node name="Window" parent="Windows" instance=ExtResource( 8 )]
@@ -523,7 +531,6 @@ position = Vector2( 672, -64 )
 rotation = -3.14159
 
 [node name="SpawnManager" parent="." instance=ExtResource( 1 )]
-visible = false
 DISABLED = false
 
 [node name="ZombieSpawner2" parent="SpawnManager" instance=ExtResource( 12 )]
@@ -544,7 +551,6 @@ active = true
 position = Vector2( 1040, 1840 )
 
 [node name="NavigationNodeManager" parent="." instance=ExtResource( 13 )]
-visible = false
 
 [node name="Node1" parent="NavigationNodeManager" instance=ExtResource( 11 )]
 position = Vector2( -1056, 720 )
@@ -583,7 +589,6 @@ position = Vector2( -352, 1072 )
 position = Vector2( 576, 112 )
 
 [node name="Rooms" type="Node2D" parent="."]
-visible = false
 
 [node name="Room_1" parent="Rooms" instance=ExtResource( 9 )]
 position = Vector2( -720, 416 )
@@ -850,6 +855,7 @@ pitch_scale = 0.49
 [editable path="Light2D"]
 [editable path="Light2D2"]
 [editable path="ZombieManager/Player"]
+[editable path="HUD"]
 [editable path="SpawnManager"]
 [editable path="Rooms/Room_1"]
 [editable path="Rooms/Room_2"]

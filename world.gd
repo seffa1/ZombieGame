@@ -279,4 +279,3 @@ func _on_camera_shake(intensity, duration):
 	$screenShaker.shake(intensity, duration)
 
 
-
