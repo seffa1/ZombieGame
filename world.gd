@@ -33,8 +33,9 @@ var bulletsFired = 0
 var bulletsHit = 0 
 var kills = 0
 
+
 func _ready():
-	
+
 	for child in get_node("ZombieManager").get_children():
 		if child.get_filename() == "res://Player.tscn":
 			players.append(child)

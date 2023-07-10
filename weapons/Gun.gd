@@ -15,11 +15,10 @@ export var STARTING_AMMO = 4500
 export var SINGLE_FIRE = false
 export var GUN_NAME : String
 
-# TODO: These will be controlled by player animations
-export var RELOAD_SPEED = 1
-
 onready var ammo = STARTING_AMMO setget set_ammo
 onready var clip_count = CLIP_SIZE setget set_clip_count
+
+onready var isReloading = false
 
 # Check for laser toggle
 func _process(delta):
@@ -40,6 +39,9 @@ func _ready():
 	
 	# Laser defaults to on
 	$Muzzle/LaserSite.is_casting = true
+	
+	# reload bar defaults to off
+	$reloadBar.visible = false
 
 func set_ammo(_value):
 	ammo = _value
@@ -50,6 +52,9 @@ func set_clip_count(_value):
 	updateHUD()
 
 func shoot():	
+	if isReloading:
+		return
+	
 	# create a bullet
 	var dir = Vector2(1,0).rotated(global_rotation)
 
@@ -75,9 +80,24 @@ func shoot():
 	emit_signal("shakeScreen", 5, .1)
 	
 	updateHUD()
-		
+
+func _on_reload_animation_finished():
+	# reload the gun
+	var amount_to_fill = CLIP_SIZE - clip_count
+	if amount_to_fill > ammo:
+		amount_to_fill = ammo
+	ammo -= amount_to_fill
+	clip_count += amount_to_fill
+	updateHUD()
+	$reloadBar.visible = false
+	isReloading = false
+	
+	return "Gun reloaded"
 
 func reload():
+	if isReloading:
+		return
+	
 	if ammo == 0:
 		# play sound
 		$noMoreAmmoOrFull.play()
@@ -88,17 +108,14 @@ func reload():
 		$noMoreAmmoOrFull.play()
 		# Tell the player your ammo is full
 		return 'Ammo is full'
-	# TODO Play reload animation - On animation finish, do the rest of the logic below
 	
 	# reload the gun
-	var amount_to_fill = CLIP_SIZE - clip_count
-	if amount_to_fill > ammo:
-		amount_to_fill = ammo
-	ammo -= amount_to_fill
-	clip_count += amount_to_fill
-	updateHUD()
-	$reloadSound.play()
-	return "Gun reloaded"
+	$reloadBar.visible = true
+	isReloading = true
+	$reloadSound.play()  # play sound
+	$reloadAnimation.play("reload")  # play the animation
+
+	
 
 func updateHUD():
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)

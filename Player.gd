@@ -183,6 +183,7 @@ func _physics_process(delta):
 			movement_speed = DASH_SPEED
 			if $dashTimer.is_stopped():
 				$dashTimer.start(DASH_TIME)
+				$dashSound.play()
 		else:
 			movement_speed = WALK_SPEED
 			if $staminaRegenTimer.is_stopped():
@@ -216,10 +217,10 @@ func _physics_process(delta):
 	
 	if newVelocity.length() >= RUNNING_SPEED_SOUND_FX_THRESHOLD:
 		pitch_scale = 1.5  # increasing walking speed
-		volume = -3
+		volume = 0
 	elif newVelocity.length() >= WALK_SPEED:
 		pitch_scale = 0.8 # decrease walking speed
-		volume = -2
+		volume = -0
 	else:
 		pitch_scale = 0.8 
 		volume = -99  # no sound if standing still
@@ -260,7 +261,10 @@ func reload():
 		emit_signal("playerLog", reloadMessage)
 
 func shoot():
-	if current_gun_instance.clip_count > 0:
+	if current_gun_instance.isReloading:
+		return
+	
+	if current_gun_instance.clip_count > 0 :
 		can_shoot = false
 		current_gun_instance.shoot()
 		
@@ -544,3 +548,6 @@ func _on_staminaRegenTimer_timeout():
 
 func _on_staminaDepletionRate_timeout():
 	setStamina(stamina - 1)
+
+
+

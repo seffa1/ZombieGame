@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ProgressBar.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=62]
+bg_color = Color( 0.466667, 0, 0, 1 )
+
+[node name="reloadBar" type="ProgressBar"]
+margin_left = -80.0
+margin_top = -104.0
+margin_right = 88.0
+margin_bottom = -90.0
+custom_styles/fg = SubResource( 62 )
+step = 1.0
+percent_visible = false
+script = ExtResource( 1 )
