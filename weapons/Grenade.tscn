@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://weapons/Grenade.gd" type="Script" id=1]
 [ext_resource path="res://screenShaker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sounds/grenades/ESM_GW_explosion_one_shot_grenade_throw_and_landed_grenade_movement_metal_hit_long_1.wav" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 45.2548
+radius = 35.0143
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -79,6 +80,7 @@ tracks/2/keys = {
 radius = 320.0
 
 [node name="Grenade" type="RigidBody2D"]
+scale = Vector2( 0.288672, 0.311503 )
 collision_layer = 256
 collision_mask = 3
 gravity_scale = 0.0
@@ -86,12 +88,18 @@ linear_damp = 1.0
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 2 )
 shape = SubResource( 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( -32, -32 )
-color = Color( 0.0470588, 0.698039, 0.34902, 1 )
-polygon = PoolVector2Array( 64, 0, 64, 64, 0, 64, 0, 0 )
+[node name="body" type="Polygon2D" parent="."]
+position = Vector2( -30, -31.9538 )
+scale = Vector2( 0.964912, 1.04615 )
+color = Color( 0.0117647, 0.278431, 0.133333, 1 )
+polygon = PoolVector2Array( 50.7818, 19.0735, 48.7091, 23.8529, 52.4023, 21.6358, 58.0364, 30.5441, 58.0364, 35.7238, 49.7455, 37.2353, 58.0364, 38.3438, 58.0364, 48.7059, 55.3618, 52.5234, 48.7091, 51.5735, 53.8909, 55.3971, 50, 60.1765, 38, 65.9118, 21, 65.9118, 8, 59.2206, 5.91587, 54.9042, 11.4, 52.5294, 4.87463, 52.7477, 2, 46.7941, 2.07273, 38.1912, 8.29091, 38.1912, 2.39525, 35.2164, 3.10909, 28.6324, 5.31086, 23.5554, 10.3636, 24.8088, 6.52382, 20.7585, 7.25455, 19.0735, 19.6909, 14.2941, 20.7273, -1, 42, -1, 42.4909, 14.2941 )
+
+[node name="handle" type="Polygon2D" parent="."]
+color = Color( 0.32549, 0.152941, 0.0352941, 1 )
+polygon = PoolVector2Array( 6, -31, 11, -29, 11, -23, 28, -9, 32, 27, 36, 28, 39, 26, 34, -10, 19, -23, 16, -33, 6, -33 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
@@ -100,13 +108,21 @@ anims/explode = SubResource( 3 )
 [node name="FuseTimer" type="Timer" parent="."]
 
 [node name="hurt_box" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurt_box"]
+visible = false
 shape = SubResource( 4 )
 disabled = true
 
 [node name="screenShaker" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="grenadeThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
+max_distance = 1500.0
 
 [connection signal="timeout" from="FuseTimer" to="." method="_on_FuseTimer_timeout"]
 [connection signal="body_entered" from="hurt_box" to="." method="_on_hurt_box_body_entered"]

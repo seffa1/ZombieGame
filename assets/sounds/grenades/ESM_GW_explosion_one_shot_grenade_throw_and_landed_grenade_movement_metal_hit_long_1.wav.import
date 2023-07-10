@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ESM_GW_explosion_one_shot_grenade_throw_and_landed_grenade_movement_metal_hit_long_1.wav-8c1279d2ff423c1d7c3098aae46f0e24.sample"
+
+[deps]
+
+source_file="res://assets/sounds/grenades/ESM_GW_explosion_one_shot_grenade_throw_and_landed_grenade_movement_metal_hit_long_1.wav"
+dest_files=[ "res://.import/ESM_GW_explosion_one_shot_grenade_throw_and_landed_grenade_movement_metal_hit_long_1.wav-8c1279d2ff423c1d7c3098aae46f0e24.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

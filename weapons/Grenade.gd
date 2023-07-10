@@ -3,6 +3,7 @@ extends RigidBody2D
 signal shakeScreen
 
 var grenadeflash = preload("res://muzzleFlash.tscn")
+var Explosion = preload("res://Explosion.tscn")
 
 # Explode
 var FUSE_TIMER = 3
@@ -31,6 +32,10 @@ func _on_FuseTimer_timeout():
 
 
 func _on_explode_animation_finished():
+	# spawn explosion effect
+	var explotion = Explosion.instance()
+	explotion.global_position = global_position
+	get_tree().current_scene.add_child(explotion)
 	queue_free()
 
 func _on_hurt_box_body_entered(body):
