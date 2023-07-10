@@ -148,6 +148,14 @@ margin_bottom = 532.0
 rect_scale = Vector2( 3, 3 )
 text = "RESET SCORE"
 
+[node name="debug" type="Button" parent="CanvasLayer"]
+margin_left = 846.0
+margin_top = 256.0
+margin_right = 897.0
+margin_bottom = 276.0
+rect_scale = Vector2( 3, 3 )
+text = "debug"
+
 [node name="start" type="Button" parent="CanvasLayer"]
 margin_left = 536.0
 margin_top = 256.0
@@ -181,5 +189,6 @@ autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/clearScores" to="." method="_on_clearScores_pressed"]
+[connection signal="pressed" from="CanvasLayer/debug" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="CanvasLayer/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="CanvasLayer/load" to="." method="_on_load_pressed"]

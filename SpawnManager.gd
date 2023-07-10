@@ -13,6 +13,10 @@ func start_level(_zombies_left_to_spawn):
 	round_started = true
 
 func _process(delta):
+	# dont spawn zombies in debug mode
+	if GLOBALS.debugMode:
+		return
+		
 	if not round_started or DISABLED:
 		return
 	

@@ -406,7 +406,6 @@ glow_hdr_scale = 1.97
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
-NO_ZOMBIES = true
 
 [node name="Ambient" type="CanvasModulate" parent="."]
 color = Color( 0.352941, 0.184314, 0.184314, 1 )
@@ -534,23 +533,29 @@ rotation = -3.14159
 DISABLED = false
 
 [node name="ZombieSpawner2" parent="SpawnManager" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( -1680, 720 )
 active = true
 
 [node name="ZombieSpawner3" parent="SpawnManager" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 2368, 976 )
 
 [node name="ZombieSpawner4" parent="SpawnManager" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 576, -352 )
 
 [node name="ZombieSpawner5" parent="SpawnManager" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( -528, -363 )
 active = true
 
 [node name="ZombieSpawner6" parent="SpawnManager" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 1040, 1840 )
 
 [node name="NavigationNodeManager" parent="." instance=ExtResource( 13 )]
+visible = false
 
 [node name="Node1" parent="NavigationNodeManager" instance=ExtResource( 11 )]
 position = Vector2( -1056, 720 )

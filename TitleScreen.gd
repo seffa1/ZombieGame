@@ -23,13 +23,26 @@ func _on_quit_pressed():
 	get_tree().quit()
 	
 func _on_start_pressed():
+	# start game normally
+	GLOBALS.debugMode = false
+	print("Starting game in normal mode")
+	start_game()
+	
+func _on_debug_pressed():
+	# start game in debug
+	GLOBALS.debugMode = true
+	print("Starting game in debug mode")
+	start_game()
+	
+	
+func start_game():
 	# start the game
 	$impact.play()
 	get_tree().paused = false
 	$CanvasLayer.visible = false
 	$titleAmbiance1.volume_db = -30
 	get_parent().find_node("HUD").visible = true
-
+	
 func _on_load_pressed():
 	print('Loading game...')
 	var save_path = SAVE_DIR + "save.dat"
@@ -52,8 +65,7 @@ func _on_clearScores_pressed():
 	dir.remove(save_path)
 	print("high scores deleted")
 	loadHighScoreData()
-	
-	
+
 func loadHighScoreData():
 	# load high score data
 	var file = File.new()
@@ -81,3 +93,6 @@ func loadHighScoreData():
 		$CanvasLayer/roundsFiredVal.text = "0"
 		$CanvasLayer/roundsHitVal.text = "0"
 		$CanvasLayer/AccuracyVal.text = "0"
+
+
+

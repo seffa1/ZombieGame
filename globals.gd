@@ -6,6 +6,7 @@ onready var money = preload("res://pickups/Money.tscn")
 # holds a reference to the player and camera
 var player = null
 var camera = null
+var debugMode = false
 
 # Pickup drop chances
 var CHANCE_TO_DROP_PICKUP = .25

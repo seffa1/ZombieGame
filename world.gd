@@ -17,8 +17,6 @@ var ZOMBIES_PER_LEVEL = {
 	"10": 1000
 }
 
-export var NO_ZOMBIES = false
-
 const SAVE_DIR = "user://highscore/"
 
 # Zombie / player trackers
@@ -35,15 +33,15 @@ var kills = 0
 
 
 func _ready():
-
+	print("world readu, debug: " + str(GLOBALS.debugMode))
 	for child in get_node("ZombieManager").get_children():
 		if child.get_filename() == "res://Player.tscn":
 			players.append(child)
-	# for testing purposes
-	if !NO_ZOMBIES:
-		start_round(current_level)
+
+	start_round(current_level)
 	
 func start_round(level):
+
 	# play sound
 	if level > 1:
 		$startRound.play()
