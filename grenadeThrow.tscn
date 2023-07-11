@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/sounds/grenades/ESM_GW_explosion_one_shot_grenade_throw_and_landed_grenade_movement_metal_hit_long_1.wav" type="AudioStream" id=1]
+
+[node name="grenadeThrow" type="AudioStreamPlayer2D"]
+stream = ExtResource( 1 )
+autoplay = true
+max_distance = 1500.0

@@ -133,6 +133,7 @@ func _on_Player_throw_grenade(grenade, _player):
 	add_child(g)
 	g.global_transform.origin = player_position
 	g.apply_impulse(player_position, _player.grenade_throw_velocity)
+	g.throw()
 	
 func _activate_spawners(spawner_names : Array):
 	for name in spawner_names:

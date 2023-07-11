@@ -11,6 +11,12 @@ var DAMAGE = 6
 var RADIUS = 400
 var player
 
+func charge():
+	angular_velocity = 0
+
+func throw():
+	angular_velocity = 10
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$FuseTimer.start(FUSE_TIMER)
@@ -29,7 +35,6 @@ func _on_FuseTimer_timeout():
 	var grenadeFlash_instance = grenadeflash.instance()
 	get_tree().current_scene.add_child(grenadeFlash_instance)
 	grenadeFlash_instance.global_position = global_position
-
 
 func _on_explode_animation_finished():
 	# spawn explosion effect

@@ -120,7 +120,7 @@ func _exit_tree():
 func _physics_process(delta):
 	
 	update()
-#	print(charging_grenade)
+
 	if deathState:
 		return
 	find_closest_navigation_node()
@@ -407,6 +407,7 @@ func charge_grenade():
 		emit_signal("grenade_change", grenade_count)
 		var g = grenade.instance()
 		g.player = self
+		g.charge()
 		add_child(g)
 		
 	# On calls while we are charging the grenade
@@ -436,6 +437,7 @@ func throw_grenade():
 	
 	remove_child(g)
 	emit_signal("throw_grenade", grenade, self)
+	$grenadeThrow.play()
 	
 	# clean up
 	grenade_throw_velocity = Vector2.ZERO
