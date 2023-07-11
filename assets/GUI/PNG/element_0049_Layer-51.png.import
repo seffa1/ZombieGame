@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/element_0049_Layer-51.png-f33e67136032fcf940a6f1c4f2db7ad7.stex"
+path="res://.import/element_0049_Layer-51.png-17dda3be08bd8cfcff788540edd342b4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/element_0049_Layer-51.png"
-dest_files=[ "res://.import/element_0049_Layer-51.png-f33e67136032fcf940a6f1c4f2db7ad7.stex" ]
+source_file="res://assets/GUI/PNG/element_0049_Layer-51.png"
+dest_files=[ "res://.import/element_0049_Layer-51.png-17dda3be08bd8cfcff788540edd342b4.stex" ]
 
 [params]
 

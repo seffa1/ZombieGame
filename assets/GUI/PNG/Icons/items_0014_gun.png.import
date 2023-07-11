@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/items_0014_gun.png-a575c00c4d82c8e5f51bd4a96745aa80.stex"
+path="res://.import/items_0014_gun.png-a72cd73bab73754921da7271fdc5cd70.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/Icons/items_0014_gun.png"
-dest_files=[ "res://.import/items_0014_gun.png-a575c00c4d82c8e5f51bd4a96745aa80.stex" ]
+source_file="res://assets/GUI/PNG/Icons/items_0014_gun.png"
+dest_files=[ "res://.import/items_0014_gun.png-a72cd73bab73754921da7271fdc5cd70.stex" ]
 
 [params]
 

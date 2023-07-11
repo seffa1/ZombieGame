@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/girl icon_no_bg.png-bc5ef5cedba9e08788e51a8245f9b817.stex"
+path="res://.import/girl icon_no_bg.png-12ebde5d200fb0d95dd0affd073cb187.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/Icons/girl icon_no_bg.png"
-dest_files=[ "res://.import/girl icon_no_bg.png-bc5ef5cedba9e08788e51a8245f9b817.stex" ]
+source_file="res://assets/GUI/PNG/Icons/girl icon_no_bg.png"
+dest_files=[ "res://.import/girl icon_no_bg.png-12ebde5d200fb0d95dd0affd073cb187.stex" ]
 
 [params]
 

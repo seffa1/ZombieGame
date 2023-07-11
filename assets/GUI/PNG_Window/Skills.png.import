@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Skills.png-2eed3af91f7527f58203e7e5f06da0cd.stex"
+path="res://.import/Skills.png-e3b553ddb35ea4de1c36261c71c49508.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG_Window/Skills.png"
-dest_files=[ "res://.import/Skills.png-2eed3af91f7527f58203e7e5f06da0cd.stex" ]
+source_file="res://assets/GUI/PNG_Window/Skills.png"
+dest_files=[ "res://.import/Skills.png-e3b553ddb35ea4de1c36261c71c49508.stex" ]
 
 [params]
 

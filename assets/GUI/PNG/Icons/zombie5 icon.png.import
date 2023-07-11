@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/zombie5 icon.png-bdc8298650a8846efea0f56448d72378.stex"
+path="res://.import/zombie5 icon.png-2329620765ec3fdf92a5f8a652205022.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/Icons/zombie5 icon.png"
-dest_files=[ "res://.import/zombie5 icon.png-bdc8298650a8846efea0f56448d72378.stex" ]
+source_file="res://assets/GUI/PNG/Icons/zombie5 icon.png"
+dest_files=[ "res://.import/zombie5 icon.png-2329620765ec3fdf92a5f8a652205022.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/items_0009_magazine_machine_gun.png-18560528d158750020e82c417021759c.stex"
+path="res://.import/items_0009_magazine_machine_gun.png-3b63bdfe4716daba2a0d54b6581c4857.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/Icons/items_0009_magazine_machine_gun.png"
-dest_files=[ "res://.import/items_0009_magazine_machine_gun.png-18560528d158750020e82c417021759c.stex" ]
+source_file="res://assets/GUI/PNG/Icons/items_0009_magazine_machine_gun.png"
+dest_files=[ "res://.import/items_0009_magazine_machine_gun.png-3b63bdfe4716daba2a0d54b6581c4857.stex" ]
 
 [params]
 

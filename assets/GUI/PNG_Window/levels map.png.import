@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/levels map.png-a77fdb3e2431482a284a6eaa0071145e.stex"
+path="res://.import/levels map.png-ae8ca78c427ca3f7d3e314121450af9e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG_Window/levels map.png"
-dest_files=[ "res://.import/levels map.png-a77fdb3e2431482a284a6eaa0071145e.stex" ]
+source_file="res://assets/GUI/PNG_Window/levels map.png"
+dest_files=[ "res://.import/levels map.png-ae8ca78c427ca3f7d3e314121450af9e.stex" ]
 
 [params]
 

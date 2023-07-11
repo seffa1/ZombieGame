@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/items_0013_money.png-826f493c2578aadb3ca1bad716db848e.stex"
+path="res://.import/items_0013_money.png-d9058ee2f4743213f76f02ac0fa23f8c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://zombieAssets/zombie-tds-game-user-interface/PNG/Icons/items_0013_money.png"
-dest_files=[ "res://.import/items_0013_money.png-826f493c2578aadb3ca1bad716db848e.stex" ]
+source_file="res://assets/GUI/PNG/Icons/items_0013_money.png"
+dest_files=[ "res://.import/items_0013_money.png-d9058ee2f4743213f76f02ac0fa23f8c.stex" ]
 
 [params]
 

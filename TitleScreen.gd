@@ -94,5 +94,65 @@ func loadHighScoreData():
 		$CanvasLayer/roundsHitVal.text = "0"
 		$CanvasLayer/AccuracyVal.text = "0"
 
+# Code for animating buttons
 
+onready var startButtonPosition = $CanvasLayer/start.rect_position
+onready var startButtonPositionEnd = $CanvasLayer/start.rect_position + Vector2(-10, -10)
 
+func _on_start_mouse_entered():
+	$Tween.interpolate_property($CanvasLayer/start, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/start, "rect_position", startButtonPosition, startButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+func _on_start_mouse_exited():
+	$Tween.interpolate_property($CanvasLayer/start, "rect_scale", Vector2(1.1, 1.1), Vector2(1, 1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/start, "rect_position",  startButtonPositionEnd, startButtonPosition, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+onready var debugButtonPosition = $CanvasLayer/debug.rect_position
+onready var debugButtonPositionEnd = $CanvasLayer/debug.rect_position + Vector2(-10, -10)
+
+func _on_debug_mouse_entered():
+	$Tween.interpolate_property($CanvasLayer/debug, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/debug, "rect_position", debugButtonPosition, debugButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+func _on_debug_mouse_exited():
+	$Tween.interpolate_property($CanvasLayer/debug, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/debug, "rect_position", debugButtonPositionEnd, debugButtonPosition, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+onready var loadButtonPosition = $CanvasLayer/load.rect_position
+onready var loadButtonPositionEnd = $CanvasLayer/load.rect_position + Vector2(-10, -10)
+
+func _on_load_mouse_entered():
+	$Tween.interpolate_property($CanvasLayer/load, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/load, "rect_position", loadButtonPosition, loadButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+func _on_load_mouse_exited():
+	$Tween.interpolate_property($CanvasLayer/load, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/load, "rect_position", loadButtonPositionEnd, loadButtonPosition, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+onready var clearScoresButtonPosition = $CanvasLayer/clearScores.rect_position
+onready var clearScoresButtonPositionEnd = $CanvasLayer/clearScores.rect_position + Vector2(-10, -10)
+
+func _on_clearScores_mouse_entered():
+	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_position", clearScoresButtonPosition, clearScoresButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+func _on_clearScores_mouse_exited():
+	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_position", clearScoresButtonPositionEnd, clearScoresButtonPosition, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+onready var quitScoresButtonPosition = $CanvasLayer/quit.rect_position
+onready var quitScoresButtonPositionEnd = $CanvasLayer/quit.rect_position + Vector2(-10, -10)
+
+func _on_quit_mouse_entered():
+	$Tween.interpolate_property($CanvasLayer/quit, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/quit, "rect_position", quitScoresButtonPosition, quitScoresButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
+func _on_quit_mouse_exited():
+	$Tween.interpolate_property($CanvasLayer/quit, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/quit, "rect_position", quitScoresButtonPositionEnd, quitScoresButtonPosition, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
