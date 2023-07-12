@@ -505,7 +505,7 @@ parameters/playback = SubResource( 3 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
 
-[node name="reloadBar" parent="HUD" index="22"]
+[node name="reloadBar" parent="HUD" index="24"]
 custom_styles/bg = SubResource( 35 )
 
 [node name="Windows" type="Node" parent="."]

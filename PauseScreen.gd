@@ -6,21 +6,23 @@ func _ready():
 	$CanvasLayer.visible = false
 
 func _input(event):
-	# toggle pause on input
-	if event.is_action_pressed("pause"):
+	# toggle pause on input if we are not at the title screen
+	if event.is_action_pressed("pause") and not get_parent().find_node("TitleScreen").atTitleScreen:
+		togglePauseScreen()
+
+func togglePauseScreen():
+	var new_pause_state = not get_tree().paused
 		
-		var new_pause_state = not get_tree().paused
-		
-		# pause all processing on all tree nodes 
-		# except those with "pause mode" set from STOP to Process
-		# All nodes will be STOP except this one (so it doesnt stop when you pause)
-		get_tree().paused = new_pause_state
-		
-		# toggle pause menu visability
-		$CanvasLayer.visible = new_pause_state
-		
-		# toggle HUD display
-		get_parent().find_node("HUD").visible = not new_pause_state
+	# pause all processing on all tree nodes 
+	# except those with "pause mode" set from STOP to Process
+	# All nodes will be STOP except this one (so it doesnt stop when you pause)
+	get_tree().paused = new_pause_state
+	
+	# toggle pause menu visability
+	$CanvasLayer.visible = new_pause_state
+
+	# toggle HUD display
+	get_parent().find_node("HUD").visible = not new_pause_state
 
 func _on_quit_pressed():
 	get_tree().quit()
@@ -30,14 +32,13 @@ func _on_save_pressed():
 	save_game()
 
 func _on_resume_pressed():
-	get_tree().paused = false
-	$CanvasLayer.visible = false
+	togglePauseScreen()
 
 func _on_restart_pressed():
 	get_tree().paused = false
 	$CanvasLayer.visible = false
 	get_tree().reload_current_scene()
-	
+
 func save_game():
 	# This is the built in user directory at: Project -> Open User Data
 	var save_path = SAVE_DIR + "save.dat"
