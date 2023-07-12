@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
@@ -6,14 +6,10 @@
 [ext_resource path="res://perkHUDtoggler.gd" type="Script" id=4]
 [ext_resource path="res://assets/sounds/fx/ESM_Horror_Game_Notification_New_Message_Recieved_3_Drum_Only.wav" type="AudioStream" id=5]
 [ext_resource path="res://reloadBar.tscn" type="PackedScene" id=6]
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.760784, 0.0784314, 0.0784314, 1 )
-
-[sub_resource type="Theme" id=9]
-
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.0980392, 0.576471, 0.309804, 1 )
+[ext_resource path="res://assets/GUI/PNG/element_0094_Layer-96.png" type="Texture" id=7]
+[ext_resource path="res://assets/GUI/PNG/element_0095_Layer-97.png" type="Texture" id=8]
+[ext_resource path="res://assets/GUI/PNG/element_0077_Layer-79.png" type="Texture" id=9]
+[ext_resource path="res://assets/GUI/PNG/element_0076_Layer-78.png" type="Texture" id=10]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -345,61 +341,38 @@ margin_right = 1061.0
 margin_bottom = 22.0
 text = "0"
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-margin_left = 24.0
-margin_top = 7.0
-margin_right = 499.0
-margin_bottom = 20.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_styles/fg = SubResource( 8 )
-value = 60.0
-percent_visible = false
-
-[node name="health" type="Label" parent="HealthBar"]
-margin_left = 478.0
-margin_top = 4.0
-margin_right = 502.0
-margin_bottom = 18.0
+[node name="health" type="Label" parent="."]
+margin_left = 502.0
+margin_top = 11.0
+margin_right = 526.0
+margin_bottom = 25.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "100"
 
-[node name="divider" type="Label" parent="HealthBar"]
-margin_left = 542.0
-margin_top = 4.0
-margin_right = 547.0
-margin_bottom = 18.0
+[node name="divider" type="Label" parent="."]
+margin_left = 566.0
+margin_top = 11.0
+margin_right = 571.0
+margin_bottom = 25.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "/"
 
-[node name="hitPoints" type="Label" parent="HealthBar"]
-margin_left = 622.0
-margin_top = 4.0
-margin_right = 683.0
-margin_bottom = 35.0
+[node name="hitPoints" type="Label" parent="."]
+margin_left = 646.0
+margin_top = 11.0
+margin_right = 707.0
+margin_bottom = 42.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "hit points
 "
 
-[node name="maxHealth" type="Label" parent="HealthBar"]
-margin_left = 558.0
-margin_top = 4.0
-margin_right = 582.0
-margin_bottom = 18.0
+[node name="maxHealth" type="Label" parent="."]
+margin_left = 582.0
+margin_top = 11.0
+margin_right = 606.0
+margin_bottom = 25.0
 rect_scale = Vector2( 2.12, 1.6486 )
 text = "100"
-
-[node name="StaminaBar" type="ProgressBar" parent="."]
-margin_left = 24.0
-margin_top = 28.0
-margin_right = 499.0
-margin_bottom = 41.0
-theme = SubResource( 9 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_styles/fg = SubResource( 10 )
-value = 100.0
-percent_visible = false
 
 [node name="money" type="Label" parent="."]
 margin_left = 62.0
@@ -530,3 +503,23 @@ margin_bottom = 270.0
 [node name="reloadAnimation" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 14 )
 anims/reload = SubResource( 13 )
+
+[node name="StaminaBar" type="TextureProgress" parent="."]
+margin_left = 18.0
+margin_top = 30.0
+margin_right = 203.0
+margin_bottom = 50.0
+rect_scale = Vector2( 2.55735, 1.33102 )
+value = 50.0
+texture_under = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+
+[node name="HealthBar" type="TextureProgress" parent="."]
+margin_left = 19.0
+margin_top = 8.0
+margin_right = 849.0
+margin_bottom = 48.0
+rect_scale = Vector2( 0.565327, 0.83256 )
+value = 50.0
+texture_under = ExtResource( 9 )
+texture_progress = ExtResource( 10 )

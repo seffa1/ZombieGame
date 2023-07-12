@@ -20,8 +20,8 @@ func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 
 func _on_Player_health_change(_health, _maxHealth):
 	# 3 or 5
-	$HealthBar/health.text = str(_health * 20)
-	$HealthBar/maxHealth.text = str(_maxHealth * 20)
+	$health.text = str(_health * 20)
+	$maxHealth.text = str(_maxHealth * 20)
 	#1 - 3 or 1 - 5
 	$HealthBar.value = _health * 20  # 20-60 or 20-100
 
