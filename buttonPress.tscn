@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/sounds/fx/ESM_Simple_Arcade_Game_Booster_Hybrid_Mobile_Collect_Special_Power_Up_Buff.wav" type="AudioStream" id=1]
+
+[node name="buttonPress" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+volume_db = -10.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/songSamples/BO_HWD_140_Keys_Loop_Piano_High_Ching_Em.wav" type="AudioStream" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://assets/GUI/PNG_Window/Skills.png" type="Texture" id=5]
 [ext_resource path="res://defaultFontSmall.tres" type="Theme" id=6]
 [ext_resource path="res://defaultFont.tres" type="Theme" id=7]
+[ext_resource path="res://buttonHover.tscn" type="PackedScene" id=8]
+[ext_resource path="res://buttonPress.tscn" type="PackedScene" id=9]
 
 [node name="TitleScreen" type="Node2D"]
 pause_mode = 2
@@ -216,6 +218,12 @@ volume_db = -25.0
 autoplay = true
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="buttonHover" parent="." instance=ExtResource( 8 )]
+volume_db = -15.0
+
+[node name="buttonPress" parent="." instance=ExtResource( 9 )]
+volume_db = -15.0
 
 [connection signal="mouse_entered" from="CanvasLayer/start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/start" to="." method="_on_start_mouse_exited"]

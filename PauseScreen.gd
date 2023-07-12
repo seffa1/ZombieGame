@@ -28,10 +28,12 @@ func _on_quit_pressed():
 	get_tree().quit()
 
 func _on_save_pressed():
+	playButtonPressSound()
 	print('Saving game...')
 	save_game()
 
 func _on_resume_pressed():
+	playButtonPressSound()
 	togglePauseScreen()
 
 func _on_restart_pressed():
@@ -59,12 +61,19 @@ func save_game():
 		file.close()
 		print("data saved")
 
+func playButtonHoverSound():
+	$buttonHover.play()
+
+func playButtonPressSound():
+	$buttonPress.play()
+
 # Code for animating buttons
 
 onready var resumeButtonPosition = $CanvasLayer/resume.rect_position
 onready var resumeButtonPositionEnd = $CanvasLayer/resume.rect_position + Vector2(-10, -10)
 
 func _on_resume_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/resume, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/resume, "rect_position", resumeButtonPosition, resumeButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -78,6 +87,7 @@ onready var quitButtonPosition = $CanvasLayer/quit.rect_position
 onready var quitButtonPositionEnd = $CanvasLayer/quit.rect_position + Vector2(-10, -10)
 
 func _on_quit_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/quit, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/quit, "rect_position", quitButtonPosition, quitButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -91,6 +101,7 @@ onready var saveButtonPosition = $CanvasLayer/save.rect_position
 onready var saveButtonPositionEnd = $CanvasLayer/save.rect_position + Vector2(-10, -10)
 
 func _on_save_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/save, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/save, "rect_position", saveButtonPosition, saveButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -104,6 +115,7 @@ onready var restartButtonPosition = $CanvasLayer/restart.rect_position
 onready var restartButtonPositionEnd = $CanvasLayer/restart.rect_position + Vector2(-10, -10)
 
 func _on_restart_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/restart, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/restart, "rect_position", restartButtonPosition, restartButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()

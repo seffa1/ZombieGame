@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/sounds/fx/ESM_Powerful_Game_Item_Touch_2_Futuristic_Mobile_App_Pick_Up_Sci_fi.wav" type="AudioStream" id=1]
+
+[node name="buttonHover" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+volume_db = -10.0

@@ -30,7 +30,6 @@ func _on_start_pressed():
 	print("Starting game in normal mode")
 	start_game()
 	
-	
 func _on_debug_pressed():
 	# start game in debug
 	GLOBALS.debugMode = true
@@ -64,6 +63,7 @@ func _on_load_pressed():
 	pass # Replace with function body.
 
 func _on_clearScores_pressed():
+	playButtonPressSound()
 	var dir = Directory.new()
 	dir.remove(save_path)
 	print("high scores deleted")
@@ -97,12 +97,19 @@ func loadHighScoreData():
 		$CanvasLayer/roundsHitVal.text = "0"
 		$CanvasLayer/AccuracyVal.text = "0"
 
-# Code for animating buttons
+func playButtonHoverSound():
+	$buttonHover.play()
 
+func playButtonPressSound():
+	$buttonPress.play()
+
+# Code for animating buttons
+var BUTTON_OFFSET = Vector2(-5, -5)
 onready var startButtonPosition = $CanvasLayer/start.rect_position
-onready var startButtonPositionEnd = $CanvasLayer/start.rect_position + Vector2(-10, -10)
+onready var startButtonPositionEnd = $CanvasLayer/start.rect_position + BUTTON_OFFSET
 
 func _on_start_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/start, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/start, "rect_position", startButtonPosition, startButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -113,9 +120,10 @@ func _on_start_mouse_exited():
 	$Tween.start()
 
 onready var debugButtonPosition = $CanvasLayer/debug.rect_position
-onready var debugButtonPositionEnd = $CanvasLayer/debug.rect_position + Vector2(-10, -10)
+onready var debugButtonPositionEnd = $CanvasLayer/debug.rect_position + BUTTON_OFFSET
 
 func _on_debug_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/debug, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/debug, "rect_position", debugButtonPosition, debugButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -125,9 +133,10 @@ func _on_debug_mouse_exited():
 	$Tween.start()
 
 onready var loadButtonPosition = $CanvasLayer/load.rect_position
-onready var loadButtonPositionEnd = $CanvasLayer/load.rect_position + Vector2(-10, -10)
+onready var loadButtonPositionEnd = $CanvasLayer/load.rect_position + BUTTON_OFFSET
 
 func _on_load_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/load, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/load, "rect_position", loadButtonPosition, loadButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -137,9 +146,10 @@ func _on_load_mouse_exited():
 	$Tween.start()
 
 onready var clearScoresButtonPosition = $CanvasLayer/clearScores.rect_position
-onready var clearScoresButtonPositionEnd = $CanvasLayer/clearScores.rect_position + Vector2(-10, -10)
+onready var clearScoresButtonPositionEnd = $CanvasLayer/clearScores.rect_position + BUTTON_OFFSET
 
 func _on_clearScores_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/clearScores, "rect_position", clearScoresButtonPosition, clearScoresButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -149,9 +159,10 @@ func _on_clearScores_mouse_exited():
 	$Tween.start()
 
 onready var quitScoresButtonPosition = $CanvasLayer/quit.rect_position
-onready var quitScoresButtonPositionEnd = $CanvasLayer/quit.rect_position + Vector2(-10, -10)
+onready var quitScoresButtonPositionEnd = $CanvasLayer/quit.rect_position + BUTTON_OFFSET
 
 func _on_quit_mouse_entered():
+	playButtonHoverSound()
 	$Tween.interpolate_property($CanvasLayer/quit, "rect_scale", Vector2(1, 1), Vector2(1.1, 1.1), .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($CanvasLayer/quit, "rect_position", quitScoresButtonPosition, quitScoresButtonPositionEnd, .1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
