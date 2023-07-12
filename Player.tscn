@@ -16,7 +16,7 @@
 [ext_resource path="res://assets/sounds/player/ZombieVictimGroan_BW.13201.wav" type="AudioStream" id=14]
 [ext_resource path="res://assets/sounds/player/ZombieVictimGroan_BW.13204.wav" type="AudioStream" id=15]
 [ext_resource path="res://assets/sounds/walking/BRS_Feet_Walk_Wood_Casual_Shoes_1.wav" type="AudioStream" id=16]
-[ext_resource path="res://assets/sounds/walking/ESM_MU_FX_foley_cloth_whoosh_organic_basic_small_quick_swoosh_07.wav" type="AudioStream" id=17]
+[ext_resource path="res://assets/sounds/fx/ESM_MVG_fx_movement_one_shot_slow_dash_cloak_armed_whoosh_hard.wav" type="AudioStream" id=17]
 [ext_resource path="res://grenadeThrow.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -966,7 +966,7 @@ autoplay = true
 
 [node name="dashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
-volume_db = -15.0
+volume_db = -10.0
 pitch_scale = 0.7
 
 [node name="grenadeThrow" parent="." instance=ExtResource( 18 )]
