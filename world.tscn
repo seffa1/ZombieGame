@@ -819,9 +819,11 @@ pause_mode = 2
 [node name="CanvasLayer" parent="PauseScreen" index="0"]
 visible = false
 
-[node name="quit" parent="PauseScreen/CanvasLayer" index="2"]
-margin_top = 334.0
-margin_bottom = 354.0
+[node name="quit" parent="PauseScreen/CanvasLayer" index="21"]
+margin_left = 379.0
+margin_top = 428.0
+margin_right = 649.0
+margin_bottom = 495.0
 
 [node name="TitleScreen" parent="." instance=ExtResource( 24 )]
 

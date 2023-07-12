@@ -198,9 +198,9 @@ flip_v = true
 
 [node name="quit" type="Button" parent="CanvasLayer"]
 margin_left = 383.0
-margin_top = 427.333
+margin_top = 430.0
 margin_right = 653.0
-margin_bottom = 494.333
+margin_bottom = 497.0
 theme = ExtResource( 4 )
 text = "QUIT"
 flat = true
@@ -232,7 +232,17 @@ theme = ExtResource( 4 )
 text = "RESTART"
 flat = true
 
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="mouse_entered" from="CanvasLayer/quit" to="." method="_on_quit_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/quit" to="." method="_on_quit_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/resume" to="." method="_on_resume_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/resume" to="." method="_on_resume_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/resume" to="." method="_on_resume_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/save" to="." method="_on_save_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/save" to="." method="_on_save_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/save" to="." method="_on_save_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/restart" to="." method="_on_restart_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/restart" to="." method="_on_restart_mouse_exited"]
 [connection signal="pressed" from="CanvasLayer/restart" to="." method="_on_restart_pressed"]
