@@ -33,7 +33,6 @@ func _ready():
 	self.connect("shoot", world, '_on_gun_shoot')
 	self.connect("shakeScreen", world, '_on_camera_shake')
 	
-	
 	# Connec the updateHUD signal to the HUD
 	var hud = get_node('/root/World/HUD')
 	self.connect('updateHUD', hud, '_on_update_hud_gun')
@@ -77,6 +76,7 @@ func shoot():
 	
 	# Update the clip count
 	clip_count -= 1
+	print("Clip count from gun: " + str(clip_count))
 	
 	# shake screen
 	emit_signal("shakeScreen", 5, .1)
@@ -88,7 +88,6 @@ func on_reload_animation_finished():
 	Called by the world node when HUD animation completes. Dont really like this approach.
 	"""
 	# reload the gun
-	print("Gun reloaded")
 	var amount_to_fill = CLIP_SIZE - clip_count
 	if amount_to_fill > ammo:
 		amount_to_fill = ammo
@@ -120,7 +119,6 @@ func reload():
 	$reloadStartSound.play()
 	
 	emit_signal("gunReload") # Trigger HUD reload bar 
-
 
 func updateHUD():
 	emit_signal("updateHUD", clip_count, CLIP_SIZE, ammo)

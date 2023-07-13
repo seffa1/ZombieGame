@@ -273,6 +273,7 @@ func shoot():
 	if current_gun_instance.clip_count > 0 :
 		can_shoot = false
 		current_gun_instance.shoot()
+		emit_signal("gun_change", current_gun_instance.GUN_NAME)
 		
 		# TODO: decouple this
 		match current_gun_instance.GUN_NAME:

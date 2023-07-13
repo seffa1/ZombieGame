@@ -438,6 +438,7 @@ margin_bottom = 583.0
 texture = ExtResource( 12 )
 
 [node name="bulletsUnder" type="TextureRect" parent="."]
+visible = false
 margin_left = 772.0
 margin_top = 483.0
 margin_right = 881.0
@@ -575,7 +576,7 @@ margin_left = 1.0
 margin_top = 4.0
 margin_right = 41.0
 margin_bottom = 44.0
-rect_scale = Vector2( 0.947976, 0.621365 )
+rect_scale = Vector2( 0.947526, 0.613531 )
 
 [node name="TextureRect6" type="TextureRect" parent="moneyContainer"]
 margin_left = 548.0

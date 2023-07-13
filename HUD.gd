@@ -13,11 +13,36 @@ func updateLog(message: String):
 func _on_log_show_message_finished():
 	$playerLog.text = ""
 
+func setAmmoCount(count, target):
+	"""
+	Set ammo count for either $bulletsUnder or $bulletsOver
+	"""
+	var pixelsPerBullet = 6
+	var pixelsPerRowOfBullets = 116
+	var pixelsVerticalPerRow = 14
+	
+	if count == 0:
+		target.visible = false
+	elif count * pixelsPerBullet < pixelsPerRowOfBullets:
+		target.visible = true
+		target.rect_size.y = 14
+		target.rect_size.x = count * pixelsPerBullet
+	else:
+		var rowsRequired = ceil(float(count * pixelsPerBullet) / float(pixelsPerRowOfBullets))
+
+
 func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 #	print(str(clip_count) + ' / ' + str(CLIP_SIZE) + '          ' + str(ammo) + ' left')
 	$debug/CLIP_SIZE.text = str(CLIP_SIZE)
 	$debug/clip_count.text = str(clip_count)
 	$debug/ammo.text = str(ammo)
+	print("Clip Count: " + str(clip_count))
+	
+	# set max bullet sprite and current bullet sprite progress bar
+	setAmmoCount(CLIP_SIZE, $bulletsUnder)
+	setAmmoCount(clip_count, $bulletsOver)
+	$bulletsOver.rect_scale.x
+	
 
 func _on_Player_health_change(_health, _maxHealth):
 	# 3 or 5
@@ -43,7 +68,6 @@ func _on_Player_jugernaut_change(_value : bool):
 	return
 	
 func _on_reload():
-	print("Reloading")
 	$reloadAnimation.play("reload")
 
 func reload_animation_finished():
