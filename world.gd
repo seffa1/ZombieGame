@@ -80,8 +80,8 @@ func _on_zombie_spawn(zombie, _position, _target):
 	zombies_left_to_spawn -= 1
 	$SpawnManager.zombies_on_map = zombies_on_map
 	$SpawnManager.zombies_left_to_spawn = zombies_left_to_spawn
-	$HUD/zombies_on_map.text = str(zombies_on_map)
-	$HUD/zombies_left_to_spawn.text = str(zombies_left_to_spawn)
+	$HUD/debug/zombies_on_map.text = str(zombies_on_map)
+	$HUD/debug/zombies_left_to_spawn.text = str(zombies_left_to_spawn)
 
 func _on_zombie_death(id):
 	# This id system is to prevent the issue where a zombie is killed by two
@@ -91,7 +91,7 @@ func _on_zombie_death(id):
 		kills += 1
 		zombies_on_map -= 1 
 		$SpawnManager.zombies_on_map = zombies_on_map
-		$HUD/zombies_on_map.text = str(zombies_on_map)
+		$HUD/debug/zombies_on_map.text = str(zombies_on_map)
 	if zombies_on_map == 0 and zombies_left_to_spawn == 0:
 		current_level += 1
 		$HUD/level_count.text = str(current_level)
@@ -262,14 +262,14 @@ func _on_zombie_bullet_hit():
 	bulletsHit += 1
 
 func _on_Player_playerStaminaChange(value):
-	$HUD/StaminaBar.value = value
+	$HUD/healthBarContainer/StaminaBar.value = value
 
 func _on_Player_interactablesUpdated(interactables: Array):
 	# update interactable HUD
 	if len(interactables) == 0:
-		$HUD/interactable.text = ""
+		$HUD/debug/interactable.text = ""
 	else:
-		$HUD/interactable.text = str(interactables[0].interactableName)
+		$HUD/debug/interactable.text = str(interactables[0].interactableName)
 
 func _on_Player_playerLog(message: String):
 	$HUD.updateLog(message)

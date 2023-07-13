@@ -22,7 +22,7 @@ func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 func _on_Player_health_change(_health, _maxHealth):
 	# 3 or 5
 	#1 - 3 or 1 - 5
-	$HealthBar.value = _health * 20  # 20-60 or 20-100
+	$healthBarContainer/HealthBar.value = _health * 20  # 20-60 or 20-100
 
 func _on_Player_money_change(_value):
 	$money.text = str(_value)
