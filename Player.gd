@@ -53,7 +53,7 @@ var can_heal = true
 
 # Interactable Stuff
 var interactables = []
-var money = 0 setget _set_money
+var money = 10000 setget _set_money
 var window_repairs_this_round = 0
 var MAX_WINDOW_REPAIRS_PER_ROUND = 8
 

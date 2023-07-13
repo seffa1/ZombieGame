@@ -267,9 +267,9 @@ func _on_Player_playerStaminaChange(value):
 func _on_Player_interactablesUpdated(interactables: Array):
 	# update interactable HUD
 	if len(interactables) == 0:
-		$HUD/debug/interactable.text = ""
+		$HUD/interactable.text = ""
 	else:
-		$HUD/debug/interactable.text = str(interactables[0].interactableName)
+		$HUD/interactable.text = str(interactables[0].interactableName)
 
 func _on_Player_playerLog(message: String):
 	$HUD.updateLog(message)

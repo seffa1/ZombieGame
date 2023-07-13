@@ -18,17 +18,12 @@ func setAmmoCount(count, target):
 	Set ammo count for either $bulletsUnder or $bulletsOver
 	"""
 	var pixelsPerBullet = 6
-	var pixelsPerRowOfBullets = 116
-	var pixelsVerticalPerRow = 14
 	
 	if count == 0:
 		target.visible = false
-	elif count * pixelsPerBullet < pixelsPerRowOfBullets:
-		target.visible = true
-		target.rect_size.y = 14
-		target.rect_size.x = count * pixelsPerBullet
 	else:
-		var rowsRequired = ceil(float(count * pixelsPerBullet) / float(pixelsPerRowOfBullets))
+		target.visible = true
+		target.rect_size.x = count * pixelsPerBullet
 
 
 func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):

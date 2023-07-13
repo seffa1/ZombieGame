@@ -408,6 +408,7 @@ glow_hdr_scale = 1.97
 script = ExtResource( 6 )
 
 [node name="Ambient" type="CanvasModulate" parent="."]
+visible = false
 color = Color( 0.352941, 0.184314, 0.184314, 1 )
 
 [node name="vinette" parent="Ambient" instance=ExtResource( 32 )]
@@ -628,7 +629,7 @@ texture = ExtResource( 21 )
 occluder = SubResource( 20 )
 
 [node name="MachineGunBuy" parent="GunBuys" instance=ExtResource( 5 )]
-position = Vector2( 672, 1369 )
+position = Vector2( -624, 153 )
 rotation = 3.14159
 __meta__ = {
 "_edit_group_": true
