@@ -49,7 +49,7 @@ func start_round(level):
 	reset_player_repairs()
 	give_players_grenades()
 	zombies_left_to_spawn = ZOMBIES_PER_LEVEL[str(current_level)]
-	$HUD/zombies_left_to_spawn.text = str(zombies_left_to_spawn)
+	$HUD/debug/zombies_left_to_spawn.text = str(zombies_left_to_spawn)
 	
 	# delay zombie spawning by timer wait time
 	$newRoundStartTimer.start()
