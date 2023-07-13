@@ -3,6 +3,7 @@ extends CanvasLayer
 var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
 var PERK_ALPHA_TOGGLE_VALUE = 50
 
+
 func updateLog(message: String):
 	# print("LOG: " + message)
 	$notificationSound.play()
@@ -33,7 +34,7 @@ func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 	$other_gun.text = _other_gun
 
 func _on_Player_grenade_change(_value):
-	$Grenades/grenade_count.text = str(_value)
+	$grenade_count.text = str(_value)
 	
 func _on_Player_jugernaut_change(_value : bool):
 	# print("Player jug change")
@@ -46,8 +47,6 @@ func _on_Player_jugernaut_change(_value : bool):
 func _on_reload():
 	print("Reloading")
 	$reloadAnimation.play("reload")
-	
-
 
 func reload_animation_finished():
 	GLOBALS.player.current_gun_instance.on_reload_animation_finished()
