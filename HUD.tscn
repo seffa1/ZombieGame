@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/GUI/PNG/element_0095_Layer-97.png" type="Texture" id=8]
 [ext_resource path="res://assets/GUI/PNG/element_0077_Layer-79.png" type="Texture" id=9]
 [ext_resource path="res://assets/GUI/PNG/element_0076_Layer-78.png" type="Texture" id=10]
+[ext_resource path="res://assets/GUI/PNG/element_0012_Layer-14.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -257,6 +258,10 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+
+[sub_resource type="StreamTexture" id=15]
+flags = 2
+load_path = "res://.import/element_0010_Layer-12.png-a8a711395b3c5734c9bbddf220a41074.stex"
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -523,3 +528,30 @@ rect_scale = Vector2( 0.565327, 0.83256 )
 value = 50.0
 texture_under = ExtResource( 9 )
 texture_progress = ExtResource( 10 )
+
+[node name="bulletsUnder" type="Sprite" parent="."]
+position = Vector2( 301, 545 )
+scale = Vector2( 1.25, 0.999998 )
+texture = ExtResource( 11 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, -1, 100, 16 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="bulletsOver" type="Sprite" parent="."]
+position = Vector2( 301, 545 )
+scale = Vector2( 1.25, 0.999998 )
+texture = SubResource( 15 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, -1, 50, 16 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 11 )
