@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/perks/items_0008_superpower.png" type="Texture" id=2]
@@ -20,6 +20,8 @@
 [ext_resource path="res://assets/GUI/PNG/element_0105_Layer-107.png" type="Texture" id=18]
 [ext_resource path="res://assets/GUI/PNG/element_0130_Layer-132.png" type="Texture" id=19]
 [ext_resource path="res://assets/GUI/PNG/element_0069_Layer-71.png" type="Texture" id=20]
+[ext_resource path="res://assets/riffle/riffle_buy.png" type="Texture" id=21]
+[ext_resource path="res://assets/pistol/pistol_buy.png" type="Texture" id=22]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -655,3 +657,24 @@ rect_scale = Vector2( 0.7, 0.7 )
 theme = ExtResource( 16 )
 text = "10000
 "
+
+[node name="primary" type="TextureRect" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 863.0
+margin_top = 527.0
+margin_right = 937.0
+margin_bottom = 560.0
+rect_rotation = 30.0
+texture = ExtResource( 22 )
+expand = true
+
+[node name="seconday" type="TextureRect" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 961.0
+margin_top = 536.0
+margin_right = 1011.0
+margin_bottom = 556.0
+rect_rotation = 30.0
+texture = ExtResource( 21 )
+expand = true
+flip_h = true

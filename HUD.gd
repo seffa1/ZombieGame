@@ -3,6 +3,9 @@ extends CanvasLayer
 var juggernaut = preload("res://assets/perks/items_0008_superpower.png")
 var PERK_ALPHA_TOGGLE_VALUE = 50
 
+onready var pistolImg = preload("res://assets/pistol/pistol_buy.png")
+onready var riffleImg = preload("res://assets/riffle/riffle_buy.png")
+
 
 func updateLog(message: String):
 	# print("LOG: " + message)
@@ -31,12 +34,11 @@ func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 	$debug/CLIP_SIZE.text = str(CLIP_SIZE)
 	$debug/clip_count.text = str(clip_count)
 	$debug/ammo.text = str(ammo)
-	print("Clip Count: " + str(clip_count))
 	
 	# set max bullet sprite and current bullet sprite progress bar
 	setAmmoCount(CLIP_SIZE, $bulletsUnder)
 	setAmmoCount(clip_count, $bulletsOver)
-	$bulletsOver.rect_scale.x
+	
 	
 
 func _on_Player_health_change(_health, _maxHealth):
@@ -50,6 +52,31 @@ func _on_Player_money_change(_value):
 func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 	$debug/current_gun.text = _current_gun
 	$debug/other_gun.text = _other_gun
+	
+	print(_current_gun)
+	print(_other_gun)
+	
+	match _current_gun:
+		"PISTOL":
+			print("Pistol as primary equipped")
+			$primary.texture = pistolImg
+		"RIFFLE":
+			print("Riffle as primary equipped")
+			$primary.texture = riffleImg
+		_:
+			print("Nothing eqipped priary!")
+			$primary.texture = null
+	match _other_gun:
+		"PISTOL":
+			print("Pistol as secondary equipped")
+			$seconday.texture = pistolImg
+		"RIFFLE":
+			print("Riffle as secondary equipped")
+			$seconday.texture = riffleImg
+		_:
+			print("Nothing eqipped secondary!")
+			$seconday.texture = null
+	
 
 func _on_Player_grenade_change(_value):
 	$grenade_count.text = str(_value)
