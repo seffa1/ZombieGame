@@ -408,7 +408,6 @@ glow_hdr_scale = 1.97
 script = ExtResource( 6 )
 
 [node name="Ambient" type="CanvasModulate" parent="."]
-visible = false
 color = Color( 0.352941, 0.184314, 0.184314, 1 )
 
 [node name="vinette" parent="Ambient" instance=ExtResource( 32 )]
@@ -506,7 +505,7 @@ parameters/playback = SubResource( 3 )
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
 
-[node name="reloadBar" parent="HUD" index="4"]
+[node name="reloadBar" parent="HUD" index="5"]
 custom_styles/bg = SubResource( 35 )
 
 [node name="Windows" type="Node" parent="."]

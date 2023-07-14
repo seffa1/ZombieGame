@@ -6,6 +6,9 @@ var PERK_ALPHA_TOGGLE_VALUE = 50
 onready var pistolImg = preload("res://assets/pistol/pistol_buy.png")
 onready var riffleImg = preload("res://assets/riffle/riffle_buy.png")
 
+func _ready():
+	$seconday.texture = null
+	$primary.texture = pistolImg
 
 func updateLog(message: String):
 	# print("LOG: " + message)
@@ -38,8 +41,6 @@ func _on_update_hud_gun(clip_count, CLIP_SIZE, ammo):
 	# set max bullet sprite and current bullet sprite progress bar
 	setAmmoCount(CLIP_SIZE, $bulletsUnder)
 	setAmmoCount(clip_count, $bulletsOver)
-	
-	
 
 func _on_Player_health_change(_health, _maxHealth):
 	# 3 or 5
@@ -63,9 +64,7 @@ func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 		"RIFFLE":
 			print("Riffle as primary equipped")
 			$primary.texture = riffleImg
-		_:
-			print("Nothing eqipped priary!")
-			$primary.texture = null
+
 	match _other_gun:
 		"PISTOL":
 			print("Pistol as secondary equipped")
@@ -73,9 +72,7 @@ func _on_Player_gun_change( _current_gun : String, _other_gun : String = ''):
 		"RIFFLE":
 			print("Riffle as secondary equipped")
 			$seconday.texture = riffleImg
-		_:
-			print("Nothing eqipped secondary!")
-			$seconday.texture = null
+
 	
 
 func _on_Player_grenade_change(_value):
