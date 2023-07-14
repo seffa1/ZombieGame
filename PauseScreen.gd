@@ -12,6 +12,10 @@ func _input(event):
 
 func togglePauseScreen():
 	var new_pause_state = not get_tree().paused
+	
+	if new_pause_state:
+		# toggle the mouse
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 	# pause all processing on all tree nodes 
 	# except those with "pause mode" set from STOP to Process
@@ -35,6 +39,8 @@ func _on_save_pressed():
 func _on_resume_pressed():
 	playButtonPressSound()
 	togglePauseScreen()
+	# toggle the mouse
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_restart_pressed():
 	get_tree().paused = false

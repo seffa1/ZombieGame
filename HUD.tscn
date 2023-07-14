@@ -199,7 +199,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.3, 0.8, 1.3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 23, 584 ), Vector2( 23, 569 ), Vector2( 23, 569 ), Vector2( 23, 563 ) ]
+"values": [ Vector2( 684, 565 ), Vector2( 684, 560 ), Vector2( 684, 549 ), Vector2( 684, 530 ) ]
 }
 
 [sub_resource type="Animation" id=14]

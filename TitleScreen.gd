@@ -16,9 +16,12 @@ func _ready():
 	# toggle the HUD
 	get_parent().find_node("HUD").visible = false
 	
+	# toggle the mouse
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
 	# play ambiance
 	$titleAmbiance1.play()
-	
+
 	loadHighScoreData()
 
 func _on_quit_pressed():
@@ -38,6 +41,8 @@ func _on_debug_pressed():
 
 func start_game():
 	# start the game
+	# toggle the mouse
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	atTitleScreen = false
 	$impact.play()
 	get_tree().paused = false
