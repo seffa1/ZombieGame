@@ -40,7 +40,7 @@ func _on_resume_pressed():
 	playButtonPressSound()
 	togglePauseScreen()
 	# toggle the mouse
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _on_restart_pressed():
 	get_tree().paused = false
